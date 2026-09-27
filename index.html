@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>পরিচালনা পর্ষদ ড্যাশবোর্ড | সমবায় সমিতি</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 antialiased">
+
+  <!-- নেভবার / হেডার -->
+  <header class="bg-indigo-900 text-white sticky top-0 z-30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3 space-x-reverse">
+        <div class="w-10 h-10 bg-indigo-700 rounded-lg flex items-center justify-center text-xl shadow-inner">
+          <i class="fa-solid fa-building-columns text-emerald-400"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold leading-tight">সমিতি ম্যানেজমেন্ট সিস্টেম</h1>
+          <p class="text-xs text-indigo-300">পরিচালনা পর্ষদ পোর্টাল (Board of Directors)</p>
+        </div>
+      </div>
+      <button onclick="openModal()" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition shadow-sm">
+        <i class="fa-solid fa-user-plus"></i> নতুন পরিচালক যোগ করুন
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- পরিসংখ্যান উইজেট -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-500">মোট বোর্ড মেম্বার</p>
+          <h3 id="stat-total-directors" class="text-2xl font-bold text-slate-800 mt-1">০ জন</h3>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-users"></i>
+        </div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-500">মোট সংরক্ষিত শেয়ার</p>
+          <h3 id="stat-total-shares" class="text-2xl font-bold text-slate-800 mt-1">০ টি</h3>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-chart-pie"></i>
+        </div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-500">মোট পরিচালকদের মূলধন</p>
+          <h3 id="stat-total-capital" class="text-2xl font-bold text-emerald-600 mt-1">৳ ০</h3>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-sack-dollar"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- কন্ট্রোল প্যানেল (সার্চ, ফিল্টার ও ভিউ সুইচ) -->
+    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="relative w-full sm:w-80">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+        <input 
+          type="text" 
+          id="search-input" 
+          oninput="handleSearch()" 
+          placeholder="নাম, মোবাইল বা পদবী খুঁজুন..." 
+          class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
+        />
+      </div>
+
+      <div class="flex items-center gap-2 self-end sm:self-auto">
+        <div class="bg-slate-100 p-1 rounded-lg border border-slate-200 flex items-center">
+          <button id="btn-grid" onclick="setViewMode('grid')" class="px-3 py-1.5 rounded-md text-xs font-semibold bg-white text-indigo-700 shadow-sm transition">
+            <i class="fa-solid fa-grip mr-1"></i> কার্ড ভিউ
+          </button>
+          <button id="btn-table" onclick="setViewMode('table')" class="px-3 py-1.5 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+            <i class="fa-solid fa-table-list mr-1"></i> টেবিল ভিউ
+          </button>
+        </div>
+        <button onclick="loadDirectors()" class="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-600 transition" title="রিফ্রেশ">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- লোডিং স্টেট -->
+    <div id="loader" class="text-center py-20">
+      <i class="fa-solid fa-circle-notch fa-spin text-4xl text-indigo-600 mb-3"></i>
+      <p class="text-slate-500 text-sm font-medium">তথ্য লোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...</p>
+    </div>
+
+    <!-- কার্ড গ্রিড ভিউ -->
+    <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+    <!-- টেবিল ভিউ -->
+    <div id="table-container" class="hidden bg-white rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse">
+        <thead class="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase text-slate-500">
+          <tr>
+            <th class="px-4 py-3">পরিচালক</th>
+            <th class="px-4 py-3">পদবী</th>
+            <th class="px-4 py-3">যোগাযোগ</th>
+            <th class="px-4 py-3">এনআইডি</th>
+            <th class="px-4 py-3">শেয়ার / মূলধন</th>
+            <th class="px-4 py-3">নমিনি</th>
+            <th class="px-4 py-3 text-center">স্ট্যাটাস</th>
+          </tr>
+        </thead>
+        <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- নতুন পরিচালক যুক্ত করার মডাল (পপ-আপ) -->
+  <div id="modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-100 overflow-hidden transform transition-all">
+      <!-- মডাল হেডার -->
+      <div class="bg-indigo-900 px-6 py-4 flex items-center justify-between text-white">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <i class="fa-solid fa-user-plus text-emerald-400"></i> নতুন পরিচালনা পর্ষদ সদস্য ভর্তি
+        </h3>
+        <button onclick="closeModal()" class="text-slate-300 hover:text-white text-lg leading-none">&times;</button>
+      </div>
+
+      <!-- মডাল ফর্ম -->
+      <form id="director-form" onsubmit="submitDirector(event)" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">পূর্ণ নাম *</label>
+            <input type="text" name="fullName" required placeholder="মোঃ রফিকুল ইসলাম" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">পদবী *</label>
+            <select name="designation" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="কার্যনির্বাহী সদস্য">কার্যনির্বাহী সদস্য</option>
+              <option value="সভাপতি">সভাপতি</option>
+              <option value="সহ-সভাপতি">সহ-সভাপতি</option>
+              <option value="সাধারণ সম্পাদক">সাধারণ সম্পাদক</option>
+              <option value="যুগ্ম সম্পাদক">যুগ্ম সম্পাদক</option>
+              <option value="কোষাধ্যক্ষ">কোষাধ্যক্ষ</option>
+              <option value="সাংগঠনিক সম্পাদক">সাংগঠনিক সম্পাদক</option>
+              <option value="প্রচার ও প্রকাশনা সম্পাদক">প্রচার ও প্রকাশনা সম্পাদক</option>
+              <option value="দপ্তর সম্পাদক">দপ্তর সম্পাদক</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">মোবাইল নম্বর *</label>
+            <input type="tel" name="mobileNumber" required placeholder="017XXXXXXXX" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">জাতীয় পরিচয়পত্র (NID) নম্বর *</label>
+            <input type="text" name="nidNumber" required placeholder="198XXXXXXXXXXX" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">শেয়ার সংখ্যা *</label>
+            <input type="number" name="shareCount" value="40" min="1" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">শেয়ার মূলধন (টাকা) *</label>
+            <input type="number" name="shareCapital" value="40000" min="0" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">পিতা বা স্বামীর নাম</label>
+            <input type="text" name="guardianName" placeholder="পিতার নাম" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">বর্তমান ঠিকানা</label>
+            <input type="text" name="presentAddress" placeholder="রোড/মহল্লা, থানা, জেলা" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">নমিনির নাম</label>
+            <input type="text" name="nomineeName" placeholder="নমিনির পূর্ণ নাম" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">সম্পর্ক</label>
+            <input type="text" name="nomineeRelation" placeholder="যেমন: স্ত্রী / পুত্র" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 transition">বাতিল</button>
+          <button type="submit" id="btn-submit" class="px-5 py-2 rounded-lg text-sm font-semibold bg-indigo-700 hover:bg-indigo-600 text-white flex items-center gap-2 transition">
+            <span>সংরক্ষণ করুন</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // এখানে আপনার Google Apps Script Web App URL প্রতিস্থাপন করুন
+    const API_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnRDwV-Q1MrF9xIecbWrpTsaM-Oz5IndyR6MAh00pMaWtn82dOJbNJaQVyJPpik_Q6Tch6sDBof9Y29Qd6Zuz-V3DwwB-gVnjNWQsJhOYYV6AE5d7j1z47U0pRwQmQycxGtspsId_-dKGdTbZO7fFsyn_Z6lRsRaZDkzOW-VoS-DtfZOddFoR5Z6L23MKikZlaUJG-DIZHSOPmy3RLNtCTNqbNFDToz4asCHNylrSSCIbmxWYNmKCI3npupAwvJxotNrZ6CpYzy5z6eRJW8ZS-e1M7iz7w&lib=MFeOJEbYUmcmZr8G1FyZpsuKl_bsOE08m";
+
+    let directorsData = [];
+    let currentView = 'grid';
+
+    // ১. ডেটা লোড করার ফাংশন
+    async function loadDirectors() {
+      const loader = document.getElementById("loader");
+      loader.classList.remove("hidden");
+      document.getElementById("grid-container").classList.add("hidden");
+      document.getElementById("table-container").classList.add("hidden");
+
+      try {
+        const response = await fetch(API_URL);
+        const result = await response.json();
+
+        if (result.success) {
+          directorsData = result.data;
+          updateStats(directorsData);
+          renderUI(directorsData);
+        } else {
+          alert("ডেটা লোডে সমস্যা হয়েছে: " + result.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("API সংযুক্ত করা যাচ্ছে না। URL যাচাই করুন।");
+      } finally {
+        loader.classList.add("hidden");
+        setViewMode(currentView);
+      }
+    }
+
+    // ২. পরিসংখ্যান আপডেট
+    function updateStats(data) {
+      const totalDirectors = data.length;
+      const totalShares = data.reduce((acc, curr) => acc + (Number(curr.shareCount) || 0), 0);
+      const totalCapital = data.reduce((acc, curr) => acc + (Number(curr.shareCapital) || 0), 0);
+
+      document.getElementById("stat-total-directors").innerText = `${totalDirectors} জন`;
+      document.getElementById("stat-total-shares").innerText = `${totalShares.toLocaleString('bn-BD')} টি`;
+      document.getElementById("stat-total-capital").innerText = `৳ ${totalCapital.toLocaleString('bn-BD')}`;
+    }
+
+    // ৩. গ্রিড ও টেবিল রেন্ডারিং
+    function renderUI(data) {
+      renderGrid(data);
+      renderTable(data);
+    }
+
+    function renderGrid(data) {
+      const container = document.getElementById("grid-container");
+      container.innerHTML = "";
+
+      if (data.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">কোনো তথ্য পাওয়া যায়নি।</div>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-2 mb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg">
+                  ${item.fullName ? item.fullName.charAt(0) : "D"}
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 leading-snug">${item.fullName}</h4>
+                  <span class="inline-block mt-0.5 text-xs font-semibold px-2 py-0.5 rounded-full ${
+                    item.designation.includes('সভাপতি') ? 'bg-amber-100 text-amber-800' :
+                    item.designation.includes('সম্পাদক') ? 'bg-indigo-100 text-indigo-800' : 'bg-slate-100 text-slate-700'
+                  }">
+                    ${item.designation}
+                  </span>
+                </div>
+              </div>
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded ${item.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-rose-50 text-rose-600'}">
+                ${item.status}
+              </span>
+            </div>
+
+            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+              <div class="flex justify-between">
+                <span class="text-slate-400">পরিচালক আইডি:</span>
+                <span class="font-mono font-medium text-slate-800">${item.directorId}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">মোবাইল:</span>
+                <span class="font-medium text-slate-800">0${item.mobileNumber}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">এনআইডি:</span>
+                <span class="font-mono text-slate-700">${item.nidNumber}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">শেয়ার ও মূলধন:</span>
+                <span class="font-semibold text-emerald-600">${item.shareCount} টি (৳ ${Number(item.shareCapital).toLocaleString('bn-BD')})</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
+            <span>ঠিকানা: ${item.presentAddress || 'N/A'}</span>
+            <span>নমিনি: ${item.nomineeName || 'N/A'}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById("table-body");
+      tbody.innerHTML = "";
+
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-slate-400">কোনো তথ্য পাওয়া যায়নি।</td></tr>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50 transition";
+        tr.innerHTML = `
+          <td class="px-4 py-3">
+            <div class="font-bold text-slate-900">${item.fullName}</div>
+            <div class="text-xs text-slate-400 font-mono">${item.directorId}</div>
+          </td>
+          <td class="px-4 py-3">
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${
+              item.designation.includes('সভাপতি') ? 'bg-amber-100 text-amber-800' :
+              item.designation.includes('সম্পাদক') ? 'bg-indigo-100 text-indigo-800' : 'bg-slate-100 text-slate-700'
+            }">
+              ${item.designation}
+            </span>
+          </td>
+          <td class="px-4 py-3 font-medium text-slate-700">0${item.mobileNumber}</td>
+          <td class="px-4 py-3 font-mono text-xs text-slate-600">${item.nidNumber}</td>
+          <td class="px-4 py-3">
+            <div class="font-bold text-emerald-600">৳ ${Number(item.shareCapital).toLocaleString('bn-BD')}</div>
+            <div class="text-xs text-slate-400">${item.shareCount} টি শেয়ার</div>
+          </td>
+          <td class="px-4 py-3 text-xs text-slate-600">
+            <div>${item.nomineeName || '-'}</div>
+            <div class="text-[11px] text-slate-400">(${item.nomineeRelation || '-'})</div>
+          </td>
+          <td class="px-4 py-3 text-center">
+            <span class="text-xs font-semibold px-2 py-0.5 rounded ${item.status === 'Active' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}">
+              ${item.status}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ৪. লাইভ সার্চ ফিল্টার
+    function handleSearch() {
+      const q = document.getElementById("search-input").value.trim().toLowerCase();
+      const filtered = directorsData.filter(item => 
+        (item.fullName && item.fullName.toLowerCase().includes(q)) ||
+        (item.designation && item.designation.toLowerCase().includes(q)) ||
+        (item.mobileNumber && String(item.mobileNumber).includes(q)) ||
+        (item.directorId && item.directorId.toLowerCase().includes(q))
+      );
+      renderUI(filtered);
+    }
+
+    // ৫. ভিউ টগল (কার্ড বনাম টেবিল)
+    function setViewMode(mode) {
+      currentView = mode;
+      const grid = document.getElementById("grid-container");
+      const table = document.getElementById("table-container");
+      const btnGrid = document.getElementById("btn-grid");
+      const btnTable = document.getElementById("btn-table");
+
+      if (mode === 'grid') {
+        grid.classList.remove("hidden");
+        table.classList.add("hidden");
+        btnGrid.className = "px-3 py-1.5 rounded-md text-xs font-semibold bg-white text-indigo-700 shadow-sm transition";
+        btnTable.className = "px-3 py-1.5 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      } else {
+        grid.classList.add("hidden");
+        table.classList.remove("hidden");
+        btnTable.className = "px-3 py-1.5 rounded-md text-xs font-semibold bg-white text-indigo-700 shadow-sm transition";
+        btnGrid.className = "px-3 py-1.5 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      }
+    }
+
+    // ৬. মডাল নিয়ন্ত্রণ
+    function openModal() {
+      document.getElementById("modal").classList.remove("hidden");
+    }
+    function closeModal() {
+      document.getElementById("modal").classList.add("hidden");
+      document.getElementById("director-form").reset();
+    }
+
+    // ৭. নতুন পরিচালক ফর্ম সাবমিট (POST Request)
+    async function submitDirector(e) {
+      e.preventDefault();
+      const btn = document.getElementById("btn-submit");
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> সংরক্ষণ হচ্ছে...`;
+
+      const formData = new FormData(e.target);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          alert("সদস্য সফলভাবে যুক্ত হয়েছে!");
+          closeModal();
+          loadDirectors(); // তালিকা রিফ্রেশ
+        } else {
+          alert("যোগ করতে ব্যর্থ হয়েছে: " + result.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("সার্ভারের সাথে যোগাযোগ করা যায়নি।");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>সংরক্ষণ করুন</span>`;
+      }
+    }
+
+    // পৃষ্ঠা লোড হলে ডেটা ফেচ
+    window.onload = loadDirectors;
+  </script>
+</body>
+</html>
