@@ -27,431 +27,449 @@
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 antialiased flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-  <!-- ================= TOP MODERN HEADER (LARGE BRANDING WITH ADDRESS) ================= -->
-  <header class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white sticky top-0 z-40 shadow-lg border-b border-indigo-900 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 min-h-[5.5rem] flex items-center justify-between">
+  <!-- ================= ১. সম্পূর্ণ লক স্ক্রিন ================= -->
+  <div id="full-login-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-950 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl overflow-hidden border border-slate-100 animate-in fade-in zoom-in duration-200">
       
-      <!-- বাম পাশ: ৩-ডট (☰) মেনু বাটন -->
-      <div class="flex items-center gap-3">
-        <button type="button" onclick="toggleSideMenu()" class="w-11 h-11 rounded-2xl bg-indigo-900 hover:bg-indigo-800 text-white flex items-center justify-center transition border border-indigo-700 shadow-sm active:scale-95 cursor-pointer" title="মেনু ওপেন করুন">
-          <i class="fa-solid fa-bars text-xl text-emerald-400"></i>
-        </button>
+      <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 p-6 text-center text-white relative">
+        <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-2 text-2xl text-emerald-400 border border-white/20 shadow-inner">
+          <i class="fa-solid fa-vault"></i>
+        </div>
+        <h2 class="text-lg font-extrabold tracking-tight">আশার আলো সমবায় সমিতি লিঃ</h2>
+        <p class="text-xs text-emerald-300 font-bold mt-0.5">পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম</p>
+        <span class="inline-block mt-2 bg-indigo-900/90 text-[10px] text-indigo-200 px-3 py-0.5 rounded-full border border-indigo-700">সুরক্ষিত পোর্টাল লগইন</span>
       </div>
 
-      <!-- মাঝখান: পূর্ণাঙ্গ বড় হেডিং ও তার নিচে সুনির্দিষ্ট ঠিকানা -->
-      <div class="text-center cursor-pointer flex-1 px-2" onclick="switchView('home')">
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight">
-          আশার আলো সমবায় সমিতি লিমিটেড
-        </h1>
-        <p class="text-xs sm:text-sm text-emerald-300 font-bold tracking-wide mt-1 flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-location-dot text-amber-400 text-xs"></i>
-          <span>পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম</span>
+      <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
+        <div id="login-error" class="hidden p-2.5 bg-rose-50 text-rose-600 rounded-xl text-xs font-semibold text-center border border-rose-200"></div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">ইউজার আইডি (User ID)</label>
+          <div class="relative">
+            <i class="fa-solid fa-user-shield absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+            <input type="text" id="login-username" required placeholder="admin অথবা DIR-001 / MEM-0001" autocomplete="username" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600 transition" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">গোপন পাসওয়ার্ড (Password)</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+            <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600 transition" />
+          </div>
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="w-full py-3 bg-gradient-to-r from-indigo-700 to-indigo-800 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-700/30 transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+          <span>নিরাপদে লগইন করুন</span>
+          <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+        </button>
+
+        <p class="text-[10px] text-center text-slate-400 pt-1">
+          অননুমোদিত প্রবেশ আইনত নিষিদ্ধ। আইডি ও পাসওয়ার্ড সুরক্ষিত রাখুন।
         </p>
-      </div>
+      </form>
+    </div>
+  </div>
 
-      <!-- ডান পাশ: শুধুমাত্র লগইন / প্রস্থান বাটন -->
-      <div class="flex items-center gap-2">
-        <button type="button" id="nav-login-btn" onclick="openLoginModal()" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition transform active:scale-95 flex items-center gap-1.5 cursor-pointer">
-          <i class="fa-solid fa-right-to-bracket text-emerald-300"></i>
-          <span>লগইন</span>
-        </button>
+  <!-- ================= ২. মূল অ্যাপ্লিকেশন ড্যাশবোর্ড ================= -->
+  <div id="main-dashboard-app" class="hidden flex-1 flex flex-col justify-between">
+    
+    <!-- TOP HEADER -->
+    <header class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white sticky top-0 z-40 shadow-lg border-b border-indigo-900 no-print">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 min-h-[5.5rem] flex items-center justify-between">
+        
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="toggleSideMenu()" class="w-11 h-11 rounded-2xl bg-indigo-900 hover:bg-indigo-800 text-white flex items-center justify-center transition border border-indigo-700 shadow-sm active:scale-95 cursor-pointer" title="মেনু ওপেন করুন">
+            <i class="fa-solid fa-bars text-xl text-emerald-400"></i>
+          </button>
+        </div>
 
-        <div id="nav-user-profile" class="hidden flex items-center gap-2">
+        <div class="text-center cursor-pointer flex-1 px-2" onclick="switchView('home')">
+          <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight">
+            আশার আলো সমবায় সমিতি লিমিটেড
+          </h1>
+          <p class="text-xs sm:text-sm text-emerald-300 font-bold tracking-wide mt-1 flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-location-dot text-amber-400 text-xs"></i>
+            <span>পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম</span>
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
           <span id="user-display-badge" class="hidden sm:inline-block text-xs bg-indigo-900/90 border border-indigo-700 px-3 py-1.5 rounded-xl font-bold text-amber-300"></span>
           <button type="button" onclick="handleLogout()" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center gap-1 active:scale-95 cursor-pointer" title="লগআউট">
             <i class="fa-solid fa-power-off"></i>
             <span class="hidden sm:inline">প্রস্থান</span>
           </button>
         </div>
-      </div>
 
+      </div>
+    </header>
+
+    <!-- সাইড ড্রপডাউন ড্রয়ার মেনু -->
+    <div id="side-menu-drawer" class="fixed inset-0 z-50 hidden no-print">
+      <div onclick="toggleSideMenu()" class="absolute inset-0 bg-sky-950/40 backdrop-blur-sm p-4 sm:p-6 transition-all cursor-pointer"></div>
+
+      <div class="relative w-72 sm:w-80 max-w-[85%] bg-white h-full shadow-2xl flex flex-col justify-between p-5 border-r border-sky-100 z-10 overflow-y-auto">
+        <div>
+          <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-indigo-950 text-emerald-400 flex items-center justify-center text-sm font-bold shadow">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+              <span class="text-sm font-bold text-slate-800">অ্যাপ প্রধান মেনু</span>
+            </div>
+            <button type="button" onclick="toggleSideMenu()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-800 flex items-center justify-center text-lg cursor-pointer">&times;</button>
+          </div>
+
+          <div class="space-y-1.5 text-xs font-bold">
+            <a href="javascript:void(0)" onclick="menuNavigate('home')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
+              <i class="fa-solid fa-chart-pie text-emerald-600 text-base w-5"></i>
+              <div>
+                <p>ড্যাশবোর্ড সামারি (Diagram)</p>
+                <span class="text-[10px] font-normal text-slate-400">পাই চার্ট ও গ্রাফ চিত্র</span>
+              </div>
+            </a>
+
+            <!-- ১. ইনভয়েস ও ভাউচার অপশন (Admin Only) -->
+            <a href="javascript:void(0)" id="menu-item-invoice" onclick="openInvoiceModal(); toggleSideMenu();" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition border border-emerald-200/60">
+              <i class="fa-solid fa-file-invoice-dollar text-emerald-600 text-base w-5"></i>
+              <div>
+                <p>১. ইনভয়েস ও ভাউচার পোস্টিং</p>
+                <span class="text-[10px] font-normal text-emerald-600">নগদ ও ব্যাংক জমার পোস্টিং</span>
+              </div>
+            </a>
+
+            <!-- ২. ক্যাশ ও ব্যাংক খতিয়ান -->
+            <a href="javascript:void(0)" onclick="menuNavigate('cashbook')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
+              <i class="fa-solid fa-book-bookmark text-blue-600 text-base w-5"></i>
+              <div>
+                <p>২. ক্যাশ ও ব্যাংক খতিয়ান (Cash Book)</p>
+                <span class="text-[10px] font-normal text-slate-400">নগদ ও ব্যাংকের সমস্ত খতিয়ান</span>
+              </div>
+            </a>
+
+            <!-- ৩. বিনিয়োগ হিসাব -->
+            <a href="javascript:void(0)" onclick="menuNavigate('investments')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition bg-amber-50/60 border border-amber-200/50">
+              <i class="fa-solid fa-hand-holding-dollar text-amber-600 text-base w-5"></i>
+              <div>
+                <p>৩. বিনিয়োগ হিসাব (Investments)</p>
+                <span class="text-[10px] font-normal text-amber-700">খাতভিত্তিক বিনিয়োগ লেজার</span>
+              </div>
+            </a>
+
+            <!-- ৪. পরিচালনা পর্ষদ -->
+            <a href="javascript:void(0)" onclick="menuNavigate('directors')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
+              <i class="fa-solid fa-user-tie text-purple-600 text-base w-5"></i>
+              <div>
+                <p>৪. পরিচালনা পর্ষদ (Board of Directors)</p>
+                <span class="text-[10px] font-normal text-slate-400">চেয়ারম্যান, MD ও ডিরেক্টরগণ</span>
+              </div>
+            </a>
+
+            <!-- ৫. সাধারণ সদস্য -->
+            <a href="javascript:void(0)" onclick="menuNavigate('members')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
+              <i class="fa-solid fa-users text-teal-600 text-base w-5"></i>
+              <div>
+                <p>৫. সাধারণ সদস্য তালিকা (Members)</p>
+                <span class="text-[10px] font-normal text-slate-400">সদস্য ভর্তি ও ব্যক্তিগত লেজার</span>
+              </div>
+            </a>
+
+            <!-- আর্থিক বিবরণী -->
+            <div class="pt-2 border-t border-slate-100">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3.5 mb-1 block">আর্থিক চূড়ান্ত প্রতিবেদন</span>
+              <a href="javascript:void(0)" onclick="menuNavigate('receipts')" class="flex items-center gap-3 px-3.5 py-1.5 rounded-lg hover:bg-slate-50 text-slate-600 text-[11px]">
+                <i class="fa-solid fa-receipt text-slate-400 w-4"></i> প্রাপ্তি ও প্রদান হিসাব
+              </a>
+              <a href="javascript:void(0)" onclick="menuNavigate('profitloss')" class="flex items-center gap-3 px-3.5 py-1.5 rounded-lg hover:bg-slate-50 text-slate-600 text-[11px]">
+                <i class="fa-solid fa-chart-line text-slate-400 w-4"></i> লাভ ও ক্ষতি হিসাব
+              </a>
+              <a href="javascript:void(0)" onclick="menuNavigate('balancesheet')" class="flex items-center gap-3 px-3.5 py-1.5 rounded-lg hover:bg-slate-50 text-slate-600 text-[11px]">
+                <i class="fa-solid fa-building-columns text-slate-400 w-4"></i> উদ্বৃত্তপত্র (Balance Sheet)
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 text-center">
+          <p class="text-[11px] text-slate-400 font-semibold">আশার আলো সমবায় সমিতি</p>
+        </div>
+      </div>
     </div>
-  </header>
 
-  <!-- ================= সাইড ড্রপডাউন ড্রয়ার মেনু (হালকা নীল ব্যাকগ্রাউন্ড প্যাডিং সহ) ================= -->
-  <div id="side-menu-drawer" class="fixed inset-0 z-50 hidden no-print">
-    <!-- ব্যাকড্রপ: হালকা নীল কালার প্যাডিং ও সফট ব্লার শেড -->
-    <div onclick="toggleSideMenu()" class="absolute inset-0 bg-sky-950/40 backdrop-blur-sm p-4 sm:p-6 transition-all cursor-pointer"></div>
-
-    <!-- বাম পাশের স্লাইড ড্রপডাউন মেনু প্যানেল -->
-    <div class="relative w-72 sm:w-80 max-w-[85%] bg-white h-full shadow-2xl flex flex-col justify-between p-5 border-r border-sky-100 z-10 overflow-y-auto">
-      <div>
-        <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-lg bg-indigo-950 text-emerald-400 flex items-center justify-center text-sm font-bold shadow">
-              <i class="fa-solid fa-list-check"></i>
-            </div>
-            <span class="text-sm font-bold text-slate-800">অ্যাপ প্রধান মেনু</span>
-          </div>
-          <button type="button" onclick="toggleSideMenu()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-800 flex items-center justify-center text-lg cursor-pointer">&times;</button>
-        </div>
-
-        <div class="space-y-1.5 text-xs font-bold">
-          <a href="javascript:void(0)" onclick="menuNavigate('home')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
-            <i class="fa-solid fa-chart-pie text-emerald-600 text-base w-5"></i>
-            <div>
-              <p>ড্যাশবোর্ড সামারি (Diagram)</p>
-              <span class="text-[10px] font-normal text-slate-400">পাই চার্ট ও গ্রাফ চিত্র</span>
-            </div>
-          </a>
-
-          <a href="javascript:void(0)" onclick="checkAdminAction('invoice'); toggleSideMenu();" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition border border-emerald-200/60">
-            <i class="fa-solid fa-file-invoice-dollar text-emerald-600 text-base w-5"></i>
-            <div>
-              <p>১. ইনভয়েস ও ভাউচার পোস্টিং</p>
-              <span class="text-[10px] font-normal text-emerald-600">নগদ ও ব্যাংক জমার পোস্টিং</span>
-            </div>
-          </a>
-
-          <a href="javascript:void(0)" onclick="menuNavigate('cashbook')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
-            <i class="fa-solid fa-book-bookmark text-blue-600 text-base w-5"></i>
-            <div>
-              <p>২. ক্যাশ ও ব্যাংক খতিয়ান (Cash Book)</p>
-              <span class="text-[10px] font-normal text-slate-400">নগদ ও ব্যাংকের সমস্ত খতিয়ান</span>
-            </div>
-          </a>
-
-          <a href="javascript:void(0)" onclick="menuNavigate('investments')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition bg-amber-50/60 border border-amber-200/50">
-            <i class="fa-solid fa-hand-holding-dollar text-amber-600 text-base w-5"></i>
-            <div>
-              <p>৩. বিনিয়োগ হিসাব (Investments)</p>
-              <span class="text-[10px] font-normal text-amber-700">খাতভিত্তিক বিনিয়োগ লেজার</span>
-            </div>
-          </a>
-
-          <a href="javascript:void(0)" onclick="menuNavigate('directors')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
-            <i class="fa-solid fa-user-tie text-purple-600 text-base w-5"></i>
-            <div>
-              <p>৪. পরিচালনা পর্ষদ (Directors)</p>
-              <span class="text-[10px] font-normal text-slate-400">১৫ জন পরিচালক ও শেয়ার খতিয়ান</span>
-            </div>
-          </a>
-
-          <a href="javascript:void(0)" onclick="menuNavigate('members')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition">
-            <i class="fa-solid fa-users text-teal-600 text-base w-5"></i>
-            <div>
-              <p>৫. সাধারণ সদস্য তালিকা (Members)</p>
-              <span class="text-[10px] font-normal text-slate-400">সদস্য ভর্তি ও ব্যক্তিগত লেজার</span>
-            </div>
-          </a>
-
-          <div class="pt-2 border-t border-slate-100">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3.5 mb-1 block">আর্থিক চূড়ান্ত প্রতিবেদন</span>
-            <a href="javascript:void(0)" onclick="menuNavigate('receipts')" class="flex items-center gap-3 px-3.5 py-1.5 rounded-lg hover:bg-slate-50 text-slate-600 text-[11px]">
-              <i class="fa-solid fa-receipt text-slate-400 w-4"></i> প্রাপ্তি ও প্রদান হিসাব
-            </a>
-            <a href="javascript:void(0)" onclick="menuNavigate('profitloss')" class="flex items-center gap-3 px-3.5 py-1.5 rounded-lg hover:bg-slate-50 text-slate-600 text-[11px]">
-              <i class="fa-solid fa-chart-line text-slate-400 w-4"></i> লাভ ও ক্ষতি হিসাব
-            </a>
-            <a href="javascript:void(0)" onclick="menuNavigate('balancesheet')" class="flex items-center gap-3 px-3.5 py-1.5 rounded-lg hover:bg-slate-50 text-slate-600 text-[11px]">
-              <i class="fa-solid fa-building-columns text-slate-400 w-4"></i> উদ্বৃত্তপত্র (Balance Sheet)
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-3 border-t border-slate-100 text-center">
-        <p class="text-[11px] text-slate-400 font-semibold">আশার আলো সমবায় সমিতি</p>
-      </div>
+    <!-- লোডিং বার -->
+    <div id="global-loading" class="bg-indigo-900 text-white text-xs py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-indigo-700">
+      <i class="fa-solid fa-circle-notch fa-spin text-emerald-400"></i>
+      <span>গুগল শিট থেকে ডেটা লোড হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন</span>
     </div>
-  </div>
 
-  <!-- লোডিং নোটিফিকেশন বার -->
-  <div id="global-loading" class="bg-indigo-900 text-white text-xs py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-indigo-700">
-    <i class="fa-solid fa-circle-notch fa-spin text-emerald-400"></i>
-    <span>গুগল শিট থেকে ডেটা লোড হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন</span>
-  </div>
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1 no-print">
 
-  <!-- ================= MAIN CONTENT APP ================= -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1 no-print">
-
-    <!-- 0. HOME VIEW: ডায়াগ্রাম ও হিসাবের সামারি -->
-    <div id="view-home" class="space-y-6">
-      
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">নগদ ক্যাশ (Cash)</p>
-            <h3 id="stat-cash" class="text-base sm:text-xl font-bold text-emerald-600 mt-1">৳ ০</h3>
+      <!-- 0. HOME VIEW: ডায়াগ্রাম ও হিসাবের সামারি -->
+      <div id="view-home" class="space-y-6">
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">নগদ ক্যাশ (Cash)</p>
+              <h3 id="stat-cash" class="text-base sm:text-xl font-bold text-emerald-600 mt-1">৳ ০</h3>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-wallet"></i></div>
           </div>
-          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-wallet"></i></div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">ব্যাংক তহবিল</p>
+              <h3 id="stat-bank" class="text-base sm:text-xl font-bold text-blue-600 mt-1">৳ ০</h3>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-building-columns"></i></div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">মোট বিনিয়োগ</p>
+              <h3 id="stat-total-invest" class="text-base sm:text-xl font-bold text-amber-600 mt-1">৳ ০</h3>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">মোট সদস্য</p>
+              <h3 id="stat-members" class="text-base sm:text-xl font-bold text-indigo-600 mt-1">০ জন</h3>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-users"></i></div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between col-span-2 sm:col-span-1">
+            <div>
+              <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">পরিচালক মূলধন</p>
+              <h3 id="stat-director-capital" class="text-base sm:text-xl font-bold text-purple-600 mt-1">৳ ০</h3>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-user-tie"></i></div>
+          </div>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">ব্যাংক তহবিল</p>
-            <h3 id="stat-bank" class="text-base sm:text-xl font-bold text-blue-600 mt-1">৳ ০</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <div class="lg:col-span-5 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="border-b border-slate-100 pb-2.5 mb-3 flex justify-between items-center">
+              <h3 class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie text-emerald-600"></i> পাই ডায়াগ্রাম (ফান্ড বণ্টন ও বিনিয়োগ)
+              </h3>
+              <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-200">Pie Summary</span>
+            </div>
+            <div class="relative h-64 w-full flex items-center justify-center">
+              <canvas id="summaryPieChart"></canvas>
+            </div>
           </div>
-          <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-building-columns"></i></div>
+
+          <div class="lg:col-span-7 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="border-b border-slate-100 pb-2.5 mb-3 flex justify-between items-center">
+              <h3 class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2">
+                <i class="fa-solid fa-chart-simple text-blue-600"></i> বার গ্রাফ (তহবিল ও ব্যয় তুলনা)
+              </h3>
+              <span class="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200">Bar Graph</span>
+            </div>
+            <div class="relative h-64 w-full">
+              <canvas id="summaryBarChart"></canvas>
+            </div>
+          </div>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">মোট বিনিয়োগ</p>
-            <h3 id="stat-total-invest" class="text-base sm:text-xl font-bold text-amber-600 mt-1">৳ ০</h3>
-          </div>
-          <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-        </div>
-
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">মোট সদস্য</p>
-            <h3 id="stat-members" class="text-base sm:text-xl font-bold text-indigo-600 mt-1">০ জন</h3>
-          </div>
-          <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-users"></i></div>
-        </div>
-
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between col-span-2 sm:col-span-1">
-          <div>
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">পরিচালক মূলধন</p>
-            <h3 id="stat-director-capital" class="text-base sm:text-xl font-bold text-purple-600 mt-1">৳ ০</h3>
-          </div>
-          <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-user-tie"></i></div>
-        </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-        <div class="lg:col-span-5 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="border-b border-slate-100 pb-2.5 mb-3 flex justify-between items-center">
-            <h3 class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2">
-              <i class="fa-solid fa-chart-pie text-emerald-600"></i> পাই ডায়াগ্রাম (ফান্ড বণ্টন ও বিনিয়োগ)
+      <!-- ৩. বিনিয়োগ হিসাব ও লেজার -->
+      <div id="view-investments" class="hidden space-y-4">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+          <div>
+            <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> সমিতির বিনিয়োগ হিসাব ও লেজার (Investments Ledger)
             </h3>
-            <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-200">Pie Summary</span>
+            <p class="text-[11px] text-slate-500">কোন কোন খাতে সমিতির ফান্ড বিনিয়োগ করা আছে তার পূর্ণাঙ্গ খতিয়ান</p>
           </div>
-          <div class="relative h-64 w-full flex items-center justify-center">
-            <canvas id="summaryPieChart"></canvas>
-          </div>
-        </div>
-
-        <div class="lg:col-span-7 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="border-b border-slate-100 pb-2.5 mb-3 flex justify-between items-center">
-            <h3 class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2">
-              <i class="fa-solid fa-chart-simple text-blue-600"></i> বার গ্রাফ (তহবিল ও ব্যয় তুলনা)
-            </h3>
-            <span class="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200">Bar Graph</span>
-          </div>
-          <div class="relative h-64 w-full">
-            <canvas id="summaryBarChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ৩. বিনিয়োগ হিসাব ও লেজার -->
-    <div id="view-investments" class="hidden space-y-4">
-      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-        <div>
-          <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> সমিতির বিনিয়োগ হিসাব ও লেজার (Investments Ledger)
-          </h3>
-          <p class="text-[11px] text-slate-500">কোন কোন খাতে সমিতির ফান্ড বিনিয়োগ করা আছে তার পূর্ণাঙ্গ খতিয়ান</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="checkAdminAction('investment')" id="btn-add-investment" class="px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
-            <i class="fa-solid fa-plus"></i> নতুন বিনিয়োগ যোগ করুন
-          </button>
-          <button type="button" onclick="window.print()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700 cursor-pointer">
-            <i class="fa-solid fa-print"></i> প্রিন্ট
-          </button>
-        </div>
-      </div>
-
-      <div id="investment-summary-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-3.5"></div>
-
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto" id="printable-investment">
-        <div class="p-4 border-b bg-slate-50 flex justify-between items-center">
-          <span class="font-bold text-xs text-slate-700">বিনিয়োগকৃত খাতের বিস্তারিত খতিয়ান তালিকা</span>
-          <span id="investment-total-badge" class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">মোট: ৳ ০</span>
-        </div>
-        <table class="w-full text-xs text-left border-collapse">
-          <thead class="bg-slate-100 border-b text-slate-600 font-bold">
-            <tr>
-              <th class="p-3">আইডি ও তারিখ</th>
-              <th class="p-3">বিনিয়োগের খাত (Sector)</th>
-              <th class="p-3">প্রতিষ্ঠান / প্রকল্প নাম</th>
-              <th class="p-3 text-amber-700">বিনিয়োগের পরিমাণ (টাকা)</th>
-              <th class="p-3">প্রত্যাশিত মুনাফা / বিবরণ</th>
-              <th class="p-3 text-center">স্ট্যাটাস</th>
-            </tr>
-          </thead>
-          <tbody id="investment-table-body" class="divide-y divide-slate-100"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ৪. পরিচালনা পর্ষদ -->
-    <div id="view-directors" class="hidden space-y-4">
-      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-        <div>
-          <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-user-tie text-purple-600"></i> পরিচালনা পর্ষদ (১৫ জন বোর্ড ডিরেক্টর)
-          </h3>
-          <p class="text-[11px] text-slate-500">পরিচালকের নামের ওপর ক্লিক করে তার শেয়ার মূলধন লেজার দেখুন</p>
-        </div>
-        <button type="button" onclick="checkAdminAction('reg-director')" id="btn-add-director" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
-          <i class="fa-solid fa-user-plus"></i> নতুন পরিচালক যোগ করুন
-        </button>
-      </div>
-
-      <div id="directors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-    </div>
-
-    <!-- ৫. সাধারণ সদস্য তালিকা -->
-    <div id="view-members" class="hidden space-y-4">
-      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-        <div>
-          <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-users text-teal-600"></i> সাধারণ সদস্য তালিকা (General Members)
-          </h3>
-          <p class="text-[11px] text-slate-500">সদস্যের ওপর ক্লিক করে ব্যক্তিগত সঞ্চয় পাসবুক লেজার ওপেন করুন</p>
-        </div>
-        <button type="button" onclick="checkAdminAction('reg-member')" id="btn-add-member" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
-          <i class="fa-solid fa-user-plus"></i> নতুন সদস্য ভর্তি করুন
-        </button>
-      </div>
-
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
-        <table class="w-full text-xs text-left border-collapse">
-          <thead class="bg-slate-50 border-b text-slate-600 font-bold">
-            <tr>
-              <th class="p-3">আইডি ও নাম</th>
-              <th class="p-3">মোবাইল</th>
-              <th class="p-3">এনআইডি</th>
-              <th class="p-3 text-emerald-600">জমাকৃত সঞ্চয়</th>
-              <th class="p-3">ঠিকানা</th>
-              <th class="p-3 text-center">লেজার খতিয়ান</th>
-            </tr>
-          </thead>
-          <tbody id="members-body" class="divide-y divide-slate-100"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- সদস্য ও ডিরেক্টর ব্যক্তিগত লেজার -->
-    <div id="view-ledger" class="hidden bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-5">
-      <div class="border-b pb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-        <div>
-          <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-address-book text-indigo-600"></i> ব্যক্তিগত হিসাবের খতিয়ান (Individual Ledger)
-          </h3>
-          <p class="text-xs text-slate-500">সদস্য বা পরিচালকের সমস্ত জমা ও লেনদেন বিবরণ</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="window.print()" class="px-3.5 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-xl text-xs font-bold border border-indigo-200 cursor-pointer"><i class="fa-solid fa-print mr-1"></i> লেজার প্রিন্ট</button>
-          <button type="button" onclick="switchView('home')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-600 cursor-pointer">&times; বন্ধ করুন</button>
-        </div>
-      </div>
-
-      <div id="printable-ledger">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-5 text-xs">
-          <div>
-            <p class="text-slate-400">নাম ও পদবী:</p>
-            <h4 id="led-name" class="font-bold text-slate-800 text-sm mt-0.5">-</h4>
-          </div>
-          <div>
-            <p class="text-slate-400">অ্যাকাউন্ট আইডি:</p>
-            <h4 id="led-id" class="font-mono font-bold text-indigo-700 text-sm mt-0.5">-</h4>
-          </div>
-          <div>
-            <p class="text-slate-400">সর্বমোট জমা / মূলধন স্থিতি:</p>
-            <h4 id="led-balance" class="font-bold text-emerald-600 text-base mt-0.5">৳ ০</h4>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openInvestmentModal()" id="btn-add-investment" class="hidden px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-plus"></i> নতুন বিনিয়োগ যোগ করুন
+            </button>
+            <button type="button" onclick="window.print()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700 cursor-pointer">
+              <i class="fa-solid fa-print"></i> প্রিন্ট
+            </button>
           </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div id="investment-summary-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-3.5"></div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto" id="printable-investment">
+          <div class="p-4 border-b bg-slate-50 flex justify-between items-center">
+            <span class="font-bold text-xs text-slate-700">বিনিয়োগকৃত খাতের বিস্তারিত খতিয়ান তালিকা</span>
+            <span id="investment-total-badge" class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">মোট: ৳ ০</span>
+          </div>
           <table class="w-full text-xs text-left border-collapse">
-            <thead class="bg-slate-100 border-y text-slate-600 font-bold">
+            <thead class="bg-slate-100 border-b text-slate-600 font-bold">
               <tr>
-                <th class="p-3">তারিখ</th>
-                <th class="p-3">ভাউচার নং</th>
-                <th class="p-3">হিসাব মাধ্যম</th>
-                <th class="p-3">খাত (Category)</th>
-                <th class="p-3">বিবরণ / নোট</th>
-                <th class="p-3 text-emerald-600">জমা (Debit)</th>
-                <th class="p-3 text-rose-600">উত্তোলন (Credit)</th>
+                <th class="p-3">আইডি ও তারিখ</th>
+                <th class="p-3">বিনিয়োগের খাত (Sector)</th>
+                <th class="p-3">প্রতিষ্ঠান / প্রকল্প নাম</th>
+                <th class="p-3 text-amber-700">বিনিয়োগের পরিমাণ (টাকা)</th>
+                <th class="p-3">প্রত্যাশিত মুনাফা / বিবরণ</th>
+                <th class="p-3 text-center">স্ট্যাটাস</th>
               </tr>
             </thead>
-            <tbody id="ledger-table-body" class="divide-y divide-slate-100"></tbody>
+            <tbody id="investment-table-body" class="divide-y divide-slate-100"></tbody>
           </table>
         </div>
       </div>
-    </div>
 
-    <!-- ক্যাশ ও ব্যাংক বুক -->
-    <div id="view-cashbook" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
-      <div class="p-4 bg-slate-50 border-b flex justify-between items-center">
-        <h3 class="font-bold text-xs sm:text-sm text-slate-800"><i class="fa-solid fa-book-bookmark text-emerald-600 mr-2"></i>ক্যাশ ও ব্যাংক বুক (Cash Book)</h3>
-        <button type="button" onclick="reloadData()" class="text-xs px-3 py-1 bg-white border border-slate-200 rounded-lg cursor-pointer"><i class="fa-solid fa-rotate-right"></i> রিফ্রেশ</button>
-      </div>
-      <table class="w-full text-xs text-left border-collapse"><tbody id="cashbook-body" class="divide-y divide-slate-100"></tbody></table>
-    </div>
-
-    <!-- আর্থিক প্রতিবেদনসমূহ -->
-    <div id="view-receipts" class="hidden grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div class="bg-white rounded-2xl border p-4 shadow-sm"><h4 class="font-bold text-emerald-700 text-xs mb-3 border-b pb-2">প্রাপ্তি সমূহ (Receipts)</h4><tbody id="rp-receipts-body" class="divide-y"></tbody></div>
-      <div class="bg-white rounded-2xl border p-4 shadow-sm"><h4 class="font-bold text-rose-700 text-xs mb-3 border-b pb-2">প্রদান সমূহ (Payments)</h4><tbody id="rp-payments-body" class="divide-y"></tbody></div>
-    </div>
-
-    <div id="view-profitloss" class="hidden bg-white rounded-2xl border p-6 shadow-sm">
-      <h3 class="text-base font-bold text-center text-slate-800 mb-3">লাভ ও ক্ষতি হিসাব বিবরণী</h3>
-      <div class="max-w-md mx-auto p-4 bg-slate-50 rounded-xl border flex justify-between font-bold text-sm">
-        <span>নিট মুনাফা / উদ্বৃত্ত:</span><span id="pl-net-profit" class="text-emerald-600">৳ ০</span>
-      </div>
-    </div>
-
-    <div id="view-balancesheet" class="hidden bg-white rounded-2xl border p-6 shadow-sm">
-      <h3 class="text-base font-bold text-center text-slate-800 mb-4">উদ্বৃত্তপত্র (Balance Sheet)</h3>
-      <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto text-xs">
-        <div class="p-4 bg-indigo-50/50 rounded-xl border"><p>মোট পরিসম্পদ:</p><h4 id="bs-total-assets" class="font-bold text-indigo-700 text-sm mt-1">৳ ০</h4></div>
-        <div class="p-4 bg-purple-50/50 rounded-xl border"><p>মোট দায় ও তহবিল:</p><h4 id="bs-total-liabilities" class="font-bold text-purple-700 text-sm mt-1">৳ ০</h4></div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- ================= FOOTER: CENTERED, LARGE & DISTINCT ================= -->
-  <footer class="bg-slate-900 text-white text-center py-6 px-4 border-t-2 border-indigo-900 shadow-2xl no-print mt-auto">
-    <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-2">
-      <h3 class="text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-slate-100 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
-        <span>All data reserved:</span>
-        <a href="mailto:asharaloco2010@gmail.com" class="text-emerald-400 hover:text-emerald-300 underline font-mono tracking-wider transition">
-          asharaloco2010@gmail.com
-        </a>
-      </h3>
-      <p class="text-xs sm:text-sm text-slate-400 font-semibold tracking-normal">
-        আশার আলো সমবায় সমিতি লিমিটেড | পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম
-      </p>
-    </div>
-  </footer>
-
-  <!-- ================= MODALS ================= -->
-
-  <!-- A. লগইন মোডাল -->
-  <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl overflow-hidden border border-slate-100">
-      <div class="bg-indigo-950 p-6 text-center text-white relative">
-        <button type="button" onclick="closeModal('login-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl cursor-pointer">&times;</button>
-        <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-2 text-2xl text-emerald-400">
-          <i class="fa-solid fa-vault"></i>
+      <!-- ৪. পরিচালনা পর্ষদ (DIRECTORS VIEW - চেয়ারম্যান, MD, ডিরেক্টর ফাইন্যান্স ও ডিরেক্টরগণ) -->
+      <div id="view-directors" class="hidden space-y-4">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+          <div>
+            <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-user-tie text-purple-600"></i> পরিচালনা পর্ষদ (Board of Directors)
+            </h3>
+            <p class="text-[11px] text-slate-500">চেয়ারম্যান, এমডি, ডিরেক্টর ফাইন্যান্স ও পরিচালকবৃন্দের তালিকা ও শেয়ার খতিয়ান</p>
+          </div>
+          <button type="button" onclick="openRegistrationModal('director')" id="btn-add-director" class="hidden px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+            <i class="fa-solid fa-user-plus"></i> নতুন পরিচালক যোগ করুন
+          </button>
         </div>
-        <h3 class="text-lg font-bold">পোর্টাল লগইন</h3>
+
+        <div id="directors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
-      <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
-        <div id="login-error" class="hidden p-2.5 bg-rose-50 text-rose-600 rounded-xl text-xs font-semibold text-center border border-rose-200"></div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">ইউজার আইডি</label>
-          <input type="text" id="login-username" required placeholder="User ID" class="w-full px-3 py-2.5 bg-slate-50 border rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600" />
+
+      <!-- ৫. সাধারণ সদস্য তালিকা -->
+      <div id="view-members" class="hidden space-y-4">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+          <div>
+            <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-users text-teal-600"></i> সাধারণ সদস্য তালিকা (General Members)
+            </h3>
+            <p class="text-[11px] text-slate-500">সদস্যের ওপর ক্লিক করে ব্যক্তিগত সঞ্চয় পাসবুক লেজার ওপেন করুন</p>
+          </div>
+          <button type="button" onclick="openRegistrationModal('member')" id="btn-add-member" class="hidden px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+            <i class="fa-solid fa-user-plus"></i> নতুন সদস্য ভর্তি করুন
+          </button>
         </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">পাসওয়ার্ড</label>
-          <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-3 py-2.5 bg-slate-50 border rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600" />
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+          <table class="w-full text-xs text-left border-collapse">
+            <thead class="bg-slate-50 border-b text-slate-600 font-bold">
+              <tr>
+                <th class="p-3">আইডি ও নাম</th>
+                <th class="p-3">মোবাইল</th>
+                <th class="p-3">এনআইডি</th>
+                <th class="p-3 text-emerald-600">জমাকৃত সঞ্চয়</th>
+                <th class="p-3">ঠিকানা</th>
+                <th class="p-3 text-center">লেজার খতিয়ান</th>
+              </tr>
+            </thead>
+            <tbody id="members-body" class="divide-y divide-slate-100"></tbody>
+          </table>
         </div>
-        <button type="submit" id="btn-login" class="w-full py-3 bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold shadow cursor-pointer">লগইন করুন</button>
-      </form>
-    </div>
+      </div>
+
+      <!-- সদস্য ও ডিরেক্টর ব্যক্তিগত লেজার -->
+      <div id="view-ledger" class="hidden bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-5">
+        <div class="border-b pb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+          <div>
+            <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-address-book text-indigo-600"></i> ব্যক্তিগত হিসাবের খতিয়ান (Individual Ledger)
+            </h3>
+            <p class="text-xs text-slate-500">সদস্য বা পরিচালকের সমস্ত জমা ও লেনদেন বিবরণ</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="window.print()" class="px-3.5 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-xl text-xs font-bold border border-indigo-200 cursor-pointer"><i class="fa-solid fa-print mr-1"></i> লেজার প্রিন্ট</button>
+            <button type="button" onclick="switchView('home')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-600 cursor-pointer">&times; বন্ধ করুন</button>
+          </div>
+        </div>
+
+        <div id="printable-ledger">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-5 text-xs">
+            <div>
+              <p class="text-slate-400">নাম ও পদবী:</p>
+              <h4 id="led-name" class="font-bold text-slate-800 text-sm mt-0.5">-</h4>
+            </div>
+            <div>
+              <p class="text-slate-400">অ্যাকাউন্ট আইডি:</p>
+              <h4 id="led-id" class="font-mono font-bold text-indigo-700 text-sm mt-0.5">-</h4>
+            </div>
+            <div>
+              <p class="text-slate-400">সর্বমোট জমা / মূলধন স্থিতি:</p>
+              <h4 id="led-balance" class="font-bold text-emerald-600 text-base mt-0.5">৳ ০</h4>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead class="bg-slate-100 border-y text-slate-600 font-bold">
+                <tr>
+                  <th class="p-3">তারিখ</th>
+                  <th class="p-3">ভাউচার নং</th>
+                  <th class="p-3">হিসাব মাধ্যম</th>
+                  <th class="p-3">খাত (Category)</th>
+                  <th class="p-3">বিবরণ / নোট</th>
+                  <th class="p-3 text-emerald-600">জমা (Debit)</th>
+                  <th class="p-3 text-rose-600">উত্তোলন (Credit)</th>
+                </tr>
+              </thead>
+              <tbody id="ledger-table-body" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ক্যাশ ও ব্যাংক বুক -->
+      <div id="view-cashbook" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+        <div class="p-4 bg-slate-50 border-b flex justify-between items-center">
+          <h3 class="font-bold text-xs sm:text-sm text-slate-800"><i class="fa-solid fa-book-bookmark text-emerald-600 mr-2"></i>ক্যাশ ও ব্যাংক বুক (Cash Book)</h3>
+          <button type="button" onclick="reloadData()" class="text-xs px-3 py-1 bg-white border border-slate-200 rounded-lg cursor-pointer"><i class="fa-solid fa-rotate-right"></i> রিফ্রেশ</button>
+        </div>
+        <table class="w-full text-xs text-left border-collapse"><tbody id="cashbook-body" class="divide-y divide-slate-100"></tbody></table>
+      </div>
+
+      <!-- আর্থিক প্রতিবেদনসমূহ -->
+      <div id="view-receipts" class="hidden grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="bg-white rounded-2xl border p-4 shadow-sm"><h4 class="font-bold text-emerald-700 text-xs mb-3 border-b pb-2">প্রাপ্তি সমূহ (Receipts)</h4><tbody id="rp-receipts-body" class="divide-y"></tbody></div>
+        <div class="bg-white rounded-2xl border p-4 shadow-sm"><h4 class="font-bold text-rose-700 text-xs mb-3 border-b pb-2">প্রদান সমূহ (Payments)</h4><tbody id="rp-payments-body" class="divide-y"></tbody></div>
+      </div>
+
+      <div id="view-profitloss" class="hidden bg-white rounded-2xl border p-6 shadow-sm">
+        <h3 class="text-base font-bold text-center text-slate-800 mb-3">লাভ ও ক্ষতি হিসাব বিবরণী</h3>
+        <div class="max-w-md mx-auto p-4 bg-slate-50 rounded-xl border flex justify-between font-bold text-sm">
+          <span>নিট মুনাফা / উদ্বৃত্ত:</span><span id="pl-net-profit" class="text-emerald-600">৳ ০</span>
+        </div>
+      </div>
+
+      <div id="view-balancesheet" class="hidden bg-white rounded-2xl border p-6 shadow-sm">
+        <h3 class="text-base font-bold text-center text-slate-800 mb-4">উদ্বৃত্তপত্র (Balance Sheet)</h3>
+        <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto text-xs">
+          <div class="p-4 bg-indigo-50/50 rounded-xl border"><p>মোট পরিসম্পদ:</p><h4 id="bs-total-assets" class="font-bold text-indigo-700 text-sm mt-1">৳ ০</h4></div>
+          <div class="p-4 bg-purple-50/50 rounded-xl border"><p>মোট দায় ও তহবিল:</p><h4 id="bs-total-liabilities" class="font-bold text-purple-700 text-sm mt-1">৳ ০</h4></div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- FOOTER: CENTERED, LARGE & DISTINCT -->
+    <footer class="bg-slate-900 text-white text-center py-6 px-4 border-t-2 border-indigo-900 shadow-2xl no-print mt-auto">
+      <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-2">
+        <h3 class="text-sm sm:text-base md:text-lg font-extrabold tracking-wide text-slate-100 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+          <span>All data reserved:</span>
+          <a href="mailto:asharaloco2010@gmail.com" class="text-emerald-400 hover:text-emerald-300 underline font-mono tracking-wider transition">
+            asharaloco2010@gmail.com
+          </a>
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-400 font-semibold tracking-normal">
+          আশার আলো সমবায় সমিতি লিমিটেড | পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম
+        </p>
+      </div>
+    </footer>
+
   </div>
+
+  <!-- ================= MODALS (ADMIN ONLY) ================= -->
 
   <!-- B. নতুন বিনিয়োগ মোডাল -->
   <div id="investment-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -508,7 +526,7 @@
     </div>
   </div>
 
-  <!-- C. সদস্য/পরিচালক নিবন্ধন মোডাল -->
+  <!-- C. সদস্য/পরিচালক নিবন্ধন মোডাল (নির্দিষ্ট পদবীসহ) -->
   <div id="registration-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden">
       <div class="bg-indigo-950 px-6 py-4 flex items-center justify-between text-white">
@@ -532,13 +550,30 @@
           <input type="tel" name="mobileNumber" required placeholder="মোবাইল নম্বর" class="p-2.5 border rounded-xl" />
           <input type="text" name="nidNumber" required placeholder="এনআইডি নম্বর" class="p-2.5 border rounded-xl" />
         </div>
-        <div id="director-specific-fields" class="hidden p-3 bg-purple-50 rounded-xl space-y-2">
+        
+        <!-- ডিরেক্টরদের পদবী অপশনসমূহ -->
+        <div id="director-specific-fields" class="hidden p-3 bg-purple-50 rounded-xl space-y-2 border border-purple-200">
           <div class="grid grid-cols-3 gap-2">
-            <select name="designation" class="p-2 border rounded-lg bg-white"><option value="কার্যনির্বাহী সদস্য">কার্যনির্বাহী সদস্য</option><option value="সভাপতি">সভাপতি</option><option value="কোষাধ্যক্ষ">কোষাধ্যক্ষ</option></select>
-            <input type="number" name="shareCount" value="40" class="p-2 border rounded-lg" placeholder="শেয়ার" />
-            <input type="number" name="shareCapital" value="40000" class="p-2 border rounded-lg font-bold" placeholder="ক্যাপিটাল" />
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">পদবী (Designation) *</label>
+              <select name="designation" class="w-full p-2 border rounded-lg bg-white font-bold text-indigo-900 outline-none">
+                <option value="Chairman">Chairman (চেয়ারম্যান)</option>
+                <option value="Managing Director">Managing Director (ব্যবস্থাপনা পরিচালক)</option>
+                <option value="Director Finance">Director Finance (পরিচালক - অর্থ)</option>
+                <option value="Director" selected>Director (পরিচালক)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">শেয়ার সংখ্যা</label>
+              <input type="number" name="shareCount" value="40" class="w-full p-2 border rounded-lg" placeholder="শেয়ার" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">মূলধন (টাকা)</label>
+              <input type="number" name="shareCapital" value="40000" class="w-full p-2 border rounded-lg font-bold text-purple-700" placeholder="ক্যাপিটাল" />
+            </div>
           </div>
         </div>
+
         <div id="member-specific-fields" class="p-3 bg-emerald-50 rounded-xl">
           <label class="block font-bold mb-1">মাসিক সঞ্চয় কিস্তি (টাকা)</label>
           <input type="number" name="monthlySavings" value="1000" class="w-full p-2.5 border rounded-xl font-bold text-emerald-700" />
@@ -611,21 +646,100 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- ================= JAVASCRIPT APPLICATION LOGIC ================= -->
   <script>
-    // আপনার Google Apps Script Web App URL
+    // আপনার Google Apps Script Web App URL নিশ্চিত করুন (Line 518)
     const API_URL = "https://script.google.com/macros/s/AKfycbwcKm-of_Iwv9Kh-wNYK1agPo0cdCj3NNk_nbrPx1LlK385_1szUo-SrelaYsMWpkIy/exec";
 
     let currentUser = null;
     let rawCashData = [], membersList = [], directorsList = [], investmentsList = [];
     let pieChartInstance = null, barChartInstance = null;
 
-    // --- ১. ৩-ডট মেনু টগল ---
+    // ১. লগইন হ্যান্ডলার
+    async function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById("login-username").value.trim().toLowerCase();
+      const p = document.getElementById("login-password").value.trim();
+      const errBox = document.getElementById("login-error");
+      const btn = document.getElementById("btn-login-submit");
+
+      btn.disabled = true;
+      btn.innerText = "যাচাই করা হচ্ছে...";
+      errBox.classList.add("hidden");
+
+      if (u === "admin" && p === "admin123") {
+        currentUser = { role: "ADMIN", name: "সুপার অ্যাডমিন", id: "ADMIN" };
+        loginSuccess();
+        return;
+      }
+
+      if (p === "123456") {
+        btn.innerText = "ডাটাবেস চেক হচ্ছে...";
+        if (directorsList.length === 0 || membersList.length === 0) {
+          await prefetchLists();
+        }
+
+        const dir = directorsList.find(d => String(d.directorId).toLowerCase() === u);
+        if (dir) {
+          currentUser = { role: "DIRECTOR", name: dir.fullName, id: dir.directorId };
+          loginSuccess();
+          return;
+        }
+
+        const mem = membersList.find(m => String(m.memberId).toLowerCase() === u);
+        if (mem) {
+          currentUser = { role: "MEMBER", name: mem.fullName, id: mem.memberId };
+          loginSuccess();
+          return;
+        }
+      }
+
+      errBox.innerText = "ভুল ইউজার আইডি অথবা পাসওয়ার্ড!";
+      errBox.classList.remove("hidden");
+      btn.disabled = false;
+      btn.innerText = "নিরাপদে লগইন করুন";
+    }
+
+    function loginSuccess() {
+      sessionStorage.setItem("ashar_alo_auth", JSON.stringify(currentUser));
+      document.getElementById("full-login-screen").classList.add("hidden");
+      document.getElementById("main-dashboard-app").classList.remove("hidden");
+      updateUIForAuth();
+      reloadData();
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem("ashar_alo_auth");
+      currentUser = null;
+      document.getElementById("main-dashboard-app").classList.add("hidden");
+      document.getElementById("full-login-screen").classList.remove("hidden");
+      document.getElementById("login-username").value = "";
+      document.getElementById("login-password").value = "";
+      document.getElementById("btn-login-submit").disabled = false;
+      document.getElementById("btn-login-submit").innerText = "নিরাপদে লগইন করুন";
+    }
+
+    function updateUIForAuth() {
+      const badge = document.getElementById("user-display-badge");
+      const invoiceMenu = document.getElementById("menu-item-invoice");
+      const btnAddDirector = document.getElementById("btn-add-director");
+      const btnAddMember = document.getElementById("btn-add-member");
+      const btnAddInvestment = document.getElementById("btn-add-investment");
+
+      if (currentUser) {
+        badge.innerText = `${currentUser.name} (${currentUser.role})`;
+        const isAdmin = (currentUser.role === "ADMIN");
+        if (invoiceMenu) invoiceMenu.classList.toggle("hidden", !isAdmin);
+        if (btnAddDirector) btnAddDirector.classList.toggle("hidden", !isAdmin);
+        if (btnAddMember) btnAddMember.classList.toggle("hidden", !isAdmin);
+        if (btnAddInvestment) btnAddInvestment.classList.toggle("hidden", !isAdmin);
+      }
+    }
+
+    // ২. সাইড মেনু
     function toggleSideMenu() {
       const drawer = document.getElementById("side-menu-drawer");
-      if (drawer) {
-        drawer.classList.toggle("hidden");
-      }
+      if (drawer) drawer.classList.toggle("hidden");
     }
 
     function menuNavigate(viewName) {
@@ -633,42 +747,62 @@
       switchView(viewName);
     }
 
-    function openLoginModal() {
-      document.getElementById("login-modal").classList.remove("hidden");
-    }
-
     function closeModal(id) {
       const el = document.getElementById(id);
       if (el) el.classList.add("hidden");
     }
 
-    function checkAdminAction(actionType) {
-      if (!currentUser || currentUser.role !== "ADMIN") {
-        alert("শুধুমাত্র অ্যাডমিন এই কাজটি করতে পারবেন। অনুগ্রহ করে অ্যাডমিন আইডি দিয়ে লগইন করুন।");
-        openLoginModal();
-        return;
-      }
-      if (actionType === 'invoice') openInvoiceModal();
-      else if (actionType === 'investment') openInvestmentModal();
-      else if (actionType === 'reg-director') openRegistrationModal('director');
-      else if (actionType === 'reg-member') openRegistrationModal('member');
+    // ৩. বুলেটপ্রুফ ফেচ
+    function fetchAPI(type) {
+      return new Promise((resolve) => {
+        const timeout = setTimeout(() => {
+          fallbackJSONP(type, resolve);
+        }, 3000);
+
+        fetch(`${API_URL}?type=${type}&_t=${Date.now()}`)
+          .then(res => res.json())
+          .then(data => {
+            clearTimeout(timeout);
+            resolve(data);
+          })
+          .catch(() => {
+            clearTimeout(timeout);
+            fallbackJSONP(type, resolve);
+          });
+      });
     }
 
-    // --- ২. শক্তিশালী ডেটা ফেচিং ফাংশন (JSONP / Fetch Safe Fallback) ---
-    async function fetchAPI(type) {
+    function fallbackJSONP(type, resolve) {
+      const callbackName = 'cb_' + Math.round(100000 * Math.random());
+      window[callbackName] = function(data) {
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+        resolve(data);
+      };
+      const script = document.createElement('script');
+      script.src = `${API_URL}?type=${type}&callback=${callbackName}&_t=${Date.now()}`;
+      script.onerror = function() {
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+        resolve({ success: false, data: [] });
+      };
+      document.body.appendChild(script);
+    }
+
+    async function prefetchLists() {
       try {
-        const url = `${API_URL}?type=${type}&_t=${new Date().getTime()}`;
-        const res = await fetch(url, { method: "GET", mode: "cors" });
-        if (!res.ok) throw new Error("HTTP Status " + res.status);
-        const data = await res.json();
-        return data;
-      } catch (err) {
-        console.warn("Direct fetch failed for " + type + ", trying fallback:", err);
-        return { success: false, data: [] };
+        const [resMem, resDir] = await Promise.all([
+          fetchAPI("members"),
+          fetchAPI("directors")
+        ]);
+        if (resMem && resMem.data) membersList = resMem.data;
+        if (resDir && resDir.data) directorsList = resDir.data;
+      } catch (e) {
+        console.warn(e);
       }
     }
 
-    // --- ৩. সম্পূর্ণ ডেটা লোড ও পাই চার্ট ইনিশিয়ালাইজেশন ---
+    // ৪. ডেটা রিলোড
     async function reloadData() {
       const loader = document.getElementById("global-loading");
       if (loader) loader.classList.remove("hidden");
@@ -686,7 +820,12 @@
         directorsList = (resDir && resDir.data) ? resDir.data : [];
         investmentsList = (resInv && resInv.data) ? resInv.data : [];
 
-        // রেন্ডার টেবলস ও ডায়াগ্রাম
+        // পরিচালনা পর্ষদের পদবীর ক্রমানুযায়ী সর্টিং (Chairman -> Managing Director -> Director Finance -> Director)
+        directorsList.sort((a, b) => {
+          const rank = { "Chairman": 1, "Managing Director": 2, "Director Finance": 3, "Director": 4 };
+          return (rank[a.designation] || 5) - (rank[b.designation] || 5);
+        });
+
         renderCashbook(rawCashData);
         renderMembers(membersList);
         renderDirectors(directorsList);
@@ -695,14 +834,14 @@
         renderCharts(rawCashData, investmentsList);
         populatePersonDropdown();
 
-      } catch (e) {
-        console.error("Data load error: ", e);
+      } catch (err) {
+        console.error("Data load failed:", err);
       } finally {
         if (loader) loader.classList.add("hidden");
       }
     }
 
-    // --- ৪. পাই ডায়াগ্রাম ও বার গ্রাফ রেন্ডারিং ---
+    // ৫. চার্ট রেন্ডারিং
     function renderCharts(entries, invList) {
       try {
         let totalSavings = 0, totalShare = 0, totalFees = 0, totalExpense = 0, totalCashIn = 0, totalCashOut = 0;
@@ -710,8 +849,7 @@
         entries.forEach(e => {
           const inAmt = Number(e.cashIn) || 0;
           const outAmt = Number(e.cashOut) || 0;
-          totalCashIn += inAmt; 
-          totalCashOut += outAmt;
+          totalCashIn += inAmt; totalCashOut += outAmt;
 
           const cat = String(e.category || "");
           if (cat.includes("সঞ্চয়")) totalSavings += inAmt;
@@ -722,21 +860,20 @@
 
         const totalInv = (invList || []).reduce((s, i) => s + (Number(i.amount) || 0), 0);
 
-        // ১. পাই ডায়াগ্রাম
         const pieCanvas = document.getElementById('summaryPieChart');
         if (pieCanvas) {
           const ctxPie = pieCanvas.getContext('2d');
-          if (pieChartInstance) { pieChartInstance.destroy(); }
+          if (pieChartInstance) pieChartInstance.destroy();
 
           const hasData = (totalSavings + totalShare + totalInv + totalExpense) > 0;
-          const pieData = hasData ? [totalSavings, totalShare, totalInv, totalExpense] : [1, 1, 1, 1];
+          const pData = hasData ? [totalSavings, totalShare, totalInv, totalExpense] : [1, 1, 1, 1];
 
           pieChartInstance = new Chart(ctxPie, {
             type: 'pie',
             data: {
               labels: ['সঞ্চয় আমানত', 'শেয়ার মূলধন', 'বিনিয়োগ তহবিল', 'পরিচালন ব্যয়'],
               datasets: [{
-                data: pieData,
+                data: pData,
                 backgroundColor: ['#10B981', '#8B5CF6', '#F59E0B', '#F43F5E']
               }]
             },
@@ -748,11 +885,10 @@
           });
         }
 
-        // ২. বার গ্রাফ
         const barCanvas = document.getElementById('summaryBarChart');
         if (barCanvas) {
           const ctxBar = barCanvas.getContext('2d');
-          if (barChartInstance) { barChartInstance.destroy(); }
+          if (barChartInstance) barChartInstance.destroy();
 
           barChartInstance = new Chart(ctxBar, {
             type: 'bar',
@@ -771,12 +907,11 @@
             }
           });
         }
-      } catch (err) {
-        console.error("Chart Render Failed: ", err);
+      } catch (e) {
+        console.error("Chart error:", e);
       }
     }
 
-    // --- ৫. আর্থিক হিসাব ও মেটাবলিজম ক্যালকুলেশন ---
     function calculateFinancialReports(entries, directors, invList) {
       let cash = 0, bank = 0, income = 0, expense = 0, savingsDeposited = 0;
       const receiptsMap = {}, paymentsMap = {};
@@ -816,7 +951,43 @@
       document.getElementById('bs-total-liabilities').innerText = `৳ ${(shareCap + savingsDeposited + netProfit).toLocaleString('bn-BD')}`;
     }
 
-    // --- ৬. টেবিল রেন্ডারিং মেথডসমূহ ---
+    // ৬. টেবিল ও পরিচালনা পর্ষদ রেন্ডারিং (ব্যাজ ও পদবী ডিজাইনসহ)
+    function renderDirectors(dList) {
+      const box = document.getElementById('directors-grid');
+      if (!box) return;
+      box.innerHTML = '';
+      if (dList.length === 0) {
+        box.innerHTML = '<div class="p-4 text-center text-slate-400 col-span-3">কোনো পরিচালক তালিকা পাওয়া যায়নি</div>';
+        return;
+      }
+      dList.forEach(d => {
+        let badgeColor = "bg-purple-100 text-purple-800 border-purple-200";
+        if (d.designation === "Chairman") badgeColor = "bg-amber-100 text-amber-800 border-amber-300 font-extrabold";
+        else if (d.designation === "Managing Director") badgeColor = "bg-emerald-100 text-emerald-800 border-emerald-300 font-extrabold";
+        else if (d.designation === "Director Finance") badgeColor = "bg-blue-100 text-blue-800 border-blue-300 font-bold";
+
+        box.innerHTML += `
+          <div class="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm hover:border-indigo-400 cursor-pointer transition" onclick="openPersonLedger('${d.directorId}', '${d.fullName}', true)">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-11 h-11 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold text-lg border border-purple-100 shadow-inner">
+                ${d.fullName ? d.fullName.charAt(0) : 'D'}
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-800 text-sm">${d.fullName}</h4>
+                <span class="inline-block mt-0.5 px-2.5 py-0.5 rounded-full text-[10px] border ${badgeColor}">
+                  ${d.designation || 'Director'}
+                </span>
+              </div>
+            </div>
+            <div class="text-xs text-slate-500 border-t pt-2 mt-2 space-y-0.5">
+              <p>আইডি: <span class="font-mono font-bold text-slate-700">${d.directorId}</span></p>
+              <p>মোবাইল: ${d.mobileNumber || '-'}</p>
+              <p>শেয়ার মূলধন: <b class="text-emerald-600">৳ ${Number(d.shareCapital || 0).toLocaleString('bn-BD')}</b> (${d.shareCount || 0} টি)</p>
+            </div>
+          </div>`;
+      });
+    }
+
     function renderCashbook(entries) {
       const tbody = document.getElementById('cashbook-body');
       if (!tbody) return;
@@ -856,26 +1027,6 @@
             <td class="p-3 text-slate-500">${m.presentAddress || '-'}</td>
             <td class="p-3 text-center"><button type="button" class="px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold cursor-pointer">লেজার</button></td>
           </tr>`;
-      });
-    }
-
-    function renderDirectors(dList) {
-      const box = document.getElementById('directors-grid');
-      if (!box) return;
-      box.innerHTML = '';
-      if (dList.length === 0) {
-        box.innerHTML = '<div class="p-4 text-center text-slate-400 col-span-3">কোনো পরিচালক তালিকা পাওয়া যায়নি</div>';
-        return;
-      }
-      dList.forEach(d => {
-        box.innerHTML += `
-          <div class="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm hover:border-indigo-400 cursor-pointer transition" onclick="openPersonLedger('${d.directorId}', '${d.fullName}', true)">
-            <div class="flex items-center gap-3 mb-2">
-              <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold">${d.fullName ? d.fullName.charAt(0) : 'D'}</div>
-              <div><h4 class="font-bold text-slate-800 text-sm">${d.fullName}</h4><span class="text-xs text-purple-700 font-bold">${d.designation || 'বোর্ড পরিচালক'}</span></div>
-            </div>
-            <div class="text-xs text-slate-500 border-t pt-2 mt-2"><p>আইডি: ${d.directorId}</p><p>শেয়ার মূলধন: <b class="text-emerald-600">৳ ${Number(d.shareCapital || 0).toLocaleString('bn-BD')}</b></p></div>
-          </div>`;
       });
     }
 
@@ -1004,7 +1155,7 @@
       list.forEach(i => {
         const opt = document.createElement('option');
         opt.value = i.directorId || i.memberId;
-        opt.innerText = `${i.fullName} (${opt.value})`;
+        opt.innerText = `${i.fullName} (${opt.value} - ${i.designation || 'Member'})`;
         opt.dataset.name = i.fullName; opt.dataset.id = opt.value;
         select.appendChild(opt);
       });
@@ -1018,64 +1169,7 @@
       }
     }
 
-    // --- ৭. ফর্ম সাবমিশন ও অথেনটিকেশন ---
-    async function handleLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById("login-username").value.trim().toLowerCase();
-      const p = document.getElementById("login-password").value.trim();
-      const errBox = document.getElementById("login-error");
-      const btn = document.getElementById("btn-login");
-
-      btn.disabled = true;
-      btn.innerText = "যাচাই হচ্ছে...";
-      errBox.classList.add("hidden");
-
-      if (u === "admin" && p === "admin123") {
-        currentUser = { role: "ADMIN", name: "সুপার অ্যাডমিন", id: "ADMIN" };
-        loginSuccess();
-        return;
-      }
-
-      if (p === "123456") {
-        const dir = directorsList.find(d => String(d.directorId).toLowerCase() === u);
-        if (dir) { currentUser = { role: "DIRECTOR", name: dir.fullName, id: dir.directorId }; loginSuccess(); return; }
-        const mem = membersList.find(m => String(m.memberId).toLowerCase() === u);
-        if (mem) { currentUser = { role: "MEMBER", name: mem.fullName, id: mem.memberId }; loginSuccess(); return; }
-      }
-
-      errBox.innerText = "ভুল ইউজার আইডি অথবা পাসওয়ার্ড!";
-      errBox.classList.remove("hidden");
-      btn.disabled = false;
-      btn.innerText = "লগইন করুন";
-    }
-
-    function loginSuccess() {
-      sessionStorage.setItem("ashar_alo_auth", JSON.stringify(currentUser));
-      closeModal("login-modal");
-      updateUIForAuth();
-    }
-
-    function handleLogout() {
-      sessionStorage.removeItem("ashar_alo_auth");
-      currentUser = null;
-      updateUIForAuth();
-    }
-
-    function updateUIForAuth() {
-      const loginBtn = document.getElementById("nav-login-btn");
-      const userProfile = document.getElementById("nav-user-profile");
-      const badge = document.getElementById("user-display-badge");
-
-      if (currentUser) {
-        loginBtn.classList.add("hidden");
-        userProfile.classList.remove("hidden");
-        badge.innerText = `${currentUser.name} (${currentUser.role})`;
-      } else {
-        loginBtn.classList.remove("hidden");
-        userProfile.classList.add("hidden");
-      }
-    }
-
+    // ৭. ফর্ম সাবমিশন
     async function submitInvoice(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-save-inv');
@@ -1144,12 +1238,18 @@
 
     // উইন্ডো লোড
     window.addEventListener('DOMContentLoaded', () => {
+      prefetchLists();
       const savedAuth = sessionStorage.getItem("ashar_alo_auth");
       if (savedAuth) {
         currentUser = JSON.parse(savedAuth);
+        document.getElementById("full-login-screen").classList.add("hidden");
+        document.getElementById("main-dashboard-app").classList.remove("hidden");
+        updateUIForAuth();
+        reloadData();
+      } else {
+        document.getElementById("full-login-screen").classList.remove("hidden");
+        document.getElementById("main-dashboard-app").classList.add("hidden");
       }
-      updateUIForAuth();
-      reloadData();
     });
   </script>
 </body>
