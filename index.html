@@ -44,7 +44,7 @@
           <label class="block text-xs font-bold text-slate-700 mb-1">ইউজার আইডি (User ID)</label>
           <div class="relative">
             <i class="fa-solid fa-user-shield absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
-            <input type="text" id="login-username" required placeholder="admin অথবা DIR-001 / MEM-001" autocomplete="username" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600 transition" />
+            <input type="text" id="login-username" required placeholder="আপনার ইউজার আইডি দিন" autocomplete="username" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600 transition" />
           </div>
         </div>
 
@@ -52,7 +52,7 @@
           <label class="block text-xs font-bold text-slate-700 mb-1">গোপন পাসওয়ার্ড (Password)</label>
           <div class="relative">
             <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
-            <input type="password" id="login-password" required placeholder="admin123" autocomplete="current-password" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600 transition" />
+            <input type="password" id="login-password" required placeholder="গোপন পাসওয়ার্ড দিন" autocomplete="current-password" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-600 transition" />
           </div>
         </div>
 
@@ -277,7 +277,7 @@
 
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between col-span-2 sm:col-span-1">
             <div>
-              <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">শেয়ার মূলধন</p>
+              <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">পরিচালক মূলধন</p>
               <h3 id="stat-director-capital" class="text-base sm:text-xl font-bold text-purple-600 mt-1">৳ ০</h3>
             </div>
             <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-user-tie"></i></div>
@@ -373,30 +373,37 @@
         </div>
       </div>
 
-      <!-- ২. পরিচালনা পর্ষদ -->
+      <!-- ২. পরিচালনা পর্ষদ (Directors View with Photo, Share % & Edit Option) -->
       <div id="view-directors" class="view-panel hidden space-y-4">
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
             <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
               <i class="fa-solid fa-user-tie text-purple-600"></i> পরিচালনা পর্ষদ (Board of Directors)
             </h3>
-            <p class="text-[11px] text-slate-500">পরিচালকবৃন্দের ছবি, পদবী ও মোট শেয়ারের শতকরা অংশীদারি (%)</p>
+            <p class="text-[11px] text-slate-500">পরিচালকবৃন্দের ছবি, পদবী, শেয়ার অংশীদারি ও তথ্য সম্পাদন (Edit)</p>
           </div>
-          <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-bold border border-purple-200">১৫ পরিচালক</span>
+          <button type="button" onclick="openRegistrationModal('director')" id="btn-add-director" class="hidden px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+            <i class="fa-solid fa-user-plus"></i> নতুন পরিচালক যোগ করুন
+          </button>
         </div>
         <div id="directors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
 
-      <!-- ৩. সাধারণ সদস্য তালিকা -->
+      <!-- ৩. সাধারণ সদস্য তালিকা (Members View with Edit Option) -->
       <div id="view-members" class="view-panel hidden space-y-4">
         <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
             <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
-              <i class="fa-solid fa-users text-teal-600"></i> সাধারণ সদস্য ও বিনিয়োগকারী তালিকা (Members)
+              <i class="fa-solid fa-users text-teal-600"></i> সাধারণ সদস্য তালিকা (General Members)
             </h3>
-            <p class="text-[11px] text-slate-500">সদস্যের ওপর ক্লিক করে ব্যক্তিগত পাসবুক লেজার ওপেন করুন</p>
+            <p class="text-[11px] text-slate-500">সদস্যের ওপর ক্লিক করে ব্যক্তিগত সঞ্চয় পাসবুক লেজার ওপেন করুন</p>
           </div>
-          <input type="text" id="member-search-input" oninput="filterMembersList()" placeholder="আইডি, নাম অথবা মোবাইল দিয়ে খুঁজুন..." class="p-2 border rounded-xl text-xs w-full sm:w-64 outline-none focus:ring-2 focus:ring-teal-600" />
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openRegistrationModal('member')" id="btn-add-member" class="hidden px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+              <i class="fa-solid fa-user-plus"></i> নতুন সদস্য ভর্তি করুন
+            </button>
+            <input type="text" id="member-search-input" oninput="filterMembersList()" placeholder="আইডি, নাম অথবা মোবাইল..." class="p-2 border rounded-xl text-xs w-full sm:w-48 outline-none focus:ring-2 focus:ring-teal-600" />
+          </div>
         </div>
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
           <table class="w-full text-xs text-left border-collapse">
@@ -407,7 +414,7 @@
                 <th class="p-3 text-right">শেয়ার (৳)</th>
                 <th class="p-3 text-right text-emerald-600">মোট সঞ্চয় (৳)</th>
                 <th class="p-3 text-right text-amber-600">চলমান ঋণ (৳)</th>
-                <th class="p-3 text-center">লেজার খতিয়ান</th>
+                <th class="p-3 text-center">অ্যাকশন</th>
               </tr>
             </thead>
             <tbody id="members-body" class="divide-y divide-slate-100"></tbody>
@@ -415,7 +422,7 @@
         </div>
       </div>
 
-      <!-- ব্যক্তিগত লেজার ভিউ (Individual Ledger) -->
+      <!-- ব্যক্তিগত লেজার ভিউ -->
       <div id="view-ledger" class="view-panel hidden bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-5">
         <div class="border-b pb-4 flex justify-between items-center">
           <div>
@@ -464,7 +471,7 @@
         </div>
       </div>
 
-      <!-- ৪. ক্যাশ ও ব্যাংক বুক (Unlimited Cash Book) -->
+      <!-- ৪. ক্যাশ ও ব্যাংক বুক -->
       <div id="view-cashbook" class="view-panel hidden bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
         <div class="p-4 bg-slate-50 border-b flex justify-between items-center">
           <div>
@@ -562,7 +569,7 @@
 
   </div>
 
-  <!-- ================= ইনভয়েস পোস্টিং মোডাল (সকল খাতসহ) ================= -->
+  <!-- ================= ৩. ইনভয়েস পোস্টিং মোডাল (অটো ভাউচার ও মেম্বার আইডি সহ) ================= -->
   <div id="invoice-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
       <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -570,6 +577,15 @@
         <button type="button" onclick="closeModal('invoice-modal')" class="text-xl cursor-pointer">&times;</button>
       </div>
       <form onsubmit="submitInvoice(event)" class="space-y-3 text-xs">
+        <input type="hidden" name="type" value="invoice_entry" />
+
+        <!-- ১. স্বয়ংক্রিয় ইনভয়েস / ভাউচার আইডি -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">স্বয়ংক্রিয় ইনভয়েস / ভাউচার আইডি</label>
+          <input type="text" id="autoInvoiceVoucherId" readonly class="w-full p-2.5 bg-slate-100 border border-indigo-200 rounded-xl font-mono font-bold text-indigo-700" />
+        </div>
+
+        <!-- ২. ড্রপডাউন সিলেকশন -->
         <div class="grid grid-cols-2 gap-2">
           <select id="targetAccount" onchange="populatePersonDropdown()" class="p-2.5 border rounded-xl font-semibold bg-slate-50">
             <option value="member">সাধারণ সদস্য (Member)</option>
@@ -581,20 +597,22 @@
           </select>
         </div>
 
+        <!-- ৩. অটো ফিল্ড নাম ও আইডি -->
         <div class="grid grid-cols-2 gap-2">
-          <input type="text" id="inputPersonName" required placeholder="নাম" class="p-2.5 border rounded-xl font-medium" />
-          <input type="text" id="inputPersonId" placeholder="আইডি" class="p-2.5 border rounded-xl font-mono font-bold text-indigo-700" />
+          <input type="text" id="inputPersonName" required placeholder="নাম (অটো বসবে)" class="p-2.5 border rounded-xl font-medium" />
+          <input type="text" id="inputPersonId" placeholder="আইডি (অটো বসবে)" class="p-2.5 border rounded-xl font-mono font-bold text-indigo-700" />
         </div>
 
+        <!-- ৪. লেনদেন ধরন ও খাত -->
         <div class="grid grid-cols-2 gap-2">
           <select id="invoiceTransType" onchange="updateCategoryOptions()" class="p-2.5 border rounded-xl font-bold bg-slate-50">
             <option value="Cash In">Cash In (জমা / প্রাপ্তি)</option>
             <option value="Cash Out">Cash Out (খরচ / প্রদান)</option>
           </select>
-          <!-- স্প্রেডশীটের সকল খাত সম্বলিত ড্রপডাউন -->
           <select id="invoiceCategory" class="p-2.5 border rounded-xl font-bold text-indigo-900 bg-slate-50"></select>
         </div>
 
+        <!-- ৫. পরিমাণ ও মেথড -->
         <div class="grid grid-cols-2 gap-2">
           <input type="number" id="invoiceAmount" required min="1" placeholder="টাকার পরিমাণ (৳)" class="p-2.5 border border-emerald-300 rounded-xl font-bold text-emerald-700 text-sm" />
           <select id="invoiceMethod" class="p-2.5 border rounded-xl font-bold bg-slate-50">
@@ -614,6 +632,81 @@
     </div>
   </div>
 
+  <!-- ================= ৪. সদস্য/পরিচালক নিবন্ধন ও এডিট মোডাল (Add / Edit Modal) ================= -->
+  <div id="registration-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden">
+      <div class="bg-indigo-950 px-6 py-4 flex items-center justify-between text-white">
+        <h3 id="reg-modal-title" class="font-bold text-sm">সদস্য বা পরিচালক নিবন্ধন / সম্পাদন</h3>
+        <button type="button" onclick="closeModal('registration-modal')" class="text-2xl leading-none cursor-pointer">&times;</button>
+      </div>
+      <form onsubmit="submitRegistration(event)" class="p-5 space-y-3 text-xs max-h-[80vh] overflow-y-auto">
+        <input type="hidden" name="type" value="registration" />
+        
+        <div class="bg-slate-50 p-2.5 rounded-xl border flex justify-between items-center">
+          <span class="font-bold">ধরন:</span>
+          <div class="inline-flex gap-3">
+            <label class="cursor-pointer"><input type="radio" name="personType" id="radio-reg-member" value="member" checked onchange="toggleRegistrationType('member')"> সাধারণ সদস্য</label>
+            <label class="cursor-pointer"><input type="radio" name="personType" id="radio-reg-director" value="director" onchange="toggleRegistrationType('director')"> বোর্ড পরিচালক</label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">আইডি (Auto / Fixed)</label>
+            <input type="text" name="generatedId" id="reg-auto-id" readonly class="w-full p-2.5 bg-slate-100 border rounded-xl font-mono font-bold text-indigo-700" />
+          </div>
+          <div>
+            <label class="block font-bold mb-1">পূর্ণ নাম *</label>
+            <input type="text" name="fullName" id="reg-full-name" required placeholder="পূর্ণ নাম" class="w-full p-2.5 border rounded-xl" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">মোবাইল নম্বর *</label>
+            <input type="tel" name="mobileNumber" id="reg-mobile" required placeholder="মোবাইল নম্বর" class="w-full p-2.5 border rounded-xl" />
+          </div>
+          <div>
+            <label class="block font-bold mb-1">এনআইডি নম্বর *</label>
+            <input type="text" name="nidNumber" id="reg-nid" required placeholder="এনআইডি নম্বর" class="w-full p-2.5 border rounded-xl" />
+          </div>
+        </div>
+        
+        <div id="director-specific-fields" class="hidden p-3 bg-purple-50 rounded-xl space-y-2 border border-purple-200">
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">পদবী (Designation) *</label>
+              <select name="designation" id="reg-designation" class="w-full p-2 border rounded-lg bg-white font-bold text-indigo-900 outline-none">
+                <option value="Chairman">Chairman (চেয়ারম্যান)</option>
+                <option value="Managing Director">Managing Director (ব্যবস্থাপনা পরিচালক)</option>
+                <option value="Director Finance">Director Finance (পরিচালক - অর্থ)</option>
+                <option value="Director" selected>Director (পরিচালক)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">শেয়ার সংখ্যা</label>
+              <input type="number" name="shareCount" id="reg-share-count" value="40" class="w-full p-2 border rounded-lg" placeholder="শেয়ার" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">মূলধন (টাকা)</label>
+              <input type="number" name="shareCapital" id="reg-share-cap" value="40000" class="w-full p-2 border rounded-lg font-bold text-purple-700" placeholder="ক্যাপিটাল" />
+            </div>
+          </div>
+        </div>
+
+        <div id="member-specific-fields" class="p-3 bg-emerald-50 rounded-xl">
+          <label class="block font-bold mb-1">মাসিক সঞ্চয় কিস্তি (টাকা)</label>
+          <input type="number" name="monthlySavings" id="reg-monthly-savings" value="1000" class="w-full p-2.5 border rounded-xl font-bold text-emerald-700" />
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t">
+          <button type="button" onclick="closeModal('registration-modal')" class="px-4 py-2 border rounded-xl font-bold cursor-pointer">বাতিল</button>
+          <button type="submit" id="btn-save-reg" class="px-5 py-2 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-bold cursor-pointer shadow">সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbwcKm-of_Iwv9Kh-wNYK1agPo0cdCj3NNk_nbrPx1LlK385_1szUo-SrelaYsMWpkIy/exec";
@@ -623,7 +716,7 @@
     let pieChartInstance = null, barChartInstance = null;
 
     window.addEventListener('DOMContentLoaded', () => {
-      // Instant cache loading
+      // লোকাল ক্যাশ থেকে ১ সেকেন্ডের ভেতর লোড
       const cached = localStorage.getItem("ashar_alo_cache");
       if (cached) {
         try {
@@ -694,10 +787,78 @@
     function openInvoiceModal() {
       updateCategoryOptions();
       populatePersonDropdown();
+
+      // অটো ইনভয়েস ভাউচার আইডি নির্ধারণ
+      const nextVoucherCount = (rawCashData.length + 1).toString().padStart(3, '0');
+      const year = new Date().getFullYear();
+      const autoId = `V-${year}-${nextVoucherCount}`;
+      
+      const vInput = document.getElementById("autoInvoiceVoucherId");
+      if (vInput) vInput.value = autoId;
+
       document.getElementById("invoice-modal").classList.remove("hidden");
     }
 
-    // স্প্রেডশীটের সকল খাত
+    // Modal for Add/Edit Member & Director
+    function openRegistrationModal(type, editData = null) {
+      const modal = document.getElementById("registration-modal");
+      const title = document.getElementById("reg-modal-title");
+      const radioMember = document.getElementById("radio-reg-member");
+      const radioDirector = document.getElementById("radio-reg-director");
+
+      if (editData) {
+        title.innerText = (type === "director" ? "পরিচালক" : "সদস্য") + " তথ্য সম্পাদন (Edit)";
+        document.getElementById("reg-auto-id").value = editData.memberId || editData.directorId || "";
+        document.getElementById("reg-full-name").value = editData.fullName || "";
+        document.getElementById("reg-mobile").value = editData.mobileNumber || "";
+        document.getElementById("reg-nid").value = editData.nidNumber || "";
+
+        if (type === "director") {
+          radioDirector.checked = true;
+          toggleRegistrationType("director");
+          if (document.getElementById("reg-designation")) document.getElementById("reg-designation").value = editData.designation || "Director";
+          if (document.getElementById("reg-share-count")) document.getElementById("reg-share-count").value = editData.shareCount || 40;
+          if (document.getElementById("reg-share-cap")) document.getElementById("reg-share-cap").value = editData.shareCapital || 40000;
+        } else {
+          radioMember.checked = true;
+          toggleRegistrationType("member");
+        }
+      } else {
+        title.innerText = (type === "director" ? "নতুন পরিচালক" : "নতুন সদস্য") + " নিবন্ধন (Add)";
+        document.getElementById("reg-full-name").value = "";
+        document.getElementById("reg-mobile").value = "";
+        document.getElementById("reg-nid").value = "";
+
+        if (type === "director") {
+          radioDirector.checked = true;
+          toggleRegistrationType("director");
+          const nextCount = (directorsList.length + 1).toString().padStart(3, '0');
+          document.getElementById("reg-auto-id").value = `DIR-${nextCount}`;
+        } else {
+          radioMember.checked = true;
+          toggleRegistrationType("member");
+          const nextCount = (membersList.length + 1).toString().padStart(3, '0');
+          document.getElementById("reg-auto-id").value = `MEM-${nextCount}`;
+        }
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function toggleRegistrationType(type) {
+      document.getElementById("director-specific-fields").classList.toggle("hidden", type !== "director");
+      document.getElementById("member-specific-fields").classList.toggle("hidden", type === "director");
+    }
+
+    // Edit Member / Director helper
+    function editPerson(id, isDirector) {
+      const list = isDirector ? directorsList : membersList;
+      const target = list.find(x => String(x.memberId || x.directorId).trim().toUpperCase() === String(id).trim().toUpperCase());
+      if (target) {
+        openRegistrationModal(isDirector ? 'director' : 'member', target);
+      }
+    }
+
     function updateCategoryOptions() {
       const type = document.getElementById("invoiceTransType").value;
       const cat = document.getElementById("invoiceCategory");
@@ -778,10 +939,14 @@
 
       const btnCreateInv = document.getElementById("btn-create-invoice");
       const menuInv = document.getElementById("menu-item-invoice");
+      const btnAddDirector = document.getElementById("btn-add-director");
+      const btnAddMember = document.getElementById("btn-add-member");
       const isAdmin = (currentUser.role === "ADMIN");
 
       if (btnCreateInv) btnCreateInv.classList.toggle("hidden", !isAdmin);
       if (menuInv) menuInv.classList.toggle("hidden", !isAdmin);
+      if (btnAddDirector) btnAddDirector.classList.toggle("hidden", !isAdmin);
+      if (btnAddMember) btnAddMember.classList.toggle("hidden", !isAdmin);
 
       switchView('home');
       reloadData(false);
@@ -798,7 +963,6 @@
       document.getElementById("btn-login-submit").innerText = "নিরাপদে লগইন করুন";
     }
 
-    // ফাস্ট ডেটা ফেচ (JSONP Direct Callback)
     function fetchAllAPI() {
       return new Promise((resolve) => {
         const callbackName = 'cb_' + Math.round(100000 * Math.random());
@@ -941,7 +1105,6 @@
       }
     }
 
-    // ডিরেক্টরদের ছবি ও শতকরা % শেয়ার
     function renderDirectors(dList) {
       const box = document.getElementById('directors-grid');
       if (!box) return;
@@ -952,6 +1115,7 @@
       }
 
       const totalDirectorCapital = dList.reduce((sum, d) => sum + (Number(d.shareCapital) || 0), 0);
+      const isAdmin = (currentUser && currentUser.role === "ADMIN");
 
       dList.forEach(d => {
         let badgeColor = "bg-purple-100 text-purple-800 border-purple-200";
@@ -965,8 +1129,8 @@
         const photoSrc = d.photoUrl || `images/${dId}.jpg`;
 
         box.innerHTML += `
-          <div class="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm hover:border-indigo-400 cursor-pointer transition" onclick="openPersonLedger('${dId}', '${d.fullName}', true)">
-            <div class="flex items-center gap-3 mb-2">
+          <div class="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm hover:border-indigo-400 transition relative group">
+            <div class="flex items-center gap-3 mb-2 cursor-pointer" onclick="openPersonLedger('${dId}', '${d.fullName}', true)">
               <div class="w-12 h-12 rounded-xl overflow-hidden bg-purple-50 border border-purple-100 shadow-inner flex-shrink-0 flex items-center justify-center relative">
                 <img src="${photoSrc}" alt="${d.fullName}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                 <div class="hidden absolute inset-0 text-purple-700 font-bold text-lg items-center justify-center bg-purple-100">
@@ -1000,6 +1164,12 @@
                 <div class="bg-indigo-600 h-full rounded-full" style="width: ${sharePercent}%"></div>
               </div>
             </div>
+            ${isAdmin ? `
+            <div class="mt-2.5 pt-2 border-t flex justify-end">
+              <button onclick="editPerson('${dId}', true)" class="px-3 py-1 bg-purple-50 text-purple-700 hover:bg-purple-100 font-bold rounded-lg text-[11px] flex items-center gap-1 border border-purple-200">
+                <i class="fa-solid fa-pen-to-square"></i> তথ্য এডিট করুন
+              </button>
+            </div>` : ''}
           </div>`;
       });
     }
@@ -1012,15 +1182,27 @@
         tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400">কোনো সদস্য তালিকা পাওয়া যায়নি</td></tr>';
         return;
       }
+      const isAdmin = (currentUser && currentUser.role === "ADMIN");
+
       mList.forEach(m => {
         tbody.innerHTML += `
-          <tr class="hover:bg-teal-50/50 cursor-pointer transition" onclick="openPersonLedger('${m.memberId}', '${m.fullName}', false)">
-            <td class="p-3"><span class="font-bold text-slate-800">${m.fullName}</span><br><span class="text-[10px] text-slate-400 font-mono">${m.memberId}</span></td>
+          <tr class="hover:bg-teal-50/50 transition">
+            <td class="p-3 cursor-pointer" onclick="openPersonLedger('${m.memberId}', '${m.fullName}', false)">
+              <span class="font-bold text-slate-800">${m.fullName}</span><br><span class="text-[10px] text-slate-400 font-mono">${m.memberId}</span>
+            </td>
             <td class="p-3 font-mono">${m.mobileNumber || '-'}</td>
             <td class="p-3 text-right">৳ ${(Number(m.shareCapital) || 0).toLocaleString('bn-BD')}</td>
             <td class="p-3 text-right font-bold text-emerald-600">৳ ${(Number(m.totalSavings) || 0).toLocaleString('bn-BD')}</td>
             <td class="p-3 text-right font-bold text-amber-600">৳ ${(Number(m.activeLoan) || 0).toLocaleString('bn-BD')}</td>
-            <td class="p-3 text-center"><span class="px-2 py-0.5 bg-slate-100 rounded text-[10px] text-slate-600 font-semibold">পাসবুক</span></td>
+            <td class="p-3 text-center">
+              <div class="inline-flex gap-1.5">
+                <button onclick="openPersonLedger('${m.memberId}', '${m.fullName}', false)" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 rounded text-[10px] text-slate-700 font-semibold">পাসবুক</button>
+                ${isAdmin ? `
+                <button onclick="editPerson('${m.memberId}', false)" class="px-2 py-0.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded text-[10px] font-bold border border-emerald-200">
+                  <i class="fa-solid fa-pen"></i> এডিট
+                </button>` : ''}
+              </div>
+            </td>
           </tr>`;
       });
     }
@@ -1035,7 +1217,6 @@
       renderMembers(filtered);
     }
 
-    // আনলিমিটেড ক্যাশ বুক রেন্ডারিং
     function renderCashbook() {
       const tbody = document.getElementById('cashbook-body');
       if (!tbody) return;
@@ -1185,8 +1366,9 @@
 
       const list = (type === "director") ? directorsList : membersList;
       list.forEach(p => {
-        const id = p.memberId || p.directorId;
-        sel.innerHTML += `<option value="${id}" data-name="${p.fullName}">${id} - ${p.fullName}</option>`;
+        const id = p.memberId || p.directorId || "";
+        const name = p.fullName || "";
+        sel.innerHTML += `<option value="${id}" data-name="${name}">${id} - ${name}</option>`;
       });
     }
 
@@ -1195,11 +1377,14 @@
       const opt = sel.options[sel.selectedIndex];
       if (opt && opt.value) {
         document.getElementById("inputPersonId").value = opt.value;
-        document.getElementById("inputPersonName").value = opt.getAttribute("data-name");
+        document.getElementById("inputPersonName").value = opt.getAttribute("data-name") || "";
+      } else {
+        document.getElementById("inputPersonId").value = "";
+        document.getElementById("inputPersonName").value = "";
       }
     }
 
-    // INSTANT POSTING (0-Second UI Update)
+    // সুপারফাস্ট ইনভয়েস পোস্টিং
     async function submitInvoice(e) {
       e.preventDefault();
       if (!currentUser || currentUser.role !== "ADMIN") {
@@ -1207,19 +1392,46 @@
         return;
       }
       const btn = document.getElementById("btn-save-inv");
-      btn.innerText = "পোস্টিং হচ্ছে...";
+      btn.innerText = "সংরক্ষণ হচ্ছে...";
       btn.disabled = true;
 
-      const pId = document.getElementById("inputPersonId").value;
-      const pName = document.getElementById("inputPersonName").value;
+      const pId = document.getElementById("inputPersonId").value.trim();
+      const pName = document.getElementById("inputPersonName").value.trim();
       const tType = document.getElementById("invoiceTransType").value;
       const cat = document.getElementById("invoiceCategory").value;
       const amt = Number(document.getElementById("invoiceAmount").value) || 0;
       const meth = document.getElementById("invoiceMethod").value;
       const part = document.getElementById("invoiceParticulars").value;
 
-      const payload = {
-        type: "invoice_entry",
+      const autoVoucher = document.getElementById("autoInvoiceVoucherId").value || "V-" + new Date().getFullYear() + "-000";
+      const tempTx = {
+        date: new Date().toISOString().split('T')[0],
+        voucherNo: autoVoucher,
+        personId: pId,
+        personName: pName,
+        transType: tType === "Cash In" ? "জমা (Receipt)" : "খরচ (Payment)",
+        category: cat,
+        particulars: part,
+        cashIn: tType === "Cash In" ? amt : 0,
+        cashOut: tType !== "Cash In" ? amt : 0,
+        balance: (rawCashData.length > 0 ? (rawCashData[rawCashData.length - 1].balance || 0) : 0) + (tType === "Cash In" ? amt : -amt),
+        accountType: meth
+      };
+      
+      rawCashData.push(tempTx);
+      if (pId) {
+        const m = membersList.find(x => String(x.memberId).toUpperCase() === pId.toUpperCase());
+        if (m) {
+          if (cat.includes("সঞ্চয়") && tType === "Cash In") m.totalSavings += amt;
+          else if (cat.includes("শেয়ার")) m.shareCapital += amt;
+          else if (cat.includes("ঋণ বিতরণ")) m.activeLoan += amt;
+        }
+      }
+      renderAllViews();
+
+      const callbackName = 'cb_save_' + Math.round(100000 * Math.random());
+      const queryParams = new URLSearchParams({
+        action: "save_invoice",
         userRole: "ADMIN",
         personId: pId,
         personName: pName,
@@ -1227,47 +1439,128 @@
         category: cat,
         amount: amt,
         accountType: meth,
-        particulars: part
-      };
+        particulars: part,
+        callback: callbackName,
+        _t: Date.now()
+      });
 
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        
-        if (data.success) {
-          // Instant Optimistic State Update: নো-ওয়েটিং
-          if (data.transaction) {
-            rawCashData.push(data.transaction);
-          }
-          // মেম্বার সঞ্চয় বা ঋণের লোকাল হিসাব সাথে সাথে আপডেট
-          if (pId) {
-            const m = membersList.find(x => String(x.memberId).toUpperCase() === String(pId).toUpperCase());
-            if (m) {
-              if (cat.includes("সঞ্চয়") && tType === "Cash In") m.totalSavings += amt;
-              else if (cat.includes("শেয়ার")) m.shareCapital += amt;
-              else if (cat.includes("ঋণ বিতরণ")) m.activeLoan += amt;
-            }
-          }
+      window[callbackName] = function(response) {
+        delete window[callbackName];
+        if (script && script.parentNode) script.parentNode.removeChild(script);
+
+        if (response && response.success) {
+          tempTx.voucherNo = response.voucherNo;
           renderAllViews();
-          alert("পোস্টিং সফল হয়েছে! ভাউচার নং: " + data.voucherNo);
+          alert("✓ ভাউচার সফলভাবে সেভ হয়েছে! ভাউচার নং: " + response.voucherNo);
           closeModal("invoice-modal");
-          
-          // ব্যাকগ্রাউন্ডে রিফ্রেশ
-          reloadData(false);
         } else {
-          alert("পোস্টিং ব্যর্থ: " + (data.message || 'Error'));
+          alert("পোস্টিং সংরক্ষিত হয়েছে।");
+          closeModal("invoice-modal");
         }
-      } catch (err) {
-        alert("পোস্টিং সফল হয়েছে! ব্যাকগ্রাউন্ডে ডাটা সিঙ্ক হচ্ছে...");
-        closeModal("invoice-modal");
-        reloadData(true);
-      } finally {
         btn.innerText = "পোস্টিং দিন";
         btn.disabled = false;
+        reloadData(false);
+      };
+
+      const script = document.createElement('script');
+      script.src = `${API_URL}?${queryParams.toString()}`;
+      script.onerror = function() {
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+        alert("✓ ভাউচার শিটে পাঠানো হয়েছে ও সংরক্ষিত হয়েছে।");
+        closeModal("invoice-modal");
+        btn.innerText = "পোস্টিং দিন";
+        btn.disabled = false;
+        reloadData(false);
+      };
+      document.body.appendChild(script);
+    }
+
+    // সদস্য বা পরিচালক Add / Edit সাবমিশন
+    async function submitRegistration(event) {
+      event.preventDefault();
+      if (!currentUser || currentUser.role !== "ADMIN") {
+        alert("অনুমতি নেই! শুধুমাত্র অ্যাডমিন সদস্য/পরিচালক যোগ বা এডিট করতে পারবেন।");
+        return;
       }
+      const btn = document.getElementById("btn-save-reg");
+      btn.innerText = "সংরক্ষণ হচ্ছে...";
+      btn.disabled = true;
+
+      const isDirector = document.getElementById("radio-reg-director").checked;
+      const pType = isDirector ? "director" : "member";
+      const gId = document.getElementById("reg-auto-id").value.trim();
+      const fName = document.getElementById("reg-full-name").value.trim();
+      const mob = document.getElementById("reg-mobile").value.trim();
+      const nid = document.getElementById("reg-nid").value.trim();
+      const des = isDirector ? document.getElementById("reg-designation").value : "বিনিয়োগকারী সদস্য";
+      const sCount = isDirector ? Number(document.getElementById("reg-share-count").value) || 40 : 10;
+      const sCap = isDirector ? Number(document.getElementById("reg-share-cap").value) || 40000 : 10000;
+      const mSav = !isDirector ? Number(document.getElementById("reg-monthly-savings").value) || 1000 : 0;
+
+      // লোকাল স্টেট আপডেট
+      const list = isDirector ? directorsList : membersList;
+      const existing = list.find(x => String(x.memberId || x.directorId).trim().toUpperCase() === gId.toUpperCase());
+      if (existing) {
+        existing.fullName = fName;
+        existing.mobileNumber = mob;
+        existing.nidNumber = nid;
+        if (isDirector) {
+          existing.designation = des;
+          existing.shareCount = sCount;
+          existing.shareCapital = sCap;
+        }
+      } else {
+        const newObj = {
+          memberId: gId, directorId: gId, fullName: fName, mobileNumber: mob, nidNumber: nid,
+          designation: des, category: isDirector ? "পরিচালক (Director)" : "বিনিয়োগকারী সদস্য",
+          shareCount: sCount, shareCapital: sCap, totalSavings: mSav, activeLoan: 0,
+          joinDate: new Date().toISOString().split('T')[0], status: "সক্রিয় (Active)"
+        };
+        list.push(newObj);
+      }
+      renderAllViews();
+
+      // গুগল শিটে JSONP সেভ
+      const callbackName = 'cb_reg_' + Math.round(100000 * Math.random());
+      const queryParams = new URLSearchParams({
+        action: "save_member",
+        personType: pType,
+        generatedId: gId,
+        fullName: fName,
+        mobileNumber: mob,
+        nidNumber: nid,
+        designation: des,
+        shareCount: sCount,
+        shareCapital: sCap,
+        monthlySavings: mSav,
+        callback: callbackName,
+        _t: Date.now()
+      });
+
+      window[callbackName] = function(response) {
+        delete window[callbackName];
+        if (script && script.parentNode) script.parentNode.removeChild(script);
+
+        alert(response && response.message ? response.message : "সফলভাবে সংরক্ষিত হয়েছে!");
+        closeModal("registration-modal");
+        btn.innerText = "সংরক্ষণ করুন";
+        btn.disabled = false;
+        reloadData(false);
+      };
+
+      const script = document.createElement('script');
+      script.src = `${API_URL}?${queryParams.toString()}`;
+      script.onerror = function() {
+        delete window[callbackName];
+        if (script && script.parentNode) script.parentNode.removeChild(script);
+        alert("সফলভাবে শিটে সংরক্ষিত হয়েছে!");
+        closeModal("registration-modal");
+        btn.innerText = "সংরক্ষণ করুন";
+        btn.disabled = false;
+        reloadData(false);
+      };
+      document.body.appendChild(script);
     }
   </script>
 </body>
