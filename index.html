@@ -9,7 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Chart.js for Visual Reports -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <style>
@@ -74,7 +74,7 @@
         </div>
 
         <p class="text-[10px] text-center text-slate-400 pt-2 border-t border-slate-100">
-          অননুমোদিত প্রবেশ আইনত দণ্ডনীয়। আপনার আইডি ও গোপন পাসওয়ার্ড নিরাপদ রাখুন।
+          অননুমোদিত প্রবেশ আইনত দণ্ডনীয়। আইডি ও পাসওয়ার্ড সুরক্ষিত রাখুন।
         </p>
       </form>
     </div>
@@ -83,29 +83,31 @@
   <!-- ================= ২. মূল অ্যাপ্লিকেশন ড্যাশবোর্ড ================= -->
   <div id="main-dashboard-app" class="hidden flex-1 flex flex-col justify-between">
     
-    <!-- Top Header -->
+    <!-- Top Header (Mobile & Desktop e Id o Name dekhanor jonno update kora) -->
     <header class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white sticky top-0 z-40 shadow-lg border-b border-indigo-900 no-print">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 min-h-[5.5rem] flex items-center justify-between">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 min-h-[5rem] flex items-center justify-between gap-2">
         
-        <div class="flex items-center gap-3">
-          <button type="button" onclick="toggleSideMenu()" class="w-11 h-11 rounded-2xl bg-indigo-900 hover:bg-indigo-800 text-white flex items-center justify-center transition border border-indigo-700 shadow-sm active:scale-95 cursor-pointer" title="মেনু খুলুন">
-            <i class="fa-solid fa-bars text-xl text-emerald-400"></i>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="toggleSideMenu()" class="w-10 h-10 rounded-2xl bg-indigo-900 hover:bg-indigo-800 text-white flex items-center justify-center transition border border-indigo-700 shadow-sm active:scale-95 cursor-pointer">
+            <i class="fa-solid fa-bars text-lg text-emerald-400"></i>
           </button>
         </div>
 
-        <div class="text-center cursor-pointer flex-1 px-2" onclick="switchView('home')">
-          <h1 id="app-org-name" class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight">
+        <div class="text-center cursor-pointer flex-1 min-w-0" onclick="switchView('home')">
+          <h1 id="app-org-name" class="text-base sm:text-2xl font-extrabold tracking-tight text-white leading-tight truncate">
             আশার আলো সমবায় সমিতি লিমিটেড
           </h1>
-          <p id="app-org-address" class="text-xs sm:text-sm text-emerald-300 font-bold tracking-wide mt-1 flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-location-dot text-amber-400 text-xs"></i>
+          <p id="app-org-address" class="text-[10px] sm:text-xs text-emerald-300 font-semibold tracking-wide flex items-center justify-center gap-1 truncate">
+            <i class="fa-solid fa-location-dot text-amber-400 text-[10px]"></i>
             <span>পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম</span>
           </p>
         </div>
 
-        <div class="flex items-center gap-2">
-          <span id="user-display-badge" class="hidden sm:inline-block text-xs bg-indigo-900/90 border border-indigo-700 px-3 py-1.5 rounded-xl font-bold text-amber-300"></span>
-          <button type="button" onclick="handleLogout()" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center gap-1 active:scale-95 cursor-pointer" title="প্রস্থান">
+        <div class="flex items-center gap-1.5 shrink-0">
+          <!-- Mobile o Desktop e ID & Name Show Kora -->
+          <div id="user-display-badge" class="inline-flex flex-col sm:flex-row items-end sm:items-center text-[10px] sm:text-xs bg-indigo-900/90 border border-indigo-700 px-2 sm:px-3 py-1 rounded-xl font-bold text-amber-300"></div>
+          
+          <button type="button" onclick="handleLogout()" class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-rose-600 hover:bg-rose-500 text-white text-[11px] sm:text-xs font-bold rounded-xl shadow transition flex items-center gap-1 active:scale-95 cursor-pointer" title="প্রস্থান">
             <i class="fa-solid fa-power-off"></i>
             <span class="hidden sm:inline">লগআউট</span>
           </button>
@@ -171,7 +173,7 @@
               <i class="fa-solid fa-user-tie text-purple-600 text-base w-5"></i>
               <div>
                 <p>৪. পরিচালনা পর্ষদ (Directors)</p>
-                <span class="text-[10px] font-normal text-slate-400">পরিচালকদের শেয়ার ও শতকরা মূলধন</span>
+                <span class="text-[10px] font-normal text-slate-400">যোগদানের তারিখ ও মূলধন অনুপাত</span>
               </div>
             </a>
 
@@ -180,7 +182,7 @@
               <i class="fa-solid fa-users text-teal-600 text-base w-5"></i>
               <div>
                 <p>৫. সাধারণ সদস্য তালিকা (Members)</p>
-                <span class="text-[10px] font-normal text-slate-400">৩৯ জন সদস্যের পাসবুক ও খতিয়ান</span>
+                <span class="text-[10px] font-normal text-slate-400">সদস্যের যোগদানের তারিখ ও পাসবুক</span>
               </div>
             </a>
 
@@ -196,7 +198,6 @@
               </a>
             </div>
 
-            <!-- ইউজার কাস্টম মেনু তালিকা -->
             <div id="dynamic-custom-menus" class="space-y-1 pt-1 border-t border-slate-100"></div>
 
             <div class="pt-2">
@@ -225,18 +226,11 @@
       </div>
     </div>
 
-    <!-- লোডিং বার -->
-    <div id="global-loading" class="hidden bg-indigo-900 text-white text-xs py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-indigo-700">
-      <i class="fa-solid fa-circle-notch fa-spin text-emerald-400"></i>
-      <span>গুগল শিট থেকে রিয়েলটাইম ডেটা সিঙ্ক হচ্ছে...</span>
-    </div>
-
     <!-- MAIN BODY CONTENT -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1 no-print">
 
       <!-- ================= VIEW 0: HOME ================= -->
       <div id="view-home" class="space-y-6">
-        
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
             <div>
@@ -304,7 +298,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <!-- ================= VIEW 1: INVESTMENTS ================= -->
@@ -360,14 +353,14 @@
         </div>
       </div>
 
-      <!-- ================= VIEW 2: DIRECTORS (ছবি ও শতভাগ % মূলধন অনুপাত) ================= -->
+      <!-- ================= VIEW 2: DIRECTORS (ছবি, যোগদানের তারিখ ও % মূলধন) ================= -->
       <div id="view-directors" class="hidden space-y-4">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
             <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
               <i class="fa-solid fa-user-tie text-purple-600"></i> পরিচালনা পর্ষদ (Executive Board)
             </h3>
-            <p class="text-xs text-slate-500">পরিচালকদের ছবি, শেয়ার সংখ্যা, মোট মূলধন এবং শতকরা মূলধন অনুপাত (%)</p>
+            <p class="text-xs text-slate-500">পরিচালকদের ছবি, যোগদানের তারিখ, শেয়ার সংখ্যা ও শতকরা মূলধন অনুপাত (%)</p>
           </div>
           <button type="button" onclick="openRegistrationModal('director')" id="btn-add-director" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
             <i class="fa-solid fa-user-plus"></i> নতুন পরিচালক যোগ
@@ -377,17 +370,17 @@
         <div id="directors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
 
-      <!-- ================= VIEW 3: MEMBERS ================= -->
+      <!-- ================= VIEW 3: MEMBERS (ছবি ও যোগদানের তারিখসহ) ================= -->
       <div id="view-members" class="hidden space-y-4">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
             <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
               <i class="fa-solid fa-users text-teal-600"></i> সাধারণ সদস্য ও ডিপিএস তালিকা
             </h3>
-            <p class="text-xs text-slate-500">সকল সাধারণ সদস্যের ছবি, অ্যাকাউন্ট ও ডিজিটাল পাসবুক লেজার</p>
+            <p class="text-xs text-slate-500">সকল সাধারণ সদস্যের ছবি, যোগদানের তারিখ, অ্যাকাউন্ট ও ডিজিটাল পাসবুক লেজার</p>
           </div>
           <div class="flex items-center gap-2">
-            <input type="text" id="member-search-input" onkeyup="filterMembersList()" placeholder="নাম বা মোবাইল দিয়ে খুঁজুন..." class="p-2 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-600" />
+            <input type="text" id="member-search-input" onkeyup="filterMembersList()" placeholder="নাম, মোবাইল বা আইডি দিয়ে খুঁজুন..." class="p-2 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-600" />
             <button type="button" onclick="openRegistrationModal('member')" id="btn-add-member" class="px-4 py-2 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-user-plus"></i> নতুন সদস্য ভর্তি
             </button>
@@ -399,8 +392,8 @@
             <thead class="bg-slate-50 border-b text-slate-600 font-bold">
               <tr>
                 <th class="p-3.5">ছবি, আইডি ও নাম</th>
-                <th class="p-3.5">মোবাইল</th>
-                <th class="p-3.5">এনআইডি</th>
+                <th class="p-3.5">যোগদানের তারিখ</th>
+                <th class="p-3.5">মোবাইল ও এনআইডি</th>
                 <th class="p-3.5 text-right">মাসিক কিস্তি</th>
                 <th class="p-3.5 text-right text-emerald-600">মোট সঞ্চয় জমা</th>
                 <th class="p-3.5 text-center">অ্যাকশন</th>
@@ -411,7 +404,7 @@
         </div>
       </div>
 
-      <!-- ================= VIEW 4: CASH BOOK (রিয়েলটাইম ডাবল-এন্ট্রি) ================= -->
+      <!-- ================= VIEW 4: CASH BOOK (ভাউচার এডিট ও সঠিক হিসাব) ================= -->
       <div id="view-cashbook" class="hidden space-y-4">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center">
           <div>
@@ -422,7 +415,7 @@
           </div>
           <div class="flex items-center gap-2">
             <button type="button" onclick="openInvoiceSearchModal()" class="px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-bold border border-indigo-200 cursor-pointer">
-              <i class="fa-solid fa-magnifying-glass mr-1"></i> ইনভয়েস খুঁজুন
+              <i class="fa-solid fa-magnifying-glass mr-1"></i> ইনভয়েস সার্চ / এডিট
             </button>
             <button type="button" onclick="window.print()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700 cursor-pointer">
               <i class="fa-solid fa-print"></i> প্রিন্ট
@@ -442,6 +435,7 @@
                 <th class="p-3 text-right text-emerald-600">আদায় (Cash In)</th>
                 <th class="p-3 text-right text-rose-600">খরচ (Cash Out)</th>
                 <th class="p-3 text-right font-bold">ব্যালেন্স স্থিতি</th>
+                <th class="p-3 text-center">অ্যাকশন</th>
               </tr>
             </thead>
             <tbody id="cashbook-body" class="divide-y divide-slate-100"></tbody>
@@ -470,7 +464,7 @@
               <img id="led-photo" src="" class="w-full h-full object-cover hidden" />
               <i id="led-photo-icon" class="fa-solid fa-user text-slate-300 text-2xl"></i>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 flex-1">
               <div>
                 <p class="text-slate-400">নাম ও পদবী:</p>
                 <h4 id="led-name" class="font-bold text-slate-800 text-sm mt-0.5">-</h4>
@@ -478,6 +472,10 @@
               <div>
                 <p class="text-slate-400">অ্যাকাউন্ট নম্বর:</p>
                 <h4 id="led-id" class="font-mono font-bold text-indigo-700 text-sm mt-0.5">-</h4>
+              </div>
+              <div>
+                <p class="text-slate-400">যোগদানের তারিখ:</p>
+                <h4 id="led-joindate" class="font-bold text-slate-700 text-sm mt-0.5">-</h4>
               </div>
               <div>
                 <p class="text-slate-400">মোট সঞ্চয় / শেয়ার ব্যালেন্স:</p>
@@ -677,7 +675,7 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- Modal 1: সদস্য বা পরিচালক নিবন্ধন ও এডিট -->
+  <!-- Modal 1: সদস্য বা পরিচালক নিবন্ধন ও এডিট (যোগদানের তারিখ সহ) -->
   <div id="registration-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-100">
       <div class="bg-indigo-950 px-6 py-4 flex items-center justify-between text-white">
@@ -687,7 +685,6 @@
       
       <form onsubmit="handleRegistrationSubmit(event)" class="p-6 space-y-3.5 text-xs max-h-[80vh] overflow-y-auto">
         <input type="hidden" id="regIsEdit" value="false" />
-        <input type="hidden" id="regPhotoBase64" value="" />
         
         <div class="bg-slate-50 p-2.5 rounded-xl border flex justify-between items-center" id="reg-type-selector-box">
           <span class="font-bold">ধরন:</span>
@@ -703,41 +700,31 @@
           </div>
         </div>
 
-        <!-- ছবি আপলোড ও প্রিভিউ সেকশন -->
-        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-          <label class="block font-bold text-slate-700 mb-1">পাসপোর্ট সাইজ ছবি</label>
-          <div class="flex items-center gap-3">
-            <div class="w-14 h-14 rounded-2xl bg-white border border-slate-300 overflow-hidden flex items-center justify-center shrink-0 shadow-inner">
-              <img id="regPhotoPreview" src="" class="w-full h-full object-cover hidden" />
-              <i id="regPhotoPlaceholder" class="fa-solid fa-camera text-slate-400 text-lg"></i>
-            </div>
-            <div class="flex-1">
-              <input type="file" id="regPhotoInput" accept="image/*" onchange="previewSelectedPhoto(event)" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer" />
-              <p class="text-[10px] text-slate-400 mt-1">পাসপোর্ট ছবি সিলেক্ট করুন (বা গিটহাবে আইডি দিয়ে আপলোড করতে পারেন)</p>
-            </div>
-          </div>
-        </div>
-
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">আইডি</label>
             <input type="text" id="regAutoId" readonly class="w-full p-2.5 bg-slate-100 border rounded-xl font-mono font-bold text-indigo-700 outline-none" />
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1">পূর্ণ নাম *</label>
-            <input type="text" id="regFullName" required placeholder="নাম লিখুন" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
+            <label class="block font-bold text-slate-700 mb-1">যোগদানের তারিখ *</label>
+            <input type="date" id="regJoiningDate" required class="w-full p-2.5 border rounded-xl font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-600" />
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
+            <label class="block font-bold text-slate-700 mb-1">পূর্ণ নাম *</label>
+            <input type="text" id="regFullName" required placeholder="নাম লিখুন" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
+          </div>
+          <div>
             <label class="block font-bold text-slate-700 mb-1">মোবাইল নম্বর *</label>
             <input type="tel" id="regMobile" required placeholder="017xxxxxxxx" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
           </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">জাতীয় পরিচয়পত্র (NID) *</label>
-            <input type="text" id="regNid" required placeholder="NID নম্বর" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
-          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">জাতীয় পরিচয়পত্র (NID) *</label>
+          <input type="text" id="regNid" required placeholder="NID নম্বর" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
         </div>
 
         <div id="director-specific-box" class="hidden p-3 bg-purple-50 rounded-xl space-y-2 border border-purple-200">
@@ -876,12 +863,12 @@
     </div>
   </div>
 
-  <!-- Modal 4: ইনভয়েস ও ভাউচার পোস্টিং (Search, History ও নির্দিষ্ট তারিখ অপশনসহ) -->
+  <!-- Modal 4: ইনভয়েস ও ভাউচার পোস্টিং এবং এডিটিং -->
   <div id="invoice-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
       <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div class="flex items-center gap-2">
-          <h3 class="font-bold text-sm text-slate-800">ইনভয়েস ও ভাউচার পোস্টিং</h3>
+          <h3 id="invoice-modal-title" class="font-bold text-sm text-slate-800">ইনভয়েস ও ভাউচার পোস্টিং</h3>
           <button type="button" onclick="closeModal('invoice-modal'); openInvoiceSearchModal();" class="text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-1 rounded-lg border border-indigo-200 cursor-pointer">
             <i class="fa-solid fa-magnifying-glass"></i> আগের ভাউচার খুঁজুন
           </button>
@@ -890,10 +877,12 @@
       </div>
 
       <form onsubmit="submitInvoice(event)" class="space-y-3.5 text-xs">
-        <!-- ভাউচার নম্বর ও ভাউচার তারিখ ইনপুট -->
+        <input type="hidden" id="invoiceIsEdit" value="false" />
+        <input type="hidden" id="invoiceOldVoucherId" value="" />
+
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">অটো ভাউচার নম্বর</label>
+            <label class="block font-bold text-slate-700 mb-1">ভাউচার নম্বর</label>
             <input type="text" id="autoInvoiceVoucherId" readonly class="w-full p-2.5 bg-slate-100 border border-indigo-200 rounded-xl font-mono font-bold text-indigo-700 outline-none" />
           </div>
           <div>
@@ -968,12 +957,12 @@
     </div>
   </div>
 
-  <!-- Modal 5: ডেডিকেটেড ইনভয়েস সার্চ ও হিস্ট্রি মোডাল -->
+  <!-- Modal 5: ডেডিকেটেড ইনভয়েস সার্চ ও এডিট হিস্ট্রি মোডাল -->
   <div id="invoice-search-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl flex flex-col max-h-[85vh]">
       <div class="flex justify-between items-center mb-3 border-b pb-2">
         <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
-          <i class="fa-solid fa-magnifying-glass text-indigo-600"></i> সংরক্ষিত ইনভয়েস ও ভাউচার সার্চ
+          <i class="fa-solid fa-magnifying-glass text-indigo-600"></i> সংরক্ষিত ইনভয়েস ও ভাউচার সার্চ / এডিট
         </h3>
         <button type="button" onclick="closeModal('invoice-search-modal')" class="text-xl cursor-pointer">&times;</button>
       </div>
@@ -991,7 +980,7 @@
               <th class="p-2.5">নাম / আইডি</th>
               <th class="p-2.5">খাত</th>
               <th class="p-2.5 text-right">পরিমাণ</th>
-              <th class="p-2.5 text-center">রিসিট</th>
+              <th class="p-2.5 text-center">অ্যাকশন</th>
             </tr>
           </thead>
           <tbody id="invoice-history-tbody" class="divide-y divide-slate-100"></tbody>
@@ -1063,9 +1052,8 @@
   <!-- ================= ৭. সম্পূর্ণ জাভাস্ক্রিপ্ট অ্যাপ্লিকেশন লজিক ================= -->
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbyBvs2XczEEWrmj6P2vXlhPWcuUvUeC1qU9-6E0L74lbCSMtpCxrKeB9ySwKOI1kO5Y8w/exec";
-    const DB_KEY = "ashar_alo_final_v3";
+    const DB_KEY = "ashar_alo_final_v4";
 
-    // GitHub Photo Base URL (ID onujayi photo auto-load hobe)
     const GITHUB_PHOTO_BASE_URL = "https://raw.githubusercontent.com/jesmulhasan/ashar-alo/main/photos/";
 
     let state = {
@@ -1109,11 +1097,7 @@
       return sym + ' ' + Number(val || 0).toLocaleString('bn-BD');
     }
 
-    // ছবি লোডিং ফাংশন
-    function getProfilePhotoUrl(id, name, customPhotoUrl) {
-      if (customPhotoUrl && customPhotoUrl.length > 20) {
-        return customPhotoUrl;
-      }
+    function getProfilePhotoUrl(id, name) {
       if (!id) return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'User')}&background=random`;
       return `${GITHUB_PHOTO_BASE_URL}${id.toString().trim().toUpperCase()}.jpg`;
     }
@@ -1121,14 +1105,11 @@
     // গুগল শিট থেকে রিয়েলটাইম ডেটা সিঙ্ক করা
     function syncFromGoogleSheet() {
       if (!API_URL || API_URL.includes("your-script-id")) return;
-      const loader = document.getElementById("global-loading");
-      if (loader) loader.classList.remove("hidden");
 
       const callbackName = 'cb_sync_' + Math.round(100000 * Math.random());
       window[callbackName] = function(resp) {
         delete window[callbackName];
         if (script && script.parentNode) script.parentNode.removeChild(script);
-        if (loader) loader.classList.add("hidden");
 
         if (resp && resp.success && resp.data) {
           if (resp.data.members) {
@@ -1137,10 +1118,10 @@
               name: m.fullName || m.name,
               mobile: m.mobileNumber || m.mobile,
               nid: m.nidNumber || m.nid,
+              joiningDate: m.joiningDate || m.joinDate || "2026-01-01",
               monthlySavings: Number(m.monthlySavings || m.monthlyDPS) || 1000,
               totalSavings: Number(m.totalSavings) || 0,
-              shareCapital: Number(m.shareCapital) || 0,
-              photoUrl: m.photoUrl || ""
+              shareCapital: Number(m.shareCapital) || 0
             }));
           }
           if (resp.data.directors) {
@@ -1148,12 +1129,12 @@
               id: d.directorId || d.memberId || d.id,
               name: d.fullName || d.name,
               designation: d.designation || "পরিচালক",
+              joiningDate: d.joiningDate || d.joinDate || "2026-01-01",
               mobile: d.mobileNumber || d.mobile,
               nid: d.nidNumber || d.nid,
               shareCount: Number(d.shareCount) || 1,
               shareCapital: Number(d.shareCapital) || 0,
-              totalSavings: Number(d.totalSavings) || 0,
-              photoUrl: d.photoUrl || ""
+              totalSavings: Number(d.totalSavings) || 0
             }));
           }
           if (resp.data.cashbook && resp.data.cashbook.length > 0) {
@@ -1171,17 +1152,8 @@
               method: c.accountType || c.method || "নগদ (Cash)"
             }));
 
-            // ক্যাশবুক থেকে ক্যাশ ও ব্যাংক ব্যালেন্স রিয়েলটাইমে হিসাব
-            let cCash = 0, cBank = 0;
-            state.cashbook.forEach(c => {
-              const inAmt = Number(c.cashIn) || 0;
-              const outAmt = Number(c.cashOut) || 0;
-              const isBank = (c.method && c.method.includes("ব্যাংক"));
-              if (isBank) cBank += (inAmt - outAmt);
-              else cCash += (inAmt - outAmt);
-            });
-            state.cashBalance = cCash;
-            state.bankBalance = cBank;
+            // ক্যাশবুক থেকে ক্যাশ ও ব্যাংক ব্যালেন্স রিয়েলটাইমে নির্ভুল হিসাব
+            recalculateBalances();
           }
           if (resp.data.investments) {
             state.investments = resp.data.investments;
@@ -1194,10 +1166,21 @@
 
       const script = document.createElement('script');
       script.src = `${API_URL}?type=all&callback=${callbackName}&_t=${Date.now()}`;
-      script.onerror = function() {
-        if (loader) loader.classList.add("hidden");
-      };
       document.body.appendChild(script);
+    }
+
+    // ব্যালেন্স রিক্যালকুলেশন হেল্পার
+    function recalculateBalances() {
+      let cCash = 0, cBank = 0;
+      state.cashbook.forEach(c => {
+        const inAmt = Number(c.cashIn) || 0;
+        const outAmt = Number(c.cashOut) || 0;
+        const isBank = (c.method && c.method.includes("ব্যাংক"));
+        if (isBank) cBank += (inAmt - outAmt);
+        else cCash += (inAmt - outAmt);
+      });
+      state.cashBalance = cCash;
+      state.bankBalance = cBank;
     }
 
     function setupAuth() {
@@ -1210,21 +1193,19 @@
       }
     }
 
-    // সম্পূর্ণ CAPITAL লেটার লগইন লজিক
+    // লগইন ফাংশন
     function handleLogin(e) {
       e.preventDefault();
       const u = document.getElementById("login-username").value.trim().toUpperCase();
       const p = document.getElementById("login-password").value.trim().toUpperCase();
       const err = document.getElementById("login-error");
 
-      // Super Admin: USER ID = ADMIN, PASSWORD = ADMIN123
       if (u === "ADMIN" && (p === "ADMIN123" || p === "ADMIN")) {
         currentUser = { id: "ADMIN", name: "সুপার অ্যাডমিন", role: "ADMIN" };
         loginSuccess();
         return;
       }
 
-      // Member বা Director লগইন
       if (p === "123456" || p === "ADMIN123") {
         const d = state.directors.find(x => x.id && x.id.toString().trim().toUpperCase() === u);
         if (d) {
@@ -1247,7 +1228,7 @@
     function quickResetAdminPassword() {
       localStorage.removeItem("somiti_admin_pass");
       sessionStorage.removeItem("somiti_active_session");
-      alert("✓ অ্যাডমিন পাসওয়ার্ড সফলভাবে ডিফল্ট অবস্থায় রিসেট করা হয়েছে। অনুগ্রহ করে লগইন করুন।");
+      alert("✓ অ্যাডমিন পাসওয়ার্ড সফলভাবে ডিফল্ট অবস্থায় রিসেট করা হয়েছে। USER ID: ADMIN এবং PASSWORD: ADMIN123 দিয়ে লগইন করুন।");
       location.reload();
     }
 
@@ -1255,7 +1236,12 @@
       sessionStorage.setItem("somiti_active_session", JSON.stringify(currentUser));
       document.getElementById("full-login-screen").classList.add("hidden");
       document.getElementById("main-dashboard-app").classList.remove("hidden");
-      document.getElementById("user-display-badge").innerText = `${currentUser.name} (${currentUser.role})`;
+      
+      // Mobile ও Desktop উভয়ের জন্যই আইডি ও নাম দেখানো
+      document.getElementById("user-display-badge").innerHTML = `
+        <span class="truncate max-w-[110px] sm:max-w-none">${currentUser.name}</span>
+        <span class="text-[9px] text-emerald-300 font-mono sm:ml-1">(${currentUser.id})</span>
+      `;
 
       const isAdmin = currentUser.role === "ADMIN";
       document.getElementById("menu-item-invoice").classList.toggle("hidden", !isAdmin);
@@ -1321,35 +1307,7 @@
       }
     }
 
-    function previewSelectedPhoto(event) {
-      var file = event.target.files[0];
-      if (!file) return;
-
-      if (file.size > 2 * 1024 * 1024) {
-        alert("ছবির সাইজ সর্বোচ্চ ২ মেগাবাইট (2MB) হতে পারবে!");
-        event.target.value = "";
-        return;
-      }
-
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        document.getElementById("regPhotoBase64").value = e.target.result;
-        var preview = document.getElementById("regPhotoPreview");
-        preview.src = e.target.result;
-        preview.classList.remove("hidden");
-        document.getElementById("regPhotoPlaceholder").classList.add("hidden");
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function resetPhotoPreview() {
-      document.getElementById("regPhotoBase64").value = "";
-      document.getElementById("regPhotoInput").value = "";
-      document.getElementById("regPhotoPreview").src = "";
-      document.getElementById("regPhotoPreview").classList.add("hidden");
-      document.getElementById("regPhotoPlaceholder").classList.remove("hidden");
-    }
-
+    // ================= সদস্য ও পরিচালক হ্যান্ডলিং (যোগদানের তারিখ সহ) =================
     function openRegistrationModal(type) {
       if (!currentUser || currentUser.role !== "ADMIN") {
         return alert("শুধুমাত্র অ্যাডমিন নতুন সদস্য বা পরিচালক যোগ করতে পারবেন!");
@@ -1366,8 +1324,8 @@
       document.getElementById("regMobile").value = "";
       document.getElementById("regNid").value = "";
       document.getElementById("regAddress").value = "";
+      document.getElementById("regJoiningDate").value = new Date().toISOString().split('T')[0];
       document.getElementById("btn-save-reg").innerText = "সংরক্ষণ করুন";
-      resetPhotoPreview();
 
       openModal("registration-modal");
     }
@@ -1391,16 +1349,8 @@
       document.getElementById("regMobile").value = target.mobile || "";
       document.getElementById("regNid").value = target.nid || "";
       document.getElementById("regAddress").value = target.presentAddress || "";
+      document.getElementById("regJoiningDate").value = target.joiningDate || new Date().toISOString().split('T')[0];
       document.getElementById("btn-save-reg").innerText = "আপডেট করুন";
-
-      resetPhotoPreview();
-      if (target.photoUrl) {
-        document.getElementById("regPhotoBase64").value = target.photoUrl;
-        var preview = document.getElementById("regPhotoPreview");
-        preview.src = target.photoUrl;
-        preview.classList.remove("hidden");
-        document.getElementById("regPhotoPlaceholder").classList.add("hidden");
-      }
 
       if (isDirector) {
         document.getElementById("radio-reg-director").checked = true;
@@ -1445,7 +1395,7 @@
         if (isDirector) {
           document.getElementById("regAutoId").value = "DIR-" + (state.directors.length + 1).toString().padStart(3, '0');
         } else {
-          document.getElementById("regAutoId").value = "MEM-" + (state.members.length + 1).toString().padStart(4, '0');
+          document.getElementById("regAutoId").value = "MEM-" + (state.members.length + 1).toString().padStart(3, '0');
         }
       }
     }
@@ -1459,16 +1409,14 @@
       const mobile = document.getElementById("regMobile").value.trim();
       const nid = document.getElementById("regNid").value.trim();
       const address = document.getElementById("regAddress").value.trim();
+      const joiningDate = document.getElementById("regJoiningDate").value || new Date().toISOString().split('T')[0];
       const designation = isDirector ? document.getElementById("regDesignation").value : "সদস্য";
       const shareCount = isDirector ? (Number(document.getElementById("regShareCount").value) || 1) : 0;
       const monthlySavings = !isDirector ? (Number(document.getElementById("regMonthlySavings").value) || 1000) : 0;
-      const photoBase64 = document.getElementById("regPhotoBase64").value;
 
       const btn = document.getElementById("btn-save-reg");
       btn.innerText = "সংরক্ষণ হচ্ছে...";
       btn.disabled = true;
-
-      const photoSrc = photoBase64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
 
       if (isEdit) {
         const list = isDirector ? state.directors : state.members;
@@ -1478,7 +1426,7 @@
           target.mobile = mobile;
           target.nid = nid;
           target.presentAddress = address;
-          if (photoBase64) target.photoUrl = photoBase64;
+          target.joiningDate = joiningDate;
           if (isDirector) {
             target.designation = designation;
             target.shareCount = shareCount;
@@ -1491,13 +1439,13 @@
           state.directors.push({
             id: pId, name: name, designation: designation, mobile: mobile, nid: nid,
             shareCount: shareCount, shareCapital: 0, totalSavings: 0, presentAddress: address,
-            photoUrl: photoSrc
+            joiningDate: joiningDate
           });
         } else {
           state.members.push({
             id: pId, name: name, mobile: mobile, nid: nid,
             monthlySavings: monthlySavings, totalSavings: 0, shareCapital: 0, presentAddress: address,
-            photoUrl: photoSrc
+            joiningDate: joiningDate
           });
         }
       }
@@ -1515,6 +1463,7 @@
           fullName: name,
           mobileNumber: mobile,
           nidNumber: nid,
+          joiningDate: joiningDate,
           presentAddress: address,
           designation: designation,
           shareCount: shareCount,
@@ -1551,7 +1500,7 @@
       }
     }
 
-    // ================= ইনভয়েস সার্চ ও হিস্ট্রি ইঞ্জিন =================
+    // ================= ইনভয়েস সার্চ ও ভাউচার এডিট ইঞ্জিন =================
     function openInvoiceSearchModal() {
       openModal("invoice-search-modal");
       document.getElementById("invoiceSearchInput").value = "";
@@ -1587,14 +1536,44 @@
             <td class="p-2.5"><b>${c.personName || '-'}</b><br><span class="font-mono text-[10px] text-slate-400">${c.personId || ''}</span></td>
             <td class="p-2.5 text-slate-600">${c.category}</td>
             <td class="p-2.5 text-right font-bold ${c.cashIn ? 'text-emerald-600' : 'text-rose-600'}">${formatBDT(amt)}</td>
-            <td class="p-2.5 text-center">
+            <td class="p-2.5 text-center flex items-center justify-center gap-1.5">
               <button type="button" onclick="showInvoiceReceipt('${c.voucherNo}')" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded text-[11px] font-bold">
                 রিসিট
+              </button>
+              <button type="button" onclick="openEditInvoiceModal('${c.voucherNo}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded text-[11px] font-bold">
+                এডিট
               </button>
             </td>
           </tr>
         `;
       });
+    }
+
+    // ভাউচার এডিট করার মডাল ওপেন
+    function openEditInvoiceModal(vNo) {
+      const v = state.cashbook.find(x => x.voucherNo === vNo);
+      if (!v) return;
+
+      closeModal("invoice-search-modal");
+      updateCategoryOptions();
+
+      document.getElementById("invoiceIsEdit").value = "true";
+      document.getElementById("invoiceOldVoucherId").value = v.voucherNo;
+      document.getElementById("invoice-modal-title").innerText = `ভাউচার সংশোধন (${v.voucherNo})`;
+      document.getElementById("autoInvoiceVoucherId").value = v.voucherNo;
+      document.getElementById("invoiceDate").value = v.date;
+      document.getElementById("inputPersonId").value = v.personId || "";
+      document.getElementById("inputPersonName").value = v.personName || "";
+      document.getElementById("invoiceTransType").value = v.transType;
+      
+      updateCategoryOptions();
+      document.getElementById("invoiceCategory").value = v.category;
+      document.getElementById("invoiceAmount").value = (v.cashIn > 0 ? v.cashIn : v.cashOut);
+      document.getElementById("invoiceMethod").value = v.method;
+      document.getElementById("invoiceParticulars").value = v.particulars || "";
+      document.getElementById("btn-save-inv").innerText = "ভাউচার আপডেট করুন";
+
+      openModal("invoice-modal");
     }
 
     function showInvoiceReceipt(vNo) {
@@ -1612,16 +1591,20 @@
       openModal("receipt-modal");
     }
 
-    // ================= ইনভয়েস ও ভাউচার পোস্টিং (ডিফল্ট আজকের তারিখ সহ) =================
+    // ================= ইনভয়েস পোস্টিং ও এডিটিং সাবমিট =================
     function openInvoiceModal() {
+      document.getElementById("invoiceIsEdit").value = "false";
+      document.getElementById("invoiceOldVoucherId").value = "";
+      document.getElementById("invoice-modal-title").innerText = "ইনভয়েস ও ভাউচার পোস্টিং";
+      document.getElementById("btn-save-inv").innerText = "পোস্টিং নিশ্চিত করুন";
+      
       updateCategoryOptions();
       populatePersonDropdown();
       const count = (state.cashbook.length + 1).toString().padStart(4, '0');
       document.getElementById("autoInvoiceVoucherId").value = `V-${new Date().getFullYear()}-${count}`;
-      
-      // ডিফল্ট আজকের তারিখ সেট করা (ব্যবহারকারী চাইলে পেছনের যেকোনো তারিখ সিলেক্ট করতে পারবেন)
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById("invoiceDate").value = today;
+      document.getElementById("invoiceDate").value = new Date().toISOString().split('T')[0];
+      document.getElementById("invoiceAmount").value = "";
+      document.getElementById("invoiceParticulars").value = "";
       
       openModal("invoice-modal");
     }
@@ -1665,6 +1648,8 @@
 
     function submitInvoice(e) {
       e.preventDefault();
+      const isEdit = document.getElementById("invoiceIsEdit").value === "true";
+      const oldVoucherId = document.getElementById("invoiceOldVoucherId").value;
       const pId = document.getElementById("inputPersonId").value.trim();
       const pName = document.getElementById("inputPersonName").value.trim();
       const tType = document.getElementById("invoiceTransType").value;
@@ -1673,23 +1658,31 @@
       const method = document.getElementById("invoiceMethod").value;
       const note = document.getElementById("invoiceParticulars").value;
       const vNo = document.getElementById("autoInvoiceVoucherId").value;
-      
-      // ব্যবহারকারীর নির্বাচিত তারিখ (অথবা আজকের তারিখ)
       const date = document.getElementById("invoiceDate").value || new Date().toISOString().split('T')[0];
 
-      if (tType === "Cash In") {
-        if (method.includes("ব্যাংক")) state.bankBalance += amt;
-        else state.cashBalance += amt;
-      } else {
-        if (method.includes("ব্যাংক")) {
-          if (amt > state.bankBalance) return alert("ব্যাংকে পর্যাপ্ত অর্থ নেই!");
-          state.bankBalance -= amt;
-        } else {
-          if (amt > state.cashBalance) return alert("ক্যাশে পর্যাপ্ত অর্থ নেই!");
-          state.cashBalance -= amt;
+      // এডিট মোড হলে আগের এন্ট্রি সরানো এবং রিভার্স করা
+      if (isEdit && oldVoucherId) {
+        const oldIndex = state.cashbook.findIndex(x => x.voucherNo === oldVoucherId);
+        if (oldIndex !== -1) {
+          const oldV = state.cashbook[oldIndex];
+          // আগের ব্যালেন্স রিভার্স
+          if (oldV.personId) {
+            const om = state.members.find(x => x.id === oldV.personId);
+            const od = state.directors.find(x => x.id === oldV.personId);
+            const oldAmt = (oldV.cashIn > 0 ? oldV.cashIn : oldV.cashOut);
+            if (om) {
+              if (oldV.category.includes("সঞ্চয়")) om.totalSavings -= (oldV.transType === "Cash In" ? oldAmt : -oldAmt);
+              if (oldV.category.includes("শেয়ার")) om.shareCapital -= (oldV.transType === "Cash In" ? oldAmt : -oldAmt);
+            } else if (od) {
+              if (oldV.category.includes("শেয়ার")) od.shareCapital -= (oldV.transType === "Cash In" ? oldAmt : -oldAmt);
+              if (oldV.category.includes("সঞ্চয়")) od.totalSavings -= (oldV.transType === "Cash In" ? oldAmt : -oldAmt);
+            }
+          }
+          state.cashbook.splice(oldIndex, 1);
         }
       }
 
+      // নতুন ব্যালেন্স সমন্বয়
       if (pId) {
         const m = state.members.find(x => x.id === pId);
         const d = state.directors.find(x => x.id === pId);
@@ -1702,9 +1695,7 @@
         }
       }
 
-      const totalLiquid = state.cashBalance + state.bankBalance;
-      
-      // ক্যাশবুকে নির্বাচিত তারিখসহ তাৎক্ষণিক এন্ট্রি যুক্ত করা
+      // ক্যাশবুকে পুশ করা
       state.cashbook.push({
         date: date,
         voucherNo: vNo,
@@ -1715,8 +1706,18 @@
         particulars: note,
         cashIn: (tType === "Cash In" ? amt : 0),
         cashOut: (tType === "Cash Out" ? amt : 0),
-        balance: totalLiquid,
+        balance: 0,
         method: method
+      });
+
+      // ব্যালেন্স হিস্ট্রি পুনর্গণনা
+      recalculateBalances();
+      
+      // কিউমুলেটিভ ব্যালেন্স রান
+      let running = 0;
+      state.cashbook.forEach(c => {
+        running += (c.cashIn - c.cashOut);
+        c.balance = running;
       });
 
       saveStateToStorage();
@@ -1728,6 +1729,8 @@
         const queryParams = new URLSearchParams({
           action: "save_invoice",
           date: date,
+          voucherNo: vNo,
+          isEdit: isEdit ? "true" : "false",
           personId: pId,
           personName: pName,
           transType: tType,
@@ -2263,7 +2266,7 @@
       document.getElementById("stat-invest-count").innerText = `${state.investments.length} টি`;
     }
 
-    // পরিচালনা পর্ষদ রেন্ডার (ছবি, শেয়ার মূলধন এবং মোট মূলধনের শতভাগ % অনুপাত প্রদর্শন)
+    // পরিচালনা পর্ষদ রেন্ডার (ছবি, যোগদানের তারিখ ও শতভাগ % মূলধন অনুপাত প্রদর্শন)
     function renderDirectors() {
       const grid = document.getElementById("directors-grid");
       grid.innerHTML = '';
@@ -2273,7 +2276,7 @@
       state.directors.forEach(d => {
         const myCap = Number(d.shareCapital) || 0;
         const sharePct = totalCap > 0 ? ((myCap / totalCap) * 100).toFixed(2) : "0.00";
-        const photoSrc = getProfilePhotoUrl(d.id, d.name, d.photoUrl);
+        const photoSrc = getProfilePhotoUrl(d.id, d.name);
         const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=6366f1&color=fff`;
 
         grid.innerHTML += `
@@ -2288,13 +2291,16 @@
                 </button>
               </div>
             ` : ''}
-            <div class="flex items-center gap-3 mb-2 cursor-pointer" onclick="openLedger('${d.id}', '${d.name}', ${d.shareCapital}, '${photoSrc}')">
+            <div class="flex items-center gap-3 mb-2 cursor-pointer" onclick="openLedger('${d.id}', '${d.name}', ${d.shareCapital}, '${photoSrc}', '${d.joiningDate || '-'}')">
               <div class="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 overflow-hidden shrink-0 shadow-inner flex items-center justify-center">
                 <img src="${photoSrc}" alt="${d.name}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${fallbackAvatar}';" />
               </div>
               <div class="flex-1 min-w-0 pr-12">
                 <h4 class="font-bold text-slate-800 text-sm truncate">${d.name}</h4>
-                <span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-50 text-purple-700 border border-purple-200">${d.designation}</span>
+                <div class="flex items-center gap-1 mt-0.5">
+                  <span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-semibold bg-purple-50 text-purple-700 border border-purple-200">${d.designation}</span>
+                  <span class="text-[9px] text-slate-400 font-semibold"><i class="fa-regular fa-calendar-check mr-0.5"></i>${d.joiningDate || '-'}</span>
+                </div>
               </div>
             </div>
             <div class="text-xs border-t pt-2 space-y-1">
@@ -2307,7 +2313,7 @@
                 <b class="text-emerald-600">${formatBDT(d.shareCapital)}</b>
               </div>
               <div class="flex justify-between items-center text-[11px] text-purple-700 font-bold bg-purple-50 px-2 py-0.5 rounded-md mt-1">
-                <span>মোট মূলধনের অংশ:</span>
+                <span>মূলধনের অংশ:</span>
                 <span>${sharePct}%</span>
               </div>
               <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-1">
@@ -2319,18 +2325,19 @@
       });
     }
 
+    // সাধারণ সদস্য রেন্ডার (ছবি, যোগদানের তারিখ সহ)
     function renderMembers(list) {
       const tbody = document.getElementById("members-body");
       tbody.innerHTML = '';
       const isAdmin = currentUser && currentUser.role === "ADMIN";
 
       list.forEach(m => {
-        const photoSrc = getProfilePhotoUrl(m.id, m.name, m.photoUrl);
+        const photoSrc = getProfilePhotoUrl(m.id, m.name);
         const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=0d9488&color=fff`;
 
         tbody.innerHTML += `
           <tr class="hover:bg-teal-50/20">
-            <td class="p-3.5 cursor-pointer flex items-center gap-3" onclick="openLedger('${m.id}', '${m.name}', ${m.totalSavings}, '${photoSrc}')">
+            <td class="p-3.5 cursor-pointer flex items-center gap-3" onclick="openLedger('${m.id}', '${m.name}', ${m.totalSavings}, '${photoSrc}', '${m.joiningDate || '-'}')">
               <div class="w-9 h-9 rounded-xl bg-teal-50 border border-teal-100 overflow-hidden shrink-0 shadow-sm flex items-center justify-center">
                 <img src="${photoSrc}" alt="${m.name}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${fallbackAvatar}';" />
               </div>
@@ -2339,13 +2346,17 @@
                 <span class="font-mono text-[10px] text-slate-400">${m.id}</span>
               </div>
             </td>
-            <td class="p-3.5 font-mono">${m.mobile}</td>
-            <td class="p-3.5 font-mono">${m.nid}</td>
+            <td class="p-3.5 font-semibold text-slate-600">
+              <span class="inline-flex items-center gap-1 bg-slate-50 px-2 py-0.5 rounded-md border text-[11px]">
+                <i class="fa-regular fa-calendar-days text-slate-400"></i> ${m.joiningDate || '-'}
+              </span>
+            </td>
+            <td class="p-3.5 font-mono text-[11px]">${m.mobile}<br><span class="text-slate-400 text-[10px]">${m.nid}</span></td>
             <td class="p-3.5 text-right font-semibold">${formatBDT(m.monthlySavings)}</td>
             <td class="p-3.5 text-right font-bold text-emerald-600">${formatBDT(m.totalSavings)}</td>
             <td class="p-3.5 text-center">
               <div class="inline-flex items-center gap-1.5">
-                <button type="button" onclick="openLedger('${m.id}', '${m.name}', ${m.totalSavings}, '${photoSrc}')" class="px-2 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-[10px] cursor-pointer">পাসবুক</button>
+                <button type="button" onclick="openLedger('${m.id}', '${m.name}', ${m.totalSavings}, '${photoSrc}', '${m.joiningDate || '-'}')" class="px-2 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-[10px] cursor-pointer">পাসবুক</button>
                 ${isAdmin ? `
                   <button type="button" onclick="openEditModal('${m.id}', false)" title="এডিট" class="p-1 text-slate-400 hover:text-indigo-600 text-xs cursor-pointer"><i class="fa-solid fa-pen"></i></button>
                   <button type="button" onclick="deletePerson('${m.id}', false)" title="ডিলিট" class="p-1 text-slate-400 hover:text-rose-600 text-xs cursor-pointer"><i class="fa-solid fa-trash-can"></i></button>
@@ -2363,13 +2374,13 @@
       renderMembers(filtered);
     }
 
-    // ক্যাশবুক রেন্ডারিং
+    // ক্যাশবুক রেন্ডারিং (ভাউচার এডিট অ্যাকশন সহ)
     function renderCashbook() {
       const tbody = document.getElementById("cashbook-body");
       tbody.innerHTML = '';
       
       if (!state.cashbook || state.cashbook.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">ক্যাশবইয়ে এখনও কোনো লেনদেন এন্ট্রি নেই। নতুন ইনভয়েস পোস্ট করলেই এখানে স্বয়ংক্রিয়ভাবে যোগ হবে।</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" class="p-4 text-center text-slate-400">ক্যাশবইয়ে এখনও কোনো লেনদেন এন্ট্রি নেই। নতুন ইনভয়েস পোস্ট করলেই এখানে স্বয়ংক্রিয়ভাবে যোগ হবে।</td></tr>';
         return;
       }
 
@@ -2384,14 +2395,21 @@
             <td class="p-3 text-right font-bold text-emerald-600">${c.cashIn ? formatBDT(c.cashIn) : '-'}</td>
             <td class="p-3 text-right font-bold text-rose-600">${c.cashOut ? formatBDT(c.cashOut) : '-'}</td>
             <td class="p-3 text-right font-bold text-slate-800">${formatBDT(c.balance)}</td>
+            <td class="p-3 text-center">
+              <div class="inline-flex items-center gap-1">
+                <button type="button" onclick="showInvoiceReceipt('${c.voucherNo}')" class="p-1 text-indigo-600 hover:text-indigo-800 text-xs" title="রিসিট ভিউ"><i class="fa-solid fa-receipt"></i></button>
+                <button type="button" onclick="openEditInvoiceModal('${c.voucherNo}')" class="p-1 text-amber-600 hover:text-amber-800 text-xs" title="ভাউচার এডিট"><i class="fa-solid fa-pen-to-square"></i></button>
+              </div>
+            </td>
           </tr>
         `;
       });
     }
 
-    function openLedger(id, name, balance, photoUrl) {
+    function openLedger(id, name, balance, photoUrl, joiningDate) {
       document.getElementById("led-name").innerText = name;
       document.getElementById("led-id").innerText = id;
+      document.getElementById("led-joindate").innerText = joiningDate || '-';
       document.getElementById("led-balance").innerText = formatBDT(balance);
 
       const pImg = document.getElementById("led-photo");
