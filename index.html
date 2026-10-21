@@ -74,7 +74,7 @@
         </div>
 
         <p class="text-[10px] text-center text-slate-400 pt-2 border-t border-slate-100">
-          অননুমোদিত প্রবেশ আইনত দণ্ডনীয়। আইডি ও পাসওয়ার্ড সুরক্ষিত রাখুন।
+          অননুমোদিত প্রবেশ আইনত দণ্ডনীয়। আপনার আইডি ও পাসওয়ার্ড সুরক্ষিত রাখুন।
         </p>
       </form>
     </div>
@@ -83,7 +83,7 @@
   <!-- ================= ২. মূল অ্যাপ্লিকেশন ড্যাশবোর্ড ================= -->
   <div id="main-dashboard-app" class="hidden flex-1 flex flex-col justify-between">
     
-    <!-- Top Header (Mobile & Desktop e Id o Name dekhanor jonno update kora) -->
+    <!-- Top Header -->
     <header class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white sticky top-0 z-40 shadow-lg border-b border-indigo-900 no-print">
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 min-h-[5rem] flex items-center justify-between gap-2">
         
@@ -104,7 +104,6 @@
         </div>
 
         <div class="flex items-center gap-1.5 shrink-0">
-          <!-- Mobile o Desktop e ID & Name Show Kora -->
           <div id="user-display-badge" class="inline-flex flex-col sm:flex-row items-end sm:items-center text-[10px] sm:text-xs bg-indigo-900/90 border border-indigo-700 px-2 sm:px-3 py-1 rounded-xl font-bold text-amber-300"></div>
           
           <button type="button" onclick="handleLogout()" class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-rose-600 hover:bg-rose-500 text-white text-[11px] sm:text-xs font-bold rounded-xl shadow transition flex items-center gap-1 active:scale-95 cursor-pointer" title="প্রস্থান">
@@ -501,7 +500,7 @@
         </div>
       </div>
 
-      <!-- ================= VIEW 6: মাসভিত্তিক আর্থিক চূড়ান্ত রিপোর্ট ================= -->
+      <!-- ================= VIEW 6: মাসভিত্তিক আর্থিক চূড়ান্ত রিপোর্ট (ব্যালেন্স শিট ব্রেকডাউন সহ) ================= -->
       <div id="view-financial-reports" class="hidden space-y-6">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
@@ -556,17 +555,62 @@
             </div>
           </div>
 
+          <!-- ব্যালেন্স শিট (উদ্বৃত্তপত্র): সম্পদ ও দায় ব্রেকডাউন সহ -->
           <div class="bg-white rounded-2xl border p-6 shadow-sm">
-            <h3 class="text-base font-bold text-center text-slate-800 mb-2">উদ্বৃত্তপত্র (Balance Sheet)</h3>
-            <p id="bs-report-subtitle" class="text-center text-xs text-slate-400 mb-4">আর্থিক স্থিতিপত্র</p>
-            <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto text-xs">
-              <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
-                <p class="text-slate-500 font-bold">মোট পরিসম্পদ (Assets):</p>
-                <h4 id="bs-total-assets" class="font-bold text-indigo-700 text-base mt-1">৳ ০</h4>
+            <h3 class="text-base font-bold text-center text-slate-800 mb-1">উদ্বৃত্তপত্র (Balance Sheet)</h3>
+            <p id="bs-report-subtitle" class="text-center text-xs text-slate-400 mb-5">সম্পদ ও দায়সমূহের আর্থিক স্থিতিপত্র</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto text-xs">
+              <!-- সম্পদ সমূহ (Assets) -->
+              <div class="p-4 bg-indigo-50/70 rounded-2xl border border-indigo-100 flex flex-col justify-between space-y-2">
+                <div class="border-b border-indigo-200 pb-1.5 flex justify-between items-center">
+                  <span class="font-bold text-indigo-950 text-xs">পরিসম্পদ সমূহ (Total Assets)</span>
+                  <i class="fa-solid fa-coins text-indigo-600"></i>
+                </div>
+                <div class="space-y-1.5 text-slate-600 text-[11px]">
+                  <div class="flex justify-between">
+                    <span>হাতে নগদ (Cash in Hand):</span>
+                    <b class="text-slate-800" id="bs-cash-hand">৳ ০</b>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>ব্যাংক তহবিল স্থিতি (Bank Balance):</span>
+                    <b class="text-blue-700" id="bs-bank-balance">৳ ০</b>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>নিয়োজিত বিনিয়োগ (Investments):</span>
+                    <b class="text-purple-700" id="bs-invest-amount">৳ ০</b>
+                  </div>
+                </div>
+                <div class="border-t border-indigo-200 pt-2 flex justify-between items-center font-bold text-sm">
+                  <span class="text-indigo-950">সর্বমোট পরিসম্পদ:</span>
+                  <span id="bs-total-assets" class="text-indigo-700 font-extrabold text-base">৳ ০</span>
+                </div>
               </div>
-              <div class="p-4 bg-purple-50 rounded-xl border border-purple-100">
-                <p class="text-slate-500 font-bold">মোট দায় ও মূলধন (Liabilities):</p>
-                <h4 id="bs-total-liabilities" class="font-bold text-purple-700 text-base mt-1">৳ ০</h4>
+
+              <!-- দায় ও মূলধন (Liabilities & Equity) -->
+              <div class="p-4 bg-purple-50/70 rounded-2xl border border-purple-100 flex flex-col justify-between space-y-2">
+                <div class="border-b border-purple-200 pb-1.5 flex justify-between items-center">
+                  <span class="font-bold text-purple-950 text-xs">দায় ও মূলধন (Liabilities & Equity)</span>
+                  <i class="fa-solid fa-scale-balanced text-purple-600"></i>
+                </div>
+                <div class="space-y-1.5 text-slate-600 text-[11px]">
+                  <div class="flex justify-between">
+                    <span>পরিচালক মূলধন (Share Capital):</span>
+                    <b class="text-slate-800" id="bs-dir-capital">৳ ০</b>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>সদস্য সঞ্চয় স্থিতি (Savings):</span>
+                    <b class="text-teal-700" id="bs-mem-savings">৳ ০</b>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>অর্জিত নিট মুনাফা (Net Surplus):</span>
+                    <b class="text-emerald-700" id="bs-net-surplus">৳ ০</b>
+                  </div>
+                </div>
+                <div class="border-t border-purple-200 pt-2 flex justify-between items-center font-bold text-sm">
+                  <span class="text-purple-950">সর্বমোট মূলধন ও দায়:</span>
+                  <span id="bs-total-liabilities" class="text-purple-700 font-extrabold text-base">৳ ০</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1152,7 +1196,6 @@
               method: c.accountType || c.method || "নগদ (Cash)"
             }));
 
-            // ক্যাশবুক থেকে ক্যাশ ও ব্যাংক ব্যালেন্স রিয়েলটাইমে নির্ভুল হিসাব
             recalculateBalances();
           }
           if (resp.data.investments) {
@@ -1193,7 +1236,6 @@
       }
     }
 
-    // লগইন ফাংশন
     function handleLogin(e) {
       e.preventDefault();
       const u = document.getElementById("login-username").value.trim().toUpperCase();
@@ -1237,7 +1279,6 @@
       document.getElementById("full-login-screen").classList.add("hidden");
       document.getElementById("main-dashboard-app").classList.remove("hidden");
       
-      // Mobile ও Desktop উভয়ের জন্যই আইডি ও নাম দেখানো
       document.getElementById("user-display-badge").innerHTML = `
         <span class="truncate max-w-[110px] sm:max-w-none">${currentUser.name}</span>
         <span class="text-[9px] text-emerald-300 font-mono sm:ml-1">(${currentUser.id})</span>
@@ -1307,7 +1348,7 @@
       }
     }
 
-    // ================= সদস্য ও পরিচালক হ্যান্ডলিং (যোগদানের তারিখ সহ) =================
+    // ================= সদস্য ও পরিচালক হ্যান্ডলিং =================
     function openRegistrationModal(type) {
       if (!currentUser || currentUser.role !== "ADMIN") {
         return alert("শুধুমাত্র অ্যাডমিন নতুন সদস্য বা পরিচালক যোগ করতে পারবেন!");
@@ -1483,14 +1524,6 @@
 
         const script = document.createElement('script');
         script.src = `${API_URL}?${queryParams.toString()}`;
-        script.onerror = function() {
-          delete window[callbackName];
-          if (script && script.parentNode) script.parentNode.removeChild(script);
-          alert("✓ লোকাল ডেটাবেজে সংরক্ষিত হয়েছে।");
-          btn.innerText = "সংরক্ষণ করুন";
-          btn.disabled = false;
-          closeModal("registration-modal");
-        };
         document.body.appendChild(script);
       } else {
         alert(isEdit ? "✓ তথ্য সফলভাবে আপডেট হয়েছে!" : "✓ নতুন এন্ট্রি সফলভাবে সংরক্ষিত হয়েছে!");
@@ -1549,7 +1582,6 @@
       });
     }
 
-    // ভাউচার এডিট করার মডাল ওপেন
     function openEditInvoiceModal(vNo) {
       const v = state.cashbook.find(x => x.voucherNo === vNo);
       if (!v) return;
@@ -1660,12 +1692,11 @@
       const vNo = document.getElementById("autoInvoiceVoucherId").value;
       const date = document.getElementById("invoiceDate").value || new Date().toISOString().split('T')[0];
 
-      // এডিট মোড হলে আগের এন্ট্রি সরানো এবং রিভার্স করা
+      // এডিট মোড হলে আগের রেকর্ড রিভার্স করা
       if (isEdit && oldVoucherId) {
         const oldIndex = state.cashbook.findIndex(x => x.voucherNo === oldVoucherId);
         if (oldIndex !== -1) {
           const oldV = state.cashbook[oldIndex];
-          // আগের ব্যালেন্স রিভার্স
           if (oldV.personId) {
             const om = state.members.find(x => x.id === oldV.personId);
             const od = state.directors.find(x => x.id === oldV.personId);
@@ -1695,7 +1726,6 @@
         }
       }
 
-      // ক্যাশবুকে পুশ করা
       state.cashbook.push({
         date: date,
         voucherNo: vNo,
@@ -1710,10 +1740,8 @@
         method: method
       });
 
-      // ব্যালেন্স হিস্ট্রি পুনর্গণনা
       recalculateBalances();
       
-      // কিউমুলেটিভ ব্যালেন্স রান
       let running = 0;
       state.cashbook.forEach(c => {
         running += (c.cashIn - c.cashOut);
@@ -2078,7 +2106,7 @@
       }
     }
 
-    // ================= মাসভিত্তিক রিপোর্ট জেনারেটর =================
+    // ================= মাসভিত্তিক রিপোর্ট জেনারেটর (ব্যালেন্স শিট ব্রেকডাউন সহ) =================
     function resetReportMonth() {
       document.getElementById("reportFilterMonth").value = "";
       renderMonthlyReports();
@@ -2147,6 +2175,7 @@
       }
       document.getElementById("monthly-p-total").innerText = formatBDT(totalOut);
 
+      // লাভ-ক্ষতি হিসাব
       let periodProfit = 0;
       if (filterMonth) {
         const profitTxs = filteredCashbook.filter(t => t.category.includes("মুনাফা") || t.category.includes("লাভ"));
@@ -2156,12 +2185,26 @@
       }
       document.getElementById("pl-net-profit").innerText = formatBDT(periodProfit);
 
-      let totalLiquid = state.cashBalance + state.bankBalance;
-      let totalInv = state.investments.reduce((a, b) => a + (Number(b.amount) || 0), 0);
-      let totalEquity = state.directors.reduce((a, b) => a + (Number(b.shareCapital) || 0), 0) + state.members.reduce((a, b) => a + (Number(b.totalSavings) || 0), 0);
+      // ব্যালেন্স শিট: সম্পদ ও দায় পূর্ণাঙ্গ হিসাব
+      let currentLiquidCash = state.cashBalance;
+      let currentBankBal = state.bankBalance;
+      let totalInvested = state.investments.reduce((a, b) => a + (Number(b.amount) || 0), 0);
+      let totalAssets = currentLiquidCash + currentBankBal + totalInvested;
 
-      document.getElementById("bs-total-assets").innerText = formatBDT(totalLiquid + totalInv);
-      document.getElementById("bs-total-liabilities").innerText = formatBDT(totalEquity);
+      let dirCapital = state.directors.reduce((a, b) => a + (Number(b.shareCapital) || 0), 0);
+      let memSavings = state.members.reduce((a, b) => a + (Number(b.totalSavings) || 0), 0);
+      let totalLiabilities = dirCapital + memSavings + periodProfit;
+
+      // সাব-ক্যাটাগরি ব্রেকডাউন ডাটা বাইন্ডিং
+      document.getElementById("bs-cash-hand").innerText = formatBDT(currentLiquidCash);
+      document.getElementById("bs-bank-balance").innerText = formatBDT(currentBankBal);
+      document.getElementById("bs-invest-amount").innerText = formatBDT(totalInvested);
+      document.getElementById("bs-dir-capital").innerText = formatBDT(dirCapital);
+      document.getElementById("bs-mem-savings").innerText = formatBDT(memSavings);
+      document.getElementById("bs-net-surplus").innerText = formatBDT(periodProfit);
+
+      document.getElementById("bs-total-assets").innerText = formatBDT(totalAssets);
+      document.getElementById("bs-total-liabilities").innerText = formatBDT(totalLiabilities);
     }
 
     // ================= সার্বিক UI রেন্ডারিং =================
@@ -2266,7 +2309,6 @@
       document.getElementById("stat-invest-count").innerText = `${state.investments.length} টি`;
     }
 
-    // পরিচালনা পর্ষদ রেন্ডার (ছবি, যোগদানের তারিখ ও শতভাগ % মূলধন অনুপাত প্রদর্শন)
     function renderDirectors() {
       const grid = document.getElementById("directors-grid");
       grid.innerHTML = '';
@@ -2325,7 +2367,6 @@
       });
     }
 
-    // সাধারণ সদস্য রেন্ডার (ছবি, যোগদানের তারিখ সহ)
     function renderMembers(list) {
       const tbody = document.getElementById("members-body");
       tbody.innerHTML = '';
@@ -2374,7 +2415,6 @@
       renderMembers(filtered);
     }
 
-    // ক্যাশবুক রেন্ডারিং (ভাউচার এডিট অ্যাকশন সহ)
     function renderCashbook() {
       const tbody = document.getElementById("cashbook-body");
       tbody.innerHTML = '';
