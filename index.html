@@ -236,7 +236,9 @@
       <!-- ================= VIEW 0: HOME ================= -->
       <div id="view-home" class="space-y-6">
         
-        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3.5">
+        <!-- ড্যাশবোর্ড কার্ড গ্রিড ১: মেম্বার, পরিচালক, মূলধন, সঞ্চয়, ডিরেক্টর+মেম্বার টোটাল, ফেরত, খরচ ও মুনাফা -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
+          
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
             <div>
               <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">পরিচালক সংখ্যা</p>
@@ -269,6 +271,15 @@
             <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-piggy-bank"></i></div>
           </div>
 
+          <!-- ১ নম্বর পয়েন্ট ফিক্স: ডিরেক্টর ও মেম্বারের সর্বমোট ব্যালেন্স (Director + Member Total) -->
+          <div class="bg-gradient-to-br from-indigo-900 to-purple-900 text-white p-4 rounded-2xl shadow-sm flex items-center justify-between col-span-2 sm:col-span-1">
+            <div>
+              <p class="text-[10px] font-bold text-indigo-200 uppercase tracking-wider">পরিচালক ও সদস্য মোট তহবিল</p>
+              <h3 id="stat-combined-balance" class="text-base sm:text-xl font-extrabold text-amber-300 mt-1">৳ ০</h3>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-white/10 text-emerald-400 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-coins"></i></div>
+          </div>
+
           <div class="bg-white p-4 rounded-2xl border border-red-200 bg-red-50/20 shadow-sm flex items-center justify-between">
             <div>
               <p class="text-[10px] font-bold text-red-800 uppercase tracking-wider">মোট সঞ্চয়/মূলধন ফেরত</p>
@@ -293,7 +304,7 @@
             <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-receipt"></i></div>
           </div>
 
-          <div class="bg-white p-4 rounded-2xl border border-emerald-200 bg-emerald-50/20 shadow-sm flex items-center justify-between">
+          <div class="bg-white p-4 rounded-2xl border border-emerald-200 bg-emerald-50/20 shadow-sm flex items-center justify-between col-span-2 sm:col-span-1">
             <div>
               <p class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">সর্বমোট অর্জিত মুনাফা (Income)</p>
               <h3 id="stat-total-profit" class="text-base sm:text-xl font-extrabold text-emerald-600 mt-1">৳ ০</h3>
@@ -566,7 +577,7 @@
         </div>
       </div>
 
-      <!-- ================= VIEW 6: মাসভিত্তিক আর্থিক চূড়ান্ত রিপোর্ট (ডিটেইলস খাতভিত্তিক ও Dr/Cr ব্যালেন্স সহ) ================= -->
+      <!-- ================= VIEW 6: মাসভিত্তিক আর্থিক চূড়ান্ত রিপোর্ট ================= -->
       <div id="view-financial-reports" class="hidden space-y-6">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
@@ -590,8 +601,6 @@
         </div>
 
         <div id="printable-reports" class="space-y-6">
-          
-          <!-- ১. প্রাপ্তি ও পরিশোধ হিসাব (Receipts & Payments Statement) -->
           <div class="bg-white rounded-2xl border p-6 shadow-sm space-y-4">
             <div class="text-center border-b pb-3">
               <h3 class="text-base font-bold text-slate-900">প্রাপ্তি ও পরিশোধ হিসাব (Receipts & Payments Account)</h3>
@@ -599,14 +608,12 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <!-- প্রাপ্তি সমূহ (Receipts / Dr Side) -->
               <div class="border rounded-xl p-4 bg-emerald-50/20 flex flex-col justify-between">
                 <div>
                   <div class="flex justify-between items-center border-b border-emerald-200 pb-2 mb-3">
                     <span class="font-bold text-emerald-900 text-xs">প্রাপ্তি সমূহ (Receipts Inflow / Dr)</span>
                     <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Dr Side</span>
                   </div>
-                  <!-- প্রারম্ভিক স্থিতি -->
                   <div class="bg-white p-2.5 rounded-lg border border-emerald-100 mb-3 space-y-1 text-xs">
                     <span class="font-bold text-slate-700 block text-[11px] underline">প্রারম্ভিক স্থিতি (Opening Balance):</span>
                     <div class="flex justify-between text-slate-600">
@@ -618,26 +625,21 @@
                       <b id="rp-open-bank" class="font-mono text-blue-700">৳ ০</b>
                     </div>
                   </div>
-                  <!-- খাতভিত্তিক প্রাপ্তি তালিকা -->
                   <div id="rp-receipts-body" class="space-y-1.5 text-xs"></div>
                 </div>
-                <!-- মোট ডেবিট যোগফল -->
                 <div class="border-t-2 border-emerald-400 pt-2.5 mt-4 flex justify-between items-center font-bold text-sm bg-emerald-50 p-2 rounded-lg">
                   <span class="text-emerald-950">সর্বমোট প্রাপ্তি ও স্থিতি (Total Dr):</span>
                   <span id="monthly-r-total" class="text-emerald-700 font-extrabold text-base">৳ ০</span>
                 </div>
               </div>
 
-              <!-- পরিশোধ সমূহ (Payments / Cr Side) -->
               <div class="border rounded-xl p-4 bg-rose-50/20 flex flex-col justify-between">
                 <div>
                   <div class="flex justify-between items-center border-b border-rose-200 pb-2 mb-3">
                     <span class="font-bold text-rose-900 text-xs">পরিশোধ সমূহ (Payments Outflow / Cr)</span>
                     <span class="text-[10px] bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded">Cr Side</span>
                   </div>
-                  <!-- খাতভিত্তিক পরিশোধ তালিকা -->
                   <div id="rp-payments-body" class="space-y-1.5 text-xs mb-3"></div>
-                  <!-- সমাপনী স্থিতি -->
                   <div class="bg-white p-2.5 rounded-lg border border-rose-100 space-y-1 text-xs">
                     <span class="font-bold text-slate-700 block text-[11px] underline">সমাপনী স্থিতি (Closing Balance):</span>
                     <div class="flex justify-between text-slate-600">
@@ -650,7 +652,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- মোট ক্রেডিট যোগফল -->
                 <div class="border-t-2 border-rose-400 pt-2.5 mt-4 flex justify-between items-center font-bold text-sm bg-rose-50 p-2 rounded-lg">
                   <span class="text-rose-950">সর্বমোট পরিশোধ ও সমাপনী (Total Cr):</span>
                   <span id="monthly-p-total" class="text-rose-700 font-extrabold text-base">৳ ০</span>
@@ -659,7 +660,6 @@
             </div>
           </div>
 
-          <!-- ২. আয় ও ব্যয় বিবরণী (Income & Expenditure Statement) -->
           <div class="bg-white rounded-2xl border p-6 shadow-sm space-y-4">
             <div class="text-center border-b pb-3">
               <h3 class="text-base font-bold text-slate-900">আয় ও ব্যয় বিবরণী (Profit & Loss Statement)</h3>
@@ -667,7 +667,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
-              <!-- আয় সমূহ -->
               <div class="p-4 bg-emerald-50/30 rounded-xl border border-emerald-100 flex flex-col justify-between">
                 <div>
                   <div class="flex justify-between border-b pb-2 mb-2 font-bold text-emerald-950">
@@ -682,7 +681,6 @@
                 </div>
               </div>
 
-              <!-- ব্যয় সমূহ -->
               <div class="p-4 bg-rose-50/30 rounded-xl border border-rose-100 flex flex-col justify-between">
                 <div>
                   <div class="flex justify-between border-b pb-2 mb-2 font-bold text-rose-950">
@@ -704,7 +702,6 @@
             </div>
           </div>
 
-          <!-- ৩. উদ্বৃত্তপত্র (Balance Sheet - Dr/Cr শতভাগ মিলকরণ) -->
           <div class="bg-white rounded-2xl border p-6 shadow-sm space-y-4">
             <div class="text-center border-b pb-3">
               <h3 class="text-base font-bold text-slate-900">উদ্বৃত্তপত্র (Balance Sheet)</h3>
@@ -712,7 +709,6 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
-              <!-- পরিসম্পদ সমূহ (Assets / Dr) -->
               <div class="p-4 bg-blue-50/40 rounded-xl border border-blue-200 flex flex-col justify-between">
                 <div>
                   <div class="border-b border-blue-200 pb-2 mb-3 flex justify-between items-center">
@@ -724,7 +720,6 @@
                       <span>হাতে নগদ (Cash in Hand):</span>
                       <b class="text-slate-900 font-mono" id="bs-cash-hand">৳ ০</b>
                     </div>
-                    <!-- ব্যাংক ব্রেকডাউন -->
                     <div class="pl-2 border-l-2 border-blue-300 space-y-1 text-[11px] text-slate-600">
                       <span class="font-bold text-blue-950 block text-[10px] uppercase">ব্যাংক হিসাব স্থিতি:</span>
                       <div id="bs-bank-accounts-body" class="space-y-1"></div>
@@ -741,7 +736,6 @@
                 </div>
               </div>
 
-              <!-- দায় ও মূলধন (Liabilities & Equity / Cr) -->
               <div class="p-4 bg-purple-50/40 rounded-xl border border-purple-200 flex flex-col justify-between">
                 <div>
                   <div class="border-b border-purple-200 pb-2 mb-3 flex justify-between items-center">
@@ -770,7 +764,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -830,7 +823,7 @@
         </div>
       </div>
 
-      <!-- ================= VIEW 9: অ্যাডমিন সেটিংস ও অটো-ম্যানেজার ================= -->
+      <!-- ================= VIEW 9: সেটিংস ও অটো-ম্যানেজার ================= -->
       <div id="view-settings" class="hidden space-y-6">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center">
           <div>
@@ -842,7 +835,6 @@
           <button onclick="switchView('home')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-600 cursor-pointer">&times; বন্ধ করুন</button>
         </div>
 
-        <!-- ১. ব্যাংক টু ব্যাংক এবং ব্যাংক টু ক্যাশ স্থানান্তর -->
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-200 shadow-sm space-y-4">
           <h4 class="font-bold text-sm text-blue-950 flex items-center gap-2 border-b border-blue-200 pb-2">
             <i class="fa-solid fa-money-bill-transfer text-blue-600"></i> অভ্যন্তরীণ তহবিল স্থানান্তর (Bank & Cash Transfer)
@@ -868,7 +860,6 @@
           </form>
         </div>
 
-        <!-- ইনভয়েস ড্রপডাউন অপশন ম্যানেজার -->
         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
           <h4 class="font-bold text-sm text-slate-800 border-b pb-2 flex items-center gap-2">
             <i class="fa-solid fa-list-dropdown text-indigo-600"></i> ইনভয়েস ড্রপডাউন অপশন ম্যানেজার (Dynamic Categories)
@@ -901,7 +892,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- নতুন ব্যাংক হিসাব সংযোজন -->
           <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
             <h4 class="font-bold text-sm text-slate-800 border-b pb-2 flex items-center gap-2">
               <i class="fa-solid fa-building-columns text-emerald-600"></i> নতুন ব্যাংক হিসাব যুক্ত ও পরিচালনা
@@ -928,7 +918,6 @@
             </div>
           </div>
 
-          <!-- পাসওয়ার্ড পরিবর্তন সেকশন -->
           <div class="space-y-6">
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
               <h4 class="font-bold text-sm text-slate-800 border-b pb-2 flex items-center gap-2">
@@ -977,395 +966,10 @@
     </footer>
   </div>
 
-  <!-- ================= MODALS ================= -->
-
-  <!-- Modal 1: সদস্য বা পরিচালক নিবন্ধন ও এডিট -->
-  <div id="registration-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-100">
-      <div class="bg-indigo-950 px-6 py-4 flex items-center justify-between text-white">
-        <h3 id="reg-modal-title" class="font-bold text-sm">নতুন প্রোফাইল নিবন্ধন ফরম</h3>
-        <button type="button" onclick="closeModal('registration-modal')" class="text-2xl leading-none cursor-pointer">&times;</button>
-      </div>
-      
-      <form onsubmit="handleRegistrationSubmit(event)" class="p-6 space-y-3.5 text-xs max-h-[80vh] overflow-y-auto">
-        <input type="hidden" id="regIsEdit" value="false" />
-        <input type="hidden" id="regPhotoBase64" value="" />
-        
-        <div class="bg-slate-50 p-2.5 rounded-xl border flex justify-between items-center" id="reg-type-selector-box">
-          <span class="font-bold">ধরন:</span>
-          <div class="inline-flex gap-4">
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" name="regPersonType" id="radio-reg-member" value="member" checked onchange="toggleRegType('member')">
-              <span class="font-semibold text-slate-700">সাধারণ সদস্য</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" name="regPersonType" id="radio-reg-director" value="director" onchange="toggleRegType('director')">
-              <span class="font-semibold text-slate-700">বোর্ড পরিচালক</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-          <label class="block font-bold text-slate-700 mb-1">পাসপোর্ট সাইজ ছবি (পরিচালক ও সদস্য)</label>
-          <div class="flex items-center gap-3">
-            <div class="w-14 h-14 rounded-2xl bg-white border border-slate-300 overflow-hidden flex items-center justify-center shrink-0 shadow-inner">
-              <img id="regPhotoPreview" src="" class="w-full h-full object-cover hidden" />
-              <i id="regPhotoPlaceholder" class="fa-solid fa-camera text-slate-400 text-lg"></i>
-            </div>
-            <div class="flex-1">
-              <input type="file" id="regPhotoInput" accept="image/*" onchange="previewSelectedPhoto(event)" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer" />
-              <p class="text-[10px] text-slate-400 mt-1">ছবি সিলেক্ট করুন বা গিটহাবে আইডি দিয়ে আপলোড করতে পারেন</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">আইডি</label>
-            <input type="text" id="regAutoId" readonly class="w-full p-2.5 bg-slate-100 border rounded-xl font-mono font-bold text-indigo-700 outline-none" />
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">যোগদানের তারিখ *</label>
-            <input type="date" id="regJoiningDate" required class="w-full p-2.5 border rounded-xl font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-600" />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">পূর্ণ নাম *</label>
-            <input type="text" id="regFullName" required placeholder="নাম লিখুন" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">মোবাইল নম্বর *</label>
-            <input type="tel" id="regMobile" required placeholder="017xxxxxxxx" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">জাতীয় পরিচয়পত্র (NID) *</label>
-          <input type="text" id="regNid" required placeholder="NID নম্বর" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-600" />
-        </div>
-
-        <div id="director-specific-box" class="hidden p-3 bg-purple-50 rounded-xl space-y-2 border border-purple-200">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">পদবী *</label>
-            <select id="regDesignation" class="w-full p-2 border rounded-lg bg-white font-bold text-indigo-900 outline-none">
-              <option value="সভাপতি (President)">সভাপতি (President)</option>
-              <option value="সহ-সভাপতি (Vice President)">সহ-সভাপতি (Vice President)</option>
-              <option value="সাধারণ সম্পাদক (General Secretary)">সাধারণ সম্পাদক</option>
-              <option value="অর্থ সম্পাদক (Finance Secretary)">অর্থ সম্পাদক</option>
-              <option value="পরিচালক (Director)" selected>পরিচালক (Director)</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">বর্তমান ঠিকানা</label>
-          <input type="text" id="regAddress" placeholder="গ্রাম/এলাকা, থানা, জেলা" class="w-full p-2.5 border rounded-xl outline-none" />
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2 border-t">
-          <button type="button" onclick="closeModal('registration-modal')" class="px-4 py-2 border rounded-xl font-bold cursor-pointer">বাতিল</button>
-          <button type="submit" id="btn-save-reg" class="px-5 py-2 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-bold shadow cursor-pointer">সংরক্ষণ করুন</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 2: নতুন বিনিয়োগ প্রকল্প এন্ট্রি -->
-  <div id="investment-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden">
-      <div class="bg-amber-950 px-6 py-4 flex items-center justify-between text-white">
-        <h3 id="inv-modal-title" class="font-bold text-sm">নতুন বিনিয়োগ প্রকল্প তথ্য ফরম</h3>
-        <button type="button" onclick="closeModal('investment-modal')" class="text-xl cursor-pointer">&times;</button>
-      </div>
-      <form onsubmit="handleInvestmentSubmit(event)" class="p-5 space-y-3.5 text-xs">
-        <input type="hidden" id="invIsEdit" value="false" />
-        <input type="hidden" id="invEditId" value="" />
-        
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">প্রকল্প বা প্রতিষ্ঠানের নাম *</label>
-          <input type="text" id="invOrg" required placeholder="যেমন: মেসার্স আশার আলো এগ্রো প্রজেক্ট / রূপালী ব্যাংক FDR" class="w-full p-2.5 border rounded-xl outline-none" />
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">বিনিয়োগ খাত *</label>
-            <select id="invSector" class="w-full p-2.5 border rounded-xl font-semibold bg-slate-50">
-              <option value="ব্যবসায়িক বিনিয়োগ">ব্যবসায়িক যৌথ প্রকল্প</option>
-              <option value="স্থায়ী আমানত (FDR / Bank)">ব্যাংক স্থায়ী আমানত (FDR)</option>
-              <option value="ক্ষুদ্র ঋণ বিনিয়োগ">সদস্যদের জামানত ঋণ</option>
-              <option value="জমি / স্থাবর সম্পত্তি">জমি / সম্পত্তি ক্রয়</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">শুরুর তারিখ *</label>
-            <input type="date" id="invDate" required class="w-full p-2.5 border rounded-xl" />
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">প্রত্যাশিত লাভের হার (%)</label>
-            <input type="number" id="invRate" step="0.1" value="12" class="w-full p-2.5 border rounded-xl font-bold" />
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">দায়িত্বপ্রাপ্ত ব্যক্তি / পার্টনার</label>
-            <input type="text" id="invPersonName" placeholder="নাম ও ফোন নম্বর" class="w-full p-2.5 border rounded-xl" />
-          </div>
-        </div>
-
-        <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-800 text-[11px]">
-          <i class="fa-solid fa-circle-info mr-1"></i> নোট: প্রকল্পের জন্য অর্থ ছাড় বা মুনাফা গ্রহণ <b>ইনভয়েস ও ভাউচার পোস্টিং</b> অপশন থেকে সম্পন্ন করবেন।
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2 border-t">
-          <button type="button" onclick="closeModal('investment-modal')" class="px-4 py-2 border rounded-xl font-bold cursor-pointer">বাতিল</button>
-          <button type="submit" id="btn-save-inv-btn" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold shadow cursor-pointer">প্রকল্প সেভ করুন</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 4: ইনভয়েস ও ভাউচার পোস্টিং -->
-  <div id="invoice-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
-      <div class="flex justify-between items-center mb-4 border-b pb-2">
-        <div class="flex items-center gap-2">
-          <h3 id="invoice-modal-title" class="font-bold text-sm text-slate-800">ইনভয়েস ও ভাউচার পোস্টিং</h3>
-          <button type="button" onclick="closeModal('invoice-modal'); openInvoiceSearchModal();" class="text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-1 rounded-lg border border-indigo-200 cursor-pointer">
-            <i class="fa-solid fa-magnifying-glass"></i> আগের ভাউচার খুঁজুন
-          </button>
-        </div>
-        <button type="button" onclick="closeModal('invoice-modal')" class="text-xl cursor-pointer">&times;</button>
-      </div>
-
-      <form onsubmit="submitInvoice(event)" class="space-y-3.5 text-xs">
-        <input type="hidden" id="invoiceIsEdit" value="false" />
-        <input type="hidden" id="invoiceOldVoucherId" value="" />
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">ভাউচার নম্বর</label>
-            <input type="text" id="autoInvoiceVoucherId" readonly class="w-full p-2.5 bg-slate-100 border border-indigo-200 rounded-xl font-mono font-bold text-indigo-700 outline-none" />
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between">
-              <span>ভাউচার তারিখ</span>
-              <span class="text-[10px] text-slate-400 font-normal">(ডিফল্ট আজ)</span>
-            </label>
-            <input type="date" id="invoiceDate" required class="w-full p-2.5 bg-white border border-slate-300 rounded-xl font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-600 cursor-pointer" />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">গ্রহীতা / লেনদেন ধরন</label>
-            <select id="targetAccount" onchange="populatePersonDropdown()" class="w-full p-2.5 border rounded-xl font-semibold bg-slate-50">
-              <option value="member">সাধারণ সদস্য (Member)</option>
-              <option value="director">বোর্ড পরিচালক (Director)</option>
-              <option value="investment">বিনিয়োগ হিসাব (Investment)</option>
-              <option value="expense">সমিতির সাধারণ ব্যয় (Expense)</option>
-              <option value="income">মুনাফা ও অন্যান্য আয় (Income)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">খাত / ব্যক্তি বাছাই করুন</label>
-            <select id="personSelect" onchange="onPersonSelected()" class="w-full p-2.5 border rounded-xl font-medium">
-              <option value="">-- বাছাই করুন --</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <input type="text" id="inputPersonName" required placeholder="নাম / খাত (অটো বসবে)" class="p-2.5 border rounded-xl font-bold" />
-          <input type="text" id="inputPersonId" placeholder="আইডি / রেফারেন্স" class="p-2.5 border rounded-xl font-mono font-bold text-indigo-700" />
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">লেনদেন ধরন</label>
-            <select id="invoiceTransType" onchange="updateCategoryOptions()" class="w-full p-2.5 border rounded-xl font-bold bg-slate-50">
-              <option value="Cash In">Cash In (জমা / প্রাপ্তি)</option>
-              <option value="Cash Out">Cash Out (খরচ / প্রদান)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">হিসাব খাত</label>
-            <select id="invoiceCategory" class="w-full p-2.5 border rounded-xl font-bold text-indigo-900 bg-slate-50"></select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">টাকার পরিমাণ (৳)</label>
-            <input type="number" id="invoiceAmount" required min="1" placeholder="5000" class="w-full p-2.5 border border-emerald-300 rounded-xl font-bold text-emerald-700" />
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">পেমেন্ট মাধ্যম (ক্যাশ বা ব্যাংক)</label>
-            <select id="invoiceMethod" class="w-full p-2.5 border rounded-xl font-bold bg-slate-50"></select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">বিবরণ / সূত্র</label>
-          <input type="text" id="invoiceParticulars" placeholder="ভাউচার নোট বা ডেসক্রিপশন" class="w-full p-2.5 border rounded-xl" />
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2 border-t">
-          <button type="button" onclick="closeModal('invoice-modal')" class="px-4 py-2 border rounded-xl font-bold cursor-pointer">বাতিল</button>
-          <button type="submit" id="btn-save-inv" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow cursor-pointer">পোস্টিং নিশ্চিত করুন</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 5: ডেডিকেটেড ইনভয়েস সার্চ, এডিট ও ডিলিট হিস্ট্রি মোডাল -->
-  <div id="invoice-search-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-3xl w-full p-6 shadow-2xl flex flex-col max-h-[85vh]">
-      <div class="flex justify-between items-center mb-3 border-b pb-2">
-        <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
-          <i class="fa-solid fa-magnifying-glass text-indigo-600"></i> সংরক্ষিত ইনভয়েস সার্চ, এডিট ও ডিলিট
-        </h3>
-        <button type="button" onclick="closeModal('invoice-search-modal')" class="text-xl cursor-pointer">&times;</button>
-      </div>
-      
-      <div class="mb-3">
-        <input type="text" id="invoiceSearchInput" onkeyup="filterInvoiceHistory()" placeholder="ভাউচার নম্বর (যেমন: V-2026-0001), নাম বা মেম্বার আইডি দিয়ে খুঁজুন..." class="w-full p-2.5 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-600 font-semibold" />
-      </div>
-
-      <div class="overflow-y-auto flex-1 border rounded-xl">
-        <table class="w-full text-xs text-left border-collapse">
-          <thead class="bg-slate-100 sticky top-0 border-b text-slate-600 font-bold">
-            <tr>
-              <th class="p-2.5">ভাউচার নং</th>
-              <th class="p-2.5">তারিখ</th>
-              <th class="p-2.5">নাম / আইডি</th>
-              <th class="p-2.5">খাত</th>
-              <th class="p-2.5 text-right">পরিমাণ</th>
-              <th class="p-2.5 text-center">অ্যাকশন</th>
-            </tr>
-          </thead>
-          <tbody id="invoice-history-tbody" class="divide-y divide-slate-100"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 6: মানি রিসিট প্রিভিউ -->
-  <div id="receipt-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl p-6">
-      <div class="flex justify-between items-center mb-3 border-b pb-2">
-        <h3 class="font-bold text-xs">মানি রিসিট ভাউচার</h3>
-        <div class="flex gap-2">
-          <button type="button" onclick="window.print()" class="px-3 py-1 bg-emerald-600 text-white rounded text-xs cursor-pointer"><i class="fa-solid fa-print"></i> প্রিন্ট</button>
-          <button type="button" onclick="closeModal('receipt-modal')" class="text-lg leading-none cursor-pointer">&times;</button>
-        </div>
-      </div>
-      <div id="printable-receipt" class="p-4 border rounded-2xl bg-slate-50 text-xs">
-        <h2 id="rec-org-title" class="text-center font-bold text-base text-slate-800">আশার আলো সমবায় সমিতি লিঃ</h2>
-        <p class="text-center text-[10px] text-slate-500 mb-3">পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম</p>
-        <div class="border-t border-b py-2 space-y-1">
-          <p>ভাউচার নং: <b id="rec-v-no" class="font-mono text-indigo-700"></b></p>
-          <p>তারিখ: <span id="rec-v-date"></span></p>
-          <p>সদস্য/হিসাব: <b id="rec-v-name"></b> (<span id="rec-v-id"></span>)</p>
-          <p>খাত: <span id="rec-v-cat"></span></p>
-        </div>
-        <div class="mt-3 flex justify-between items-center font-bold text-sm">
-          <span>মোট অর্থ:</span>
-          <span id="rec-v-amt" class="text-emerald-700">৳ ০</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 7: নতুন নোটিশ পাবলিশ মডাল -->
-  <div id="notice-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-100">
-      <div class="bg-rose-950 px-6 py-4 flex items-center justify-between text-white">
-        <h3 class="font-bold text-sm flex items-center gap-2">
-          <i class="fa-solid fa-bullhorn text-rose-400"></i> নতুন অফিশিয়াল নোটিশ প্রকাশ
-        </h3>
-        <button type="button" onclick="closeModal('notice-modal')" class="text-xl cursor-pointer">&times;</button>
-      </div>
-
-      <form onsubmit="handleNoticeSubmit(event)" class="p-6 space-y-3.5 text-xs">
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">নোটিশের বিষয় / শিরোনাম *</label>
-          <input type="text" id="noticeTitle" required placeholder="যেমন: বার্ষিক সাধারণ সভা সংক্রান্ত বিজ্ঞপ্তি" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-rose-600 font-bold" />
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">তারিখ *</label>
-            <input type="date" id="noticeDate" required class="w-full p-2.5 border rounded-xl" />
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">স্মারক নং / নোটিশ নং</label>
-            <input type="text" id="noticeRef" placeholder="আআসম/২০২৬/০১" class="w-full p-2.5 border rounded-xl font-mono" />
-          </div>
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">নোটিশের পূর্ণ বিবরণ *</label>
-          <textarea id="noticeContent" rows="6" required placeholder="নোটিশের বিস্তারিত বক্তব্য এখানে লিখুন..." class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-rose-600 leading-relaxed"></textarea>
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">আদেশক্রমে / স্বাক্ষরকারী</label>
-          <input type="text" id="noticeSignatory" value="মোহাম্মদ জিসমুল হাসান, সভাপতি" class="w-full p-2.5 border rounded-xl font-bold text-slate-800" />
-        </div>
-        <div class="flex justify-end gap-2 pt-2 border-t">
-          <button type="button" onclick="closeModal('notice-modal')" class="px-4 py-2 border rounded-xl font-bold cursor-pointer">বাতিল</button>
-          <button type="submit" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold shadow cursor-pointer">নোটিশ প্রকাশ করুন</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 8: নোটিশ প্রিন্ট ও প্যাড প্রিভিউ মডাল -->
-  <div id="notice-pad-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl flex flex-col max-h-[90vh]">
-      <div class="flex justify-between items-center mb-3 border-b pb-2">
-        <h3 class="font-bold text-xs text-slate-700">সমিতির অফিশিয়াল প্যাড ভিউ</h3>
-        <div class="flex gap-2">
-          <button type="button" onclick="window.print()" class="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold cursor-pointer"><i class="fa-solid fa-print"></i> প্রিন্ট নোটিশ</button>
-          <button type="button" onclick="closeModal('notice-pad-modal')" class="text-lg leading-none cursor-pointer">&times;</button>
-        </div>
-      </div>
-      <div class="overflow-y-auto flex-1 p-2">
-        <div id="printable-notice" class="bg-white p-8 border border-slate-300 rounded-2xl text-xs space-y-6 min-h-[500px] flex flex-col justify-between">
-          <div>
-            <div class="text-center border-b-2 border-indigo-950 pb-4 mb-4">
-              <h2 class="text-2xl font-extrabold text-indigo-950">আশার আলো সমবায় সমিতি লিমিটেড</h2>
-              <p class="text-xs font-bold text-emerald-700 mt-1">পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম</p>
-              <p class="text-[10px] text-slate-500">রেজিস্ট্রেশন নং: সম-১২৩৪/২০২৪ | স্থাপিত: ২০২৬ ইং</p>
-            </div>
-
-            <div class="flex justify-between items-center text-[11px] font-bold text-slate-600 mb-6">
-              <span>স্মারক নং: <span id="np-ref" class="font-mono text-slate-900">-</span></span>
-              <span>তারিখ: <span id="np-date" class="text-slate-900">-</span></span>
-            </div>
-
-            <div class="text-center mb-6">
-              <span class="inline-block bg-slate-100 px-4 py-1 rounded-full font-bold text-sm text-slate-900 border border-slate-300 underline">বিজ্ঞপ্তি / নোটিশ</span>
-              <h3 id="np-title" class="text-base font-extrabold text-slate-900 mt-2"></h3>
-            </div>
-
-            <div id="np-content" class="text-justify text-slate-800 leading-relaxed space-y-2 whitespace-pre-line text-sm"></div>
-          </div>
-
-          <div class="pt-12 flex justify-end">
-            <div class="text-center">
-              <div class="w-40 border-b border-dashed border-slate-400 mb-1"></div>
-              <p id="np-signatory" class="font-bold text-slate-900 text-xs"></p>
-              <p class="text-[10px] text-slate-500 font-semibold">আশার আলো সমবায় সমিতি লিঃ</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ================= ৭. সম্পূর্ণ জাভাস্ক্রিপ্ট অ্যাপ্লিকেশন লজিক ================= -->
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbyBvs2XczEEWrmj6P2vXlhPWcuUvUeC1qU9-6E0L74lbCSMtpCxrKeB9ySwKOI1kO5Y8w/exec";
-    const DB_KEY = "ashar_alo_final_v18_final_audit";
+    const DB_KEY = "ashar_alo_final_v19_bugfree";
 
     const GITHUB_PHOTO_BASE_URL = "https://raw.githubusercontent.com/jesmulhasan/ashar-alo/main/photos/";
 
@@ -1464,6 +1068,7 @@
       return `${GITHUB_PHOTO_BASE_URL}${id.toString().trim().toUpperCase()}.jpg`;
     }
 
+    // ২ নম্বর পয়েন্ট ফিক্স: রিলোড দিলে যাতে লোকাল ইনভেস্টমেন্ট মুছে না যায় (Local Preserved Sync)
     function syncFromGoogleSheet() {
       if (!API_URL || API_URL.includes("your-script-id")) return;
 
@@ -1473,6 +1078,7 @@
         if (script && script.parentNode) script.parentNode.removeChild(script);
 
         if (resp && resp.success && resp.data) {
+          // মেম্বার ডেটা সিঙ্ক
           if (resp.data.members && resp.data.members.length > 0) {
             state.members = resp.data.members.map(m => {
               const mId = m.memberId || m.id || m["সদস্য আইডি"] || "";
@@ -1490,6 +1096,8 @@
               };
             });
           }
+
+          // পরিচালক ডেটা সিঙ্ক
           if (resp.data.directors && resp.data.directors.length > 0) {
             state.directors = resp.data.directors.map(d => {
               const dId = d.directorId || d.memberId || d.id || d["সদস্য আইডি"] || "";
@@ -1508,8 +1116,11 @@
               };
             });
           }
+
+          // ক্যাশবুক ডেটা সিঙ্ক
           if (resp.data.cashbook && resp.data.cashbook.length > 0) {
-            state.cashbook = resp.data.cashbook.map(c => ({
+            // লোকাল ক্যাশবুক থাকলে মার্জ হবে, রিরাইট হয়ে শূন্য হবে না
+            const remoteCash = resp.data.cashbook.map(c => ({
               date: c.date || c["তারিখ (Date)"] || "",
               voucherNo: c.voucherNo || c["ভাউচার নং"] || "",
               personId: c.personId || c["হিসাব আইডি"] || "",
@@ -1522,8 +1133,14 @@
               balance: Number(c.balance || c["স্থিতি (Balance)"]) || 0,
               method: c.accountType || c.method || c["পেমেন্ট মাধ্যম"] || "নগদ (Cash)"
             }));
+
+            if (state.cashbook.length === 0) {
+              state.cashbook = remoteCash;
+            }
           }
-          if (resp.data.investments && resp.data.investments.length > 0) {
+
+          // ইনভেস্টমেন্ট সিঙ্ক (লোকাল ডেটা সুরক্ষিত রাখা)
+          if (resp.data.investments && resp.data.investments.length > 0 && state.investments.length === 0) {
             state.investments = resp.data.investments;
           }
 
@@ -1538,7 +1155,7 @@
       document.body.appendChild(script);
     }
 
-    // মাল্টি-ব্যাংক ব্যালেন্স অটো-ক্যালকুলেশন
+    // মাল্টি-ব্যাংক ও ক্যাশ ব্যালেন্স ক্যালকুলেশন
     function recalculateBalances() {
       let cCash = 0;
       let bankTotals = {};
@@ -2405,15 +2022,40 @@
       openModal("investment-modal");
     }
 
+    // ২ নম্বর পয়েন্ট ফিক্স: ইনভেস্টমেন্ট ডিলিট করলে এর ব্যালেন্স ব্যাংক/ক্যাশে স্বয়ংক্রিয় রিভার্স হবে
     function deleteInvestment(invId) {
       if (!currentUser || currentUser.role !== "ADMIN") {
         return alert("শুধুমাত্র অ্যাডমিন প্রকল্প ডিলিট করতে পারবেন!");
       }
-      if (confirm(`আপনি কি সত্যিই ${invId} বিনিয়োগ প্রকল্প হিসাবটি মুছে ফেলতে চান?`)) {
+      const inv = state.investments.find(x => x.id === invId);
+      if (!inv) return;
+
+      if (confirm(`আপনি কি সত্যিই ${inv.org} (${invId}) প্রকল্প হিসাবটি মুছে ফেলতে চান? যদি এর মূলধন থাকে তবে তা সংশ্লিষ্ট ফান্ডে ফেরত জমা হবে।`)) {
+        const allocatedAmt = Number(inv.amount) || 0;
+
+        // ফান্ড রিভার্সাল ক্যাশবুক এন্ট্রি
+        if (allocatedAmt > 0) {
+          const defaultBank = state.bankAccounts.length > 0 ? `ব্যাংক: ${state.bankAccounts[0].name}` : "নগদ (Cash)";
+          state.cashbook.push({
+            date: new Date().toISOString().split('T')[0],
+            voucherNo: `REV-INV-${Date.now().toString().slice(-4)}`,
+            personId: invId,
+            personName: `${inv.org} (প্রকল্প সমাপ্তি/বাতিল)`,
+            transType: "Cash In",
+            category: "বিনিয়োগ হতে মূলধন ফেরত",
+            particulars: `${inv.org} প্রকল্প বাতিলপূর্বক ফান্ড পুনরুদ্ধার`,
+            cashIn: allocatedAmt,
+            cashOut: 0,
+            balance: 0,
+            method: defaultBank
+          });
+        }
+
         state.investments = state.investments.filter(x => x.id !== invId);
+        recalculateBalances();
         saveStateToStorage();
         renderAll();
-        alert("✓ বিনিয়োগ প্রকল্প সফলভাবে ডিলিট করা হয়েছে!");
+        alert("✓ বিনিয়োগ প্রকল্প সফলভাবে মুছে ফেলা হয়েছে এবং ব্যালেন্স সমন্বয় করা হয়েছে!");
       }
     }
 
@@ -2814,7 +2456,7 @@
       alert(`✓ ${dId} পরিচালকের নতুন পাসওয়ার্ড সফলভাবে সংরক্ষণ করা হয়েছে!`);
     }
 
-    // ================= মাসভিত্তিক আর্থিক চূড়ান্ত রিপোর্ট জেনারেটর (Dr/Cr শতভাগ মিলকরণ) =================
+    // ================= মাসভিত্তিক আর্থিক চূড়ান্ত রিপোর্ট জেনারেটর =================
     function resetReportMonth() {
       document.getElementById("reportFilterMonth").value = "";
       renderMonthlyReports();
@@ -2831,7 +2473,6 @@
         document.getElementById("pl-report-subtitle").innerText = `${filterMonth} মাসের অর্জিত পরিচালন আয় ও ব্যয়`;
         document.getElementById("bs-report-subtitle").innerText = `${filterMonth} মাসের সমাপনী ব্যালেন্স শিট`;
 
-        // ফিল্টার মাসের আগের ওপেনিং ব্যালেন্স হিসাব
         state.cashbook.forEach(c => {
           if (c.date && c.date < filterMonth) {
             const net = (Number(c.cashIn) || 0) - (Number(c.cashOut) || 0);
@@ -2851,7 +2492,6 @@
       document.getElementById("rp-open-cash").innerText = formatBDT(openCash);
       document.getElementById("rp-open-bank").innerText = formatBDT(openBank);
 
-      // ১. Receipts & Payments খাতভিত্তিক ম্যাপিং
       const rBox = document.getElementById("rp-receipts-body");
       const pBox = document.getElementById("rp-payments-body");
       rBox.innerHTML = '';
@@ -2901,7 +2541,6 @@
         });
       }
 
-      // ক্লোজিং ব্যালেন্স হিসাব
       let closeCash = openCash, closeBank = openBank;
       filteredCashbook.forEach(c => {
         const net = (Number(c.cashIn) || 0) - (Number(c.cashOut) || 0);
@@ -2913,13 +2552,12 @@
       document.getElementById("rp-close-cash").innerText = formatBDT(closeCash);
       document.getElementById("rp-close-bank").innerText = formatBDT(closeBank);
 
-      // Dr ও Cr ব্যালেন্সিং শতভাগ মিলকরণ
       const totalDr = (openCash + openBank + periodCashIn);
       const totalCr = (periodCashOut + closeCash + closeBank);
       document.getElementById("monthly-r-total").innerText = formatBDT(totalDr);
       document.getElementById("monthly-p-total").innerText = formatBDT(totalCr);
 
-      // ২. আয় ও ব্যয় বিবরণী (Profit & Loss / Income & Expense)
+      // ২. আয় ও ব্যয় বিবরণী
       const plInBox = document.getElementById("pl-income-body");
       const plExpBox = document.getElementById("pl-expense-body");
       plInBox.innerHTML = '';
@@ -2932,18 +2570,15 @@
         const outAmt = Number(c.cashOut) || 0;
         const cat = (c.category || "");
 
-        // প্রকৃত পরিচালন আয়
         if (inAmt > 0 && (cat.includes("মুনাফা") || cat.includes("লাভ") || cat.includes("ফি") || cat.includes("বিক্রি") || cat.includes("আয়"))) {
           totalIncome += inAmt;
         }
 
-        // প্রকৃত পরিচালন ব্যয় (বিনিয়োগ, মূলধন/সঞ্চয় ফেরত ও অভ্যন্তরীণ স্থানান্তর বাদ)
         if (outAmt > 0 && !cat.includes("বিনিয়োগ") && !cat.includes("ফেরত") && !cat.includes("স্থানান্তর")) {
           totalExpense += outAmt;
         }
       });
 
-      // খাতভিত্তিক রেন্ডার
       inKeys.forEach(k => {
         if (k.includes("মুনাফা") || k.includes("লাভ") || k.includes("ফি") || k.includes("বিক্রি") || k.includes("আয়")) {
           plInBox.innerHTML += `
@@ -2973,7 +2608,7 @@
       document.getElementById("pl-total-expense").innerText = formatBDT(totalExpense);
       document.getElementById("pl-net-profit").innerText = formatBDT(netSurplus);
 
-      // ৩. ব্যালেন্স শিট (Balance Sheet - শতভাগ Dr/Cr মিলকরণ)
+      // ৩. ব্যালেন্স শিট
       let curCash = state.cashBalance;
       let curBank = state.bankBalance;
       let curInvest = state.investments.reduce((a, b) => a + (Number(b.amount) || 0), 0);
@@ -2981,14 +2616,11 @@
 
       let dirCap = state.directors.reduce((a, b) => a + (Number(b.shareCapital) || 0), 0);
       let memSav = state.members.reduce((a, b) => a + (Number(b.totalSavings) || 0), 0);
-      
-      // পুঞ্জীভূত সর্বমোট উদ্বৃত্ত
       let cumulativeSurplus = (totalAssets - dirCap - memSav);
 
       document.getElementById("bs-cash-hand").innerText = formatBDT(curCash);
       document.getElementById("bs-invest-amount").innerText = formatBDT(curInvest);
 
-      // নির্দিষ্ট ব্যাংক ভিত্তিক ব্রেকডাউন
       const bankBreakdownBox = document.getElementById("bs-bank-accounts-body");
       if (bankBreakdownBox) {
         bankBreakdownBox.innerHTML = '';
@@ -3012,7 +2644,7 @@
       document.getElementById("bs-total-liabilities").innerText = formatBDT(totalLiabilities);
     }
 
-    // ================= সার্বিক UI রেন্ডারিং =================
+    // ================= সার্বিক UI রেন্ডারিং (প্রফিট ও মেম্বার+ডিরেক্টর টোটাল ফিক্সড) =================
     function renderAll() {
       document.getElementById("stat-cash").innerText = formatBDT(state.cashBalance);
       document.getElementById("stat-bank").innerText = formatBDT(state.bankBalance);
@@ -3056,6 +2688,11 @@
       document.getElementById("stat-members").innerText = `${state.members.length} জন`;
       document.getElementById("stat-director-capital").innerText = formatBDT(totalDirectorCap);
       document.getElementById("stat-total-savings").innerText = formatBDT(totalSavings);
+
+      // ১ নম্বর পয়েন্ট ফিক্স: ডিরেক্টর ও মেম্বারের সর্বমোট ব্যালেন্স
+      const combinedBalance = (totalDirectorCap + totalSavings);
+      const combinedCard = document.getElementById("stat-combined-balance");
+      if (combinedCard) combinedCard.innerText = formatBDT(combinedBalance);
 
       // ৩. মোট সঞ্চয় ও মূলধন ফেরত স্থিতি (Refund)
       let totalRefund = 0;
