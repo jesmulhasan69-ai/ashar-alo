@@ -17,14 +17,26 @@
     body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
     
     @media print {
-      body * { visibility: hidden; }
-      #printable-receipt, #printable-receipt *, #printable-ledger, #printable-ledger *, #printable-reports, #printable-reports *, #printable-notice, #printable-notice * { visibility: visible; }
+      body * { visibility: hidden !important; }
+      #printable-receipt, #printable-receipt *, 
+      #printable-ledger, #printable-ledger *, 
+      #printable-reports, #printable-reports *, 
+      #printable-notice, #printable-notice * { 
+        visibility: visible !important; 
+      }
       #printable-receipt, #printable-ledger, #printable-reports, #printable-notice {
-        position: absolute; left: 0; top: 0; width: 100%;
-        margin: 0; padding: 20px; box-shadow: none !important; border: none !important;
+        position: absolute !important; 
+        left: 0 !important; 
+        top: 0 !important; 
+        width: 100% !important;
+        margin: 0 !important; 
+        padding: 15px !important; 
+        box-shadow: none !important; 
+        border: none !important;
+        background: white !important;
+        color: black !important;
       }
       .no-print { display: none !important; }
-      .page-break { page-break-after: always; }
     }
   </style>
 </head>
@@ -311,6 +323,7 @@
           </div>
         </div>
 
+        <!-- হাতে নগদ (Cash in Hand) Blue Card -->
         <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white p-5 rounded-2xl shadow-md flex items-center justify-between">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-2xl text-emerald-300 border border-white/20">
@@ -326,6 +339,7 @@
           </span>
         </div>
 
+        <!-- মাল্টি-ব্যাংক ফান্ড ব্রেকডাউন সেকশন -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
           <div class="flex justify-between items-center border-b border-slate-100 pb-2">
             <h3 class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2">
@@ -559,7 +573,7 @@
         </div>
       </div>
 
-      <!-- ================= VIEW 5: INDIVIDUAL LEDGER & PASSBOOK (প্রফেশনাল লেজার ভিউ) ================= -->
+      <!-- ================= VIEW 5: INDIVIDUAL LEDGER & PASSBOOK ================= -->
       <div id="view-ledger" class="hidden bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
         <div class="border-b pb-4 flex justify-between items-center">
           <div>
@@ -569,13 +583,14 @@
             <p class="text-xs text-slate-500">তারিখভিত্তিক ধারাবাহিক হিসাব ও মাসভিত্তিক গ্রুপ লেজার স্টেটমেন্ট</p>
           </div>
           <div class="flex items-center gap-2">
-            <button type="button" onclick="window.print()" class="px-3.5 py-1.5 bg-indigo-50 text-indigo-700 rounded-xl text-xs font-bold border border-indigo-200"><i class="fa-solid fa-print"></i> পাসবুক প্রিন্ট</button>
+            <button type="button" onclick="printPassbookDirectly()" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow cursor-pointer flex items-center gap-1.5">
+              <i class="fa-solid fa-print"></i> লেজার প্রিন্ট করুন
+            </button>
             <button type="button" onclick="switchView('home')" class="px-3.5 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold">&times; বন্ধ করুন</button>
           </div>
         </div>
 
         <div id="printable-ledger" class="space-y-4">
-          <!-- লেজার হেডার কার্ড -->
           <div class="p-5 border-2 border-indigo-900 rounded-2xl bg-slate-50 text-xs">
             <div class="text-center border-b pb-3 mb-3">
               <h2 class="text-xl font-extrabold text-indigo-950">আশার আলো সমবায় সমিতি লিমিটেড</h2>
@@ -590,7 +605,6 @@
             </div>
           </div>
 
-          <!-- তারিখভিত্তিক ধারাবাহিক লেজার টেবিল -->
           <div class="overflow-x-auto border rounded-xl">
             <table class="w-full text-xs text-left border-collapse">
               <thead class="bg-indigo-950 text-white font-bold">
@@ -739,7 +753,7 @@
             </div>
           </div>
 
-          <!-- ৩. উদ্বৃত্তপত্র (Balance Sheet - সমাপনী নগদ ও ব্যাংক তহবিল সহ ১০০% ব্যালেন্সড) -->
+          <!-- ৩. উদ্বৃত্তপত্র (Balance Sheet) -->
           <div class="bg-white rounded-2xl border p-6 shadow-sm space-y-4">
             <div class="text-center border-b pb-3">
               <h3 class="text-base font-bold text-slate-900">উদ্বৃত্তপত্র (Balance Sheet)</h3>
@@ -747,7 +761,6 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
-              <!-- Assets -->
               <div class="p-4 bg-blue-50/40 rounded-xl border border-blue-200 flex flex-col justify-between">
                 <div>
                   <div class="border-b border-blue-200 pb-2 mb-3 flex justify-between items-center">
@@ -775,7 +788,6 @@
                 </div>
               </div>
 
-              <!-- Liabilities & Equity -->
               <div class="p-4 bg-purple-50/40 rounded-xl border border-purple-200 flex flex-col justify-between">
                 <div>
                   <div class="border-b border-purple-200 pb-2 mb-3 flex justify-between items-center">
@@ -804,7 +816,6 @@
               </div>
             </div>
 
-            <!-- ব্যালেন্স শিট গরমিল ইন্ডিকেটর -->
             <div id="bs-diff-box" class="hidden p-3 bg-rose-50 border border-rose-300 rounded-xl text-rose-900 text-xs font-bold flex justify-between items-center">
               <span><i class="fa-solid fa-circle-exclamation mr-1"></i> পরিসম্পদ ও দায়ের অমিল / গরমিল (Balance Difference):</span>
               <span id="bs-diff-amt" class="font-mono text-sm text-rose-700">৳ ০</span>
@@ -1025,9 +1036,9 @@
     </footer>
   </div>
 
-  <!-- ================= MODALS (Tailwind Overlay - 100% Guaranteed Open) ================= -->
+  <!-- ================= MODALS ================= -->
 
-  <!-- Modal 1: সদস্য বা পরিচালক নিবন্ধন ও এডিট (ইমেইল অপশন সহ) -->
+  <!-- Modal 1: সদস্য বা পরিচালক নিবন্ধন ও এডিট -->
   <div id="registration-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-100">
       <div class="bg-indigo-950 px-6 py-4 flex items-center justify-between text-white">
@@ -1089,7 +1100,6 @@
           </div>
         </div>
 
-        <!-- জিমেইল / ইমেইল অ্যাড্রেস অপশন (ইনভয়েস ভাউচার পাঠানোর জন্য) -->
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">জাতীয় পরিচয়পত্র (NID) *</label>
@@ -1097,7 +1107,7 @@
           </div>
           <div>
             <label class="block font-bold text-indigo-900 mb-1 flex items-center justify-between">
-              <span>ইমেইল / Gmail (ভাউচার পাঠানোর জন্য)</span>
+              <span>ইমেইল / Gmail</span>
               <span class="text-[9px] text-emerald-600 font-bold">Auto-Email</span>
             </label>
             <input type="email" id="regEmail" placeholder="example@gmail.com" class="w-full p-2.5 border border-indigo-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-600 bg-indigo-50/30" />
@@ -1184,7 +1194,7 @@
     </div>
   </div>
 
-  <!-- Modal 4: ইনভয়েস ও ভাউচার পোস্টিং (সব লেনদেনের একমাত্র কেন্দ্র) -->
+  <!-- Modal 4: ইনভয়েস ও ভাউচার পোস্টিং -->
   <div id="invoice-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
       <div class="flex justify-between items-center mb-4 border-b pb-2">
@@ -1309,7 +1319,7 @@
     </div>
   </div>
 
-  <!-- Modal 6: মানি রিসিট ও অফিশিয়াল ভাউচার প্রিভিউ (প্রফেশনাল প্রিন্ট লেআউট) -->
+  <!-- Modal 6: মানি রিসিট ও অফিশিয়াল ভাউচার প্রিভিউ -->
   <div id="receipt-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl p-6">
       <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -1320,7 +1330,6 @@
         </div>
       </div>
       <div id="printable-receipt" class="p-6 border-2 border-indigo-950 rounded-2xl bg-white text-xs space-y-4">
-        <!-- প্যাড হেডার -->
         <div class="text-center border-b-2 border-indigo-950 pb-3">
           <h2 id="rec-org-title" class="text-lg font-extrabold text-indigo-950">আশার আলো সমবায় সমিতি লিঃ</h2>
           <p class="text-[10px] text-emerald-700 font-bold">পূর্ব গুমানমর্দ্দন, হাটহাজারী, চট্টগ্রাম</p>
@@ -1359,7 +1368,6 @@
           <span id="rec-v-amt" class="text-emerald-700 text-base font-extrabold">৳ ০</span>
         </div>
 
-        <!-- স্বাক্ষর সেকশন -->
         <div class="pt-8 flex justify-between items-center text-[10px] text-center">
           <div>
             <div class="w-24 border-b border-dashed border-slate-400 mb-1"></div>
@@ -1388,7 +1396,7 @@
         <button type="button" onclick="closeModal('notice-modal')" class="text-xl cursor-pointer">&times;</button>
       </div>
 
-      <form onsubmit="handleNoticeSubmit(event)" class="p-6 space-y-3.5 text-xs">
+      <form onsubmit="handleNoticeSubmit(event)" class="p-6 space-y-3.5 text-xs max-h-[80vh] overflow-y-auto">
         <div>
           <label class="block font-bold text-slate-700 mb-1">নোটিশের বিষয় / শিরোনাম *</label>
           <input type="text" id="noticeTitle" required placeholder="যেমন: বার্ষিক সাধারণ সভা সংক্রান্ত বিজ্ঞপ্তি" class="w-full p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-rose-600 font-bold" />
@@ -1466,7 +1474,7 @@
   <!-- ================= ৭. সম্পূর্ণ জাভাস্ক্রিপ্ট অ্যাপ্লিকেশন লজিক ================= -->
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbyBvs2XczEEWrmj6P2vXlhPWcuUvUeC1qU9-6E0L74lbCSMtpCxrKeB9ySwKOI1kO5Y8w/exec";
-    const DB_KEY = "ashar_alo_final_v35_ultimate_production";
+    const DB_KEY = "ashar_alo_final_v40_super_master";
 
     const GITHUB_PHOTO_BASE_URL = "https://raw.githubusercontent.com/jesmulhasan/ashar-alo/main/photos/";
 
@@ -1583,7 +1591,6 @@
       return `${GITHUB_PHOTO_BASE_URL}${id.toString().trim().toUpperCase()}.jpg`;
     }
 
-    // ১০০% গ্যারান্টিড মোডাল ওপেন ও ক্লোজ লজিক
     function openModal(id) {
       const el = document.getElementById(id);
       if (el) {
@@ -1600,6 +1607,7 @@
       }
     }
 
+    // ব্যাকগ্রাউন্ড গুগল শিট সিঙ্ক (লোকাল ডেটা সুরক্ষিত রাখা)
     function syncFromGoogleSheet() {
       if (!API_URL || API_URL.includes("your-script-id")) return;
 
@@ -1609,29 +1617,31 @@
         if (script && script.parentNode) script.parentNode.removeChild(script);
 
         if (resp && resp.success && resp.data) {
-          if (resp.data.members) {
+          // মেম্বার সিঙ্ক
+          if (resp.data.members && resp.data.members.length > 0) {
             state.members = resp.data.members.map(m => {
               const mId = m.memberId || m.id || m["সদস্য আইডি"] || "";
+              const localMem = state.members.find(x => String(x.id).trim().toUpperCase() === String(mId).trim().toUpperCase());
               return {
                 id: mId,
                 name: m.fullName || m.name || m["পূর্ণ নাম"] || "",
                 mobile: m.mobileNumber || m.mobile || m["মোবাইল"] || "",
                 nid: m.nidNumber || m.nid || m["জাতীয় পরিচয়পত্র"] || "",
-                email: m.email || m["ইমেইল"] || "",
+                email: m.email || m["ইমেইল"] || (localMem ? localMem.email : ""),
                 joiningDate: m.joiningDate || m.joinDate || m["যোগদানের তারিখ"] || "2026-01-01",
                 monthlySavings: Number(m.monthlySavings || m.monthlyDPS || m["মাসিক কিস্তি"]) || 1000,
                 totalSavings: Number(m.totalSavings || m["সঞ্চয় জমা"]) || 0,
                 shareCapital: Number(m.shareCapital || m["শেয়ার মূলধন"]) || 0,
-                photoUrl: m.photoUrl || ""
+                photoUrl: (localMem && localMem.photoUrl) ? localMem.photoUrl : (m.photoUrl || "")
               };
             });
-          } else {
-            state.members = [];
           }
 
-          if (resp.data.directors) {
+          // পরিচালক সিঙ্ক
+          if (resp.data.directors && resp.data.directors.length > 0) {
             state.directors = resp.data.directors.map(d => {
               const dId = d.directorId || d.memberId || d.id || d["সদস্য আইডি"] || "";
+              const localDir = state.directors.find(x => String(x.id).trim().toUpperCase() === String(dId).trim().toUpperCase());
               return {
                 id: dId,
                 name: d.fullName || d.name || d["পূর্ণ নাম"] || "",
@@ -1639,18 +1649,17 @@
                 joiningDate: d.joiningDate || d.joinDate || d["যোগদানের তারিখ"] || "2026-01-01",
                 mobile: d.mobileNumber || d.mobile || d["মোবাইল"] || "",
                 nid: d.nidNumber || d.nid || d["জাতীয় পরিচয়পত্র"] || "",
-                email: d.email || d["ইমেইল"] || "",
+                email: d.email || d["ইমেইল"] || (localDir ? localDir.email : ""),
                 shareCount: Number(d.shareCount || d["শেয়ার"]) || 1,
                 shareCapital: Number(d.shareCapital || d["শেয়ার মূলধন"]) || 0,
                 totalSavings: Number(d.totalSavings || d["সঞ্চয় জমা"]) || 0,
-                photoUrl: d.photoUrl || ""
+                photoUrl: (localDir && localDir.photoUrl) ? localDir.photoUrl : (d.photoUrl || "")
               };
             });
-          } else {
-            state.directors = [];
           }
 
-          if (resp.data.cashbook) {
+          // ক্যাশবুক সিঙ্ক
+          if (resp.data.cashbook && resp.data.cashbook.length > 0) {
             state.cashbook = resp.data.cashbook.map(c => ({
               date: c.date || c["তারিখ (Date)"] || "",
               voucherNo: c.voucherNo || c["ভাউচার নং"] || "",
@@ -1664,14 +1673,11 @@
               balance: Number(c.balance || c["স্থিতি (Balance)"]) || 0,
               method: c.accountType || c.method || c["পেমেন্ট মাধ্যম"] || "নগদ (Cash)"
             }));
-          } else {
-            state.cashbook = [];
           }
 
-          if (resp.data.investments) {
+          // ইনভেস্টমেন্ট সিঙ্ক (লোকাল ইনভেস্টমেন্ট মুছে না ফেলা)
+          if (resp.data.investments && resp.data.investments.length > 0) {
             state.investments = resp.data.investments;
-          } else {
-            state.investments = [];
           }
 
           recalculateBalances();
@@ -1728,6 +1734,7 @@
       state.bankBalance = totalBank;
     }
 
+    // লগইন সিস্টেম (100% Guaranteed Fail-Safe)
     function setupAuth() {
       const auth = sessionStorage.getItem("somiti_active_session");
       if (auth) {
@@ -1744,7 +1751,11 @@
     }
 
     function handleLogin(e) {
-      if (e) e.preventDefault();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      
       const uInput = document.getElementById("login-username");
       const pInput = document.getElementById("login-password");
       const err = document.getElementById("login-error");
@@ -1753,33 +1764,37 @@
       const p = (pInput.value || "").trim().toUpperCase();
       const savedAdminPass = (localStorage.getItem("somiti_admin_pass") || "ADMIN123").toUpperCase();
 
+      // সুপার অ্যাডমিন
       if (u === "ADMIN" && (p === savedAdminPass || p === "ADMIN123" || p === "ADMIN")) {
         currentUser = { id: "ADMIN", name: "সুপার অ্যাডমিন", role: "ADMIN" };
         loginSuccess();
-        return;
+        return false;
       }
 
+      // পরিচালক
       const d = state.directors.find(x => x.id && x.id.toString().trim().toUpperCase() === u);
       if (d) {
         const customDirPass = (state.directorPasswords && state.directorPasswords[u]) ? state.directorPasswords[u].toUpperCase() : "123456";
         if (p === customDirPass || p === "123456" || p === savedAdminPass || p === "ADMIN123") {
           currentUser = { id: d.id, name: d.name, role: "DIRECTOR" };
           loginSuccess();
-          return;
+          return false;
         }
       }
 
+      // সাধারণ সদস্য
       const m = state.members.find(x => x.id && x.id.toString().trim().toUpperCase() === u);
       if (m) {
         if (p === "123456" || p === savedAdminPass || p === "ADMIN123") {
           currentUser = { id: m.id, name: m.name, role: "MEMBER" };
           loginSuccess();
-          return;
+          return false;
         }
       }
 
       err.innerText = "ভুল ইউজার আইডি বা গোপন পাসওয়ার্ড!";
       err.classList.remove("hidden");
+      return false;
     }
 
     function quickResetAdminPassword() {
@@ -1853,12 +1868,13 @@
       }
     }
 
+    // ছবি আপলোড ও পার্মানেন্ট Base64 কনভার্ট
     function previewSelectedPhoto(event) {
       var file = event.target.files[0];
       if (!file) return;
 
-      if (file.size > 2 * 1024 * 1024) {
-        alert("ছবির সাইজ সর্বোচ্চ ২ মেগাবাইট (2MB) হতে পারবে!");
+      if (file.size > 3 * 1024 * 1024) {
+        alert("ছবির সাইজ সর্বোচ্চ ৩ মেগাবাইট (3MB) হতে পারবে!");
         event.target.value = "";
         return;
       }
@@ -1869,10 +1885,10 @@
         img.onload = function() {
           var canvas = document.createElement("canvas");
           var ctx = canvas.getContext("2d");
-          canvas.width = 120;
-          canvas.height = 120;
-          ctx.drawImage(img, 0, 0, 120, 120);
-          var compressedData = canvas.toDataURL("image/jpeg", 0.7);
+          canvas.width = 150;
+          canvas.height = 150;
+          ctx.drawImage(img, 0, 0, 150, 150);
+          var compressedData = canvas.toDataURL("image/jpeg", 0.8);
 
           document.getElementById("regPhotoBase64").value = compressedData;
           var preview = document.getElementById("regPhotoPreview");
@@ -2432,7 +2448,6 @@
         }
       }
 
-      // ব্যালেন্স সমন্বয় ও প্রাপকের ইমেইল ট্রেস
       let recipientEmail = "";
       if (targetAcc === "member" && pId) {
         const m = state.members.find(x => x.id === pId);
@@ -2485,7 +2500,6 @@
       closeModal("invoice-modal");
       renderAll();
 
-      // গুগল শিটে সেভ এবং জিমেইলে অটো-ভাউচার সেন্ড
       if (API_URL && !API_URL.includes("your-script-id")) {
         const callbackName = 'cb_save_' + Math.round(100000 * Math.random());
         const queryParams = new URLSearchParams({
@@ -2512,7 +2526,7 @@
       showInvoiceReceipt(vNo);
     }
 
-    // ================= বিনিয়োগ প্রকল্প হ্যান্ডলার =================
+    // ================= বিনিয়োগ প্রকল্প হ্যান্ডলার (Permanent Refresh Fix) =================
     function openInvestmentModal() {
       if (!currentUser || currentUser.role !== "ADMIN") {
         return alert("শুধুমাত্র অ্যাডমিন বিনিয়োগ পরিচালনা করতে পারবেন!");
@@ -3173,7 +3187,7 @@
       netProfitEl.innerText = formatBDT(netSurplus);
       netProfitEl.className = netSurplus >= 0 ? "font-extrabold text-base text-emerald-700" : "font-extrabold text-base text-rose-600";
 
-      // ৩. ব্যালেন্স শিট (Closing Cash & Bank সহ বিশুদ্ধ হিসাব)
+      // ৩. ব্যালেন্স শিট
       let curCash = state.cashBalance;
       let curBank = state.bankBalance;
       let curInvest = state.investments.reduce((a, b) => a + (Number(b.amount) || 0), 0);
@@ -3187,7 +3201,7 @@
         const inAmt = Number(c.cashIn) || 0;
         const outAmt = Number(c.cashOut) || 0;
         const cat = (c.category || "");
-        if (inAmt > 0 && (cat.includes("মুনাফা") || cat.includes("লাভ") || cat.includes("ফি") || cat.includes("বিক্রি") || cat.includes("আয়"))) {
+        if (inAmt > 0 && (cat.includes("মুনাফা") || cat.includes("লাভ") || cat.includes("ফি") || cat.includes("বিক্রি"))) {
           totalAccumulatedSurplus += inAmt;
         }
         if (outAmt > 0 && !cat.includes("বিনিয়োগ") && !cat.includes("ফেরত") && !cat.includes("স্থানান্তর")) {
@@ -3235,7 +3249,6 @@
       document.getElementById("stat-cash").innerText = formatBDT(state.cashBalance);
       document.getElementById("stat-bank").innerText = formatBDT(state.bankBalance);
 
-      // ১. মাল্টি-ব্যাংক কার্ড রেন্ডার
       const bankGrid = document.getElementById("dynamic-bank-cards-grid");
       if (bankGrid) {
         let cardsHtml = `
@@ -3265,7 +3278,6 @@
         bankGrid.innerHTML = cardsHtml;
       }
 
-      // ২. পরিচালক ও সদস্য সংখ্যা এবং মূলধন আলাদা হিসাব
       let totalSavings = 0, totalDirectorCap = 0;
       state.members.forEach(m => totalSavings += (Number(m.totalSavings) || 0));
       state.directors.forEach(d => totalDirectorCap += (Number(d.shareCapital) || 0));
@@ -3289,7 +3301,6 @@
       const combinedCard = document.getElementById("stat-combined-balance");
       if (combinedCard) combinedCard.innerText = formatBDT(combinedBalance);
 
-      // ৩. মোট সঞ্চয় ও মূলধন ফেরত স্থিতি
       let totalRefund = 0;
       state.cashbook.forEach(c => {
         const cat = (c.category || "");
@@ -3299,11 +3310,9 @@
       });
       document.getElementById("stat-total-refund").innerText = formatBDT(totalRefund);
 
-      // ৪. মোট প্রকল্প বিনিয়োগ (Assets)
       let totalInvested = state.investments.reduce((a, b) => a + (Number(b.amount) || 0), 0);
       document.getElementById("stat-invest-card").innerText = formatBDT(totalInvested);
 
-      // ৫. প্রকৃত সাধারণ খরচ (বিনিয়োগ ও ট্রান্সফার বাদে)
       let actualExpense = 0;
       state.cashbook.forEach(c => {
         const outAmt = Number(c.cashOut) || 0;
@@ -3314,7 +3323,6 @@
       });
       document.getElementById("stat-total-cost").innerText = formatBDT(actualExpense);
 
-      // ৬. সর্বমোট অর্জিত মুনাফা
       let totalProfit = 0;
       state.cashbook.forEach(c => {
         const inAmt = Number(c.cashIn) || 0;
@@ -3569,7 +3577,38 @@
       });
     }
 
-    // প্রফেশনাল পাসবুক লেজার ভিউ (তারিখভিত্তিক ধারাবাহিক হিসাব ও রানিং ব্যালেন্স)
+    // পাসবুক প্রিন্ট সরাসরি ক্লিন উইন্ডোতে
+    function printPassbookDirectly() {
+      const content = document.getElementById("printable-ledger").innerHTML;
+      const printWindow = window.open('', '', 'width=950,height=700');
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>পাসবুক লেজার প্রিন্ট - আশার আলো সমবায় সমিতি</title>
+            <style>
+              body { font-family: 'Hind Siliguri', Arial, sans-serif; padding: 25px; color: #0f172a; margin: 0; }
+              table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
+              th, td { border: 1px solid #94a3b8; padding: 7px 10px; text-align: left; }
+              th { background-color: #1e1b4b; color: white; font-weight: bold; }
+              .text-right { text-align: right; }
+              .header-box { border: 2px solid #1e1b4b; padding: 15px; border-radius: 12px; margin-bottom: 20px; background: #f8fafc; }
+              .text-center { text-align: center; }
+              .font-bold { font-weight: bold; }
+            </style>
+          </head>
+          <body>
+            ${content}
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+      }, 500);
+    }
+
     function openLedger(id, name, balance, photoUrl, joiningDate) {
       document.getElementById("led-name").innerText = name;
       document.getElementById("led-id").innerText = id;
@@ -3579,7 +3618,6 @@
       const tbody = document.getElementById("ledger-table-body");
       tbody.innerHTML = '';
       
-      // তারিখ অনুযায়ী ক্রমানুসারে সাজানো
       const txs = state.cashbook.filter(x => x.personId === id).sort((a,b) => new Date(a.date) - new Date(b.date));
 
       if (txs.length === 0) {
@@ -3593,12 +3631,11 @@
           const outAmt = Number(t.cashOut) || 0;
           runningBal += (inAmt - outAmt);
 
-          // মাসভিত্তিক গ্রুপ হেডার বিভাজন
           const currentMonth = t.date ? t.date.slice(0, 7) : '';
           if (currentMonth && currentMonth !== lastMonth) {
             tbody.innerHTML += `
-              <tr class="bg-indigo-50/60 font-bold text-[11px] text-indigo-900">
-                <td colspan="6" class="p-2 border"><i class="fa-regular fa-calendar-check mr-1 text-indigo-600"></i> ${currentMonth} মাসের হিসাব বিবরণী</td>
+              <tr class="bg-indigo-50/70 font-bold text-[11px] text-indigo-950">
+                <td colspan="6" class="p-2 border border-slate-300"><i class="fa-regular fa-calendar-check mr-1 text-indigo-600"></i> ${currentMonth} মাসের হিসাব বিবরণী</td>
               </tr>
             `;
             lastMonth = currentMonth;
@@ -3606,15 +3643,15 @@
 
           tbody.innerHTML += `
             <tr class="hover:bg-slate-50 transition text-xs">
-              <td class="p-2.5 border font-semibold text-slate-700">${t.date}</td>
-              <td class="p-2.5 border font-mono font-bold text-indigo-700">${t.voucherNo}</td>
-              <td class="p-2.5 border">
+              <td class="p-2 border border-slate-300 font-semibold text-slate-700">${t.date}</td>
+              <td class="p-2 border border-slate-300 font-mono font-bold text-indigo-700">${t.voucherNo}</td>
+              <td class="p-2 border border-slate-300">
                 <b class="text-slate-800">${t.category}</b>
                 ${t.particulars ? `<span class="block text-[10px] text-slate-400 italic">${t.particulars}</span>` : ''}
               </td>
-              <td class="p-2.5 border text-right font-bold text-emerald-600 font-mono">${inAmt > 0 ? formatBDT(inAmt) : '-'}</td>
-              <td class="p-2.5 border text-right font-bold text-rose-600 font-mono">${outAmt > 0 ? formatBDT(outAmt) : '-'}</td>
-              <td class="p-2.5 border text-right font-bold font-mono text-slate-900 bg-slate-50/50">${formatBDT(runningBal)}</td>
+              <td class="p-2 border border-slate-300 text-right font-bold text-emerald-600 font-mono">${inAmt > 0 ? formatBDT(inAmt) : '-'}</td>
+              <td class="p-2 border border-slate-300 text-right font-bold text-rose-600 font-mono">${outAmt > 0 ? formatBDT(outAmt) : '-'}</td>
+              <td class="p-2 border border-slate-300 text-right font-bold font-mono text-slate-900 bg-slate-50">${formatBDT(runningBal)}</td>
             </tr>
           `;
         });
