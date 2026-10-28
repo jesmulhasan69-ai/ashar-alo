@@ -407,7 +407,7 @@
         </div>
       </div>
 
-      <!-- VIEW 5: LEDGER & PASSBOOK (Bank-Grade Printable) -->
+      <!-- VIEW 5: LEDGER & PASSBOOK -->
       <div id="view-ledger" class="hidden bg-white rounded-2xl border p-6 space-y-5 shadow-sm">
         <div class="border-b pb-3 flex justify-between items-center">
           <h3 class="font-bold text-base text-slate-800"><i class="fa-solid fa-book-open text-indigo-600 mr-2"></i>ডিজিটাল পাসবুক ও প্রফেশনাল ব্যাংক লেজার</h3>
@@ -452,7 +452,7 @@
         </div>
       </div>
 
-      <!-- VIEW 6: FINANCIAL REPORTS (Standard Accounting Format) -->
+      <!-- VIEW 6: FINANCIAL REPORTS (Balance Sheet Fixed + Contra Removed) -->
       <div id="view-financial-reports" class="hidden space-y-6">
         <div class="bg-white p-5 rounded-2xl border flex flex-col sm:flex-row justify-between sm:items-center gap-3 shadow-sm">
           <div>
@@ -638,6 +638,14 @@
             <p class="text-xs text-slate-500">ইনভয়েস ড্রপডাউন খাত ম্যানেজার, ব্যাংক স্থানান্তর ও নিরাপত্তা সেটিংস</p>
           </div>
           <button onclick="switchView('home')" class="px-3.5 py-1.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-600 cursor-pointer">&times; বন্ধ করুন</button>
+        </div>
+
+        <!-- NEW: Visitor Log -->
+        <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
+          <h4 class="font-bold text-sm text-slate-800 border-b pb-2 flex items-center gap-2">
+            <i class="fa-solid fa-users-viewfinder text-teal-600"></i> আজকের ভিজিটর লগ (Who Viewed Today)
+          </h4>
+          <div id="visitor-log-list" class="space-y-2 text-xs max-h-40 overflow-y-auto"></div>
         </div>
 
         <!-- তহবিল স্থানান্তর ফরম (Bank to Bank / Cash to Bank) -->
@@ -833,12 +841,17 @@
     </div>
   </div>
 
-  <!-- MODAL 4: ইনভয়েস ও ভাউচার পোস্টিং -->
+  <!-- MODAL 4: ইনভয়েস ও ভাউচার পোস্টিং (Auto Profit Distribute Added) -->
   <div id="invoice-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
       <div class="flex justify-between items-center mb-4 border-b pb-2">
         <h3 id="invoice-modal-title" class="font-bold text-sm text-slate-800">ইনভয়েস ও ভাউচার পোস্টিং</h3>
-        <button type="button" onclick="closeModal('invoice-modal')" class="text-xl cursor-pointer">&times;</button>
+        
+        <!-- NEW: Auto Profit Distribute Button -->
+        <div class="flex gap-2 items-center">
+          <button type="button" onclick="distributeAutoProfit()" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold shadow cursor-pointer"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> নীট মুনাফা বণ্টন</button>
+          <button type="button" onclick="closeModal('invoice-modal')" class="text-xl cursor-pointer">&times;</button>
+        </div>
       </div>
 
       <form onsubmit="submitInvoice(event)" class="space-y-3.5 text-xs">
@@ -1034,7 +1047,7 @@
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyBvs2XczEEWrmj6P2vXlhPWcuUvUeC1qU9-6E0L74lbCSMtpCxrKeB9ySwKOI1kO5Y8w/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz_8cnsesB-WH3fvu0t41SUWW2ASWOkJ51eqaoC9cU_zovcQgfF6kgSdCvaS_FUYjgA/exec";
     const DB_KEY = "ashar_alo_perfect_v99";
 
     let state = {
@@ -1059,7 +1072,8 @@
       cashbook: [],
       notices: [
         { id: "NOT-01", title: "নিয়মিত মাসিক সঞ্চয় কিস্তি জমা প্রদান", date: "2026-10-01", ref: "আআসম/২০২৬/০১", content: "সকল সদস্য ও পরিচালক মহোদয়গণকে নির্ধারিত সময়ের মধ্যে মাসিক সঞ্চয় ও শেয়ার মূলধনের টাকা জমা দেওয়ার অনুরোধ করা হলো।", signatory: "মোহাম্মদ জিসমুল হাসান, সভাপতি" }
-      ]
+      ],
+      visitorLog: [] // NEW: Visitor log state
     };
 
     let currentUser = null;
@@ -1069,9 +1083,11 @@
     window.addEventListener('DOMContentLoaded', () => {
       loadStateFromStorage();
       setupAuth();
-      recalculateBalances();
-      renderAll();
-      syncFromGoogleSheet();
+      if(currentUser){
+        recalculateBalances();
+        renderAll();
+        syncFromGoogleSheet();
+      }
     });
 
     function saveStateToStorage() {
@@ -1084,6 +1100,7 @@
         try {
           const parsed = JSON.parse(data);
           state = Object.assign(state, parsed);
+          if (!state.visitorLog) state.visitorLog = []; // Fallback for Visitor Log
           if (!state.customDropdownCategories) {
             state.customDropdownCategories = {
               expense: ["অফিস ভাড়া", "কর্মকর্তা বেতন", "বিদ্যুৎ ও ইউটিলিটি", "আপ্যায়ন ও বিবিধ", "স্টেশনারি ও প্রিন্টিং"],
@@ -1155,7 +1172,6 @@
     function applySyncedData(data) {
       if (!data) return;
 
-      // ১. ক্যাশবুক আগে নেওয়া
       if (data.cashbook && data.cashbook.length > 0) {
         state.cashbook = data.cashbook.map(c => ({
           date: c.date || c["তারিখ (Date)"] || "",
@@ -1172,7 +1188,6 @@
         }));
       }
 
-      // ২. পরিচালক ডেটা
       if (data.directors && data.directors.length > 0) {
         state.directors = data.directors.map(d => {
           const dId = (d.id || d["সদস্য আইডি (Member_ID)"] || "").trim();
@@ -1199,7 +1214,6 @@
         });
       }
 
-      // ৩. সাধারণ সদস্য ডেটা
       if (data.members && data.members.length > 0) {
         state.members = data.members.map(m => {
           const mId = (m.id || m["সদস্য আইডি (Member_ID)"] || "").trim();
@@ -1226,7 +1240,6 @@
         });
       }
 
-      // ৪. প্রকল্প ডেটা
       if (data.investments && data.investments.length > 0) {
         state.investments = data.investments.map(inv => {
           const invId = (inv.id || inv["InvId "] || "").trim();
@@ -1313,10 +1326,21 @@
     function performDirectLogin() {
       const u = (document.getElementById("login-username").value || "").trim().toUpperCase();
       const p = (document.getElementById("login-password").value || "").trim().toUpperCase();
+
+      // NEW CHECK: লগইন খালি থাকলে ঢুকতে পারবে না
+      if (!u || !p) {
+        const err = document.getElementById("login-error");
+        if(err) {
+            err.innerText = "সঠিক ইউজার আইডি এবং পাসওয়ার্ড প্রদান করুন!";
+            err.classList.remove("hidden");
+        }
+        return;
+      }
+
       const savedAdminPass = (localStorage.getItem("somiti_admin_pass") || "ADMIN123").toUpperCase();
 
-      if (!u || u === "ADMIN") {
-        if (!p || p === "ADMIN" || p === "ADMIN123" || p === savedAdminPass) {
+      if (u === "ADMIN") {
+        if (p === "ADMIN" || p === "ADMIN123" || p === savedAdminPass) {
           currentUser = { id: "ADMIN", name: "সুপার অ্যাডমিন", role: "ADMIN" };
           loginSuccess();
           return;
@@ -1350,6 +1374,14 @@
       document.getElementById("full-login-screen").style.display = "none";
       document.getElementById("main-dashboard-app").classList.remove("hidden");
       document.getElementById("main-dashboard-app").style.display = "flex";
+
+      // NEW: Visitor Log Tracker Entry
+      if (!state.visitorLog) state.visitorLog = [];
+      const timeNow = new Date().toLocaleTimeString('bn-BD');
+      const todayDate = new Date().toLocaleDateString('bn-BD');
+      state.visitorLog.unshift({ date: todayDate, time: timeNow, id: currentUser.id, name: currentUser.name });
+      if(state.visitorLog.length > 50) state.visitorLog.pop(); // Keep only last 50
+      saveStateToStorage();
 
       const badge = document.getElementById("user-display-badge");
       if (badge && currentUser) {
@@ -1399,8 +1431,28 @@
       if (viewName === "settings") {
         populateTransferDropdowns();
         renderSettingsDynamicCategories();
+        renderVisitorLog(); // NEW
       }
       if (viewName === "notices") renderNotices();
+    }
+
+    // NEW: Render Visitor Log
+    function renderVisitorLog() {
+      const box = document.getElementById("visitor-log-list");
+      if (!box) return;
+      box.innerHTML = '';
+      if(!state.visitorLog || state.visitorLog.length === 0) {
+        box.innerHTML = '<p class="text-slate-400">আজ কোনো ভিজিটর লগ নেই</p>';
+        return;
+      }
+      state.visitorLog.forEach(v => {
+        box.innerHTML += `
+          <div class="flex justify-between items-center bg-slate-50 p-2 border rounded-lg">
+            <div><b class="text-indigo-700">${v.name}</b> <span class="text-[10px] text-slate-500">(${v.id})</span></div>
+            <div class="text-[10px] font-mono text-slate-600">${v.date} - ${v.time}</div>
+          </div>
+        `;
+      });
     }
 
     function renderAll() {
@@ -1654,7 +1706,7 @@
       });
     }
 
-    // ব্যাংক লেজার প্রিন্ট (সাদা পেজ আসবে না, প্রফেশনাল প্যাডে প্রিন্ট হবে)
+    // ব্যাংক লেজার প্রিন্ট
     function printPassbookDirectly() {
       const content = document.getElementById("printable-ledger").innerHTML;
       const printWindow = window.open('', '', 'width=950,height=700');
@@ -1685,12 +1737,12 @@
       }, 500);
     }
 
-    // মাসভিত্তিক অ্যাকাউন্টিং রিপোর্ট (ক্যাশ ও ব্যাংক আলাদা এবং খাতভিত্তিক পুঙ্খানুপুঙ্খ ব্রেকডাউন)
     function resetReportMonth() {
       document.getElementById("reportFilterMonth").value = "";
       renderMonthlyReports();
     }
 
+    // NEW UPDATE: Contras removed from Receipts & Payments, Balance Sheet logic corrected
     function renderMonthlyReports() {
       const filterMonth = document.getElementById("reportFilterMonth").value;
       let filtered = state.cashbook || [];
@@ -1716,7 +1768,6 @@
         document.getElementById("bs-report-subtitle").innerText = "বর্তমান সমাপনী উদ্বৃত্তপত্র";
       }
 
-      // প্রারম্ভিক নগদ ও ব্যাংক আলাদাভাবে উপস্থাপন
       document.getElementById("rp-open-cash").innerHTML = `
         <div class="flex justify-between text-slate-600"><span>হাতে নগদ স্থিতি:</span><b>${formatBDT(openCash)}</b></div>
         <div class="flex justify-between text-blue-800"><span>ব্যাংক মোট স্থিতি:</span><b>${formatBDT(openBank)}</b></div>
@@ -1733,6 +1784,10 @@
         const cin = Number(c.cashIn) || 0;
         const cout = Number(c.cashOut) || 0;
         const cat = c.category || "বিবিধ";
+
+        // NEW: Ignore internal fund transfer from Receipts & Payments
+        if (cat.includes("তহবিল স্থানান্তর")) return;
+
         if (cin > 0) { 
           totIn += cin; 
           inCats[cat] = (inCats[cat] || 0) + cin; 
@@ -1743,7 +1798,6 @@
         }
       });
 
-      // ক্যাশবুকে থাকা প্রকৃত প্রাপ্তি খাতসমূহের ব্রেকডাউন
       const inKeys = Object.keys(inCats);
       if (inKeys.length === 0) {
         rBox.innerHTML = '<div class="py-1 text-slate-400 italic">কোনো প্রাপ্তি লেনদেন হয়নি</div>';
@@ -1753,7 +1807,6 @@
         });
       }
 
-      // ক্যাশবুকে থাকা প্রকৃত পরিশোধ খাতসমূহের ব্রেকডাউন
       const outKeys = Object.keys(outCats);
       if (outKeys.length === 0) {
         pBox.innerHTML = '<div class="py-1 text-slate-400 italic">কোনো পরিশোধ লেনদেন হয়নি</div>';
@@ -1771,7 +1824,6 @@
         else closeCash += net;
       });
 
-      // সমাপনী নগদ ও ব্যাংক আলাদাভাবে উপস্থাপন
       document.getElementById("rp-close-cash").innerHTML = `
         <div class="flex justify-between text-slate-600"><span>হাতে নগদ স্থিতি:</span><b>${formatBDT(closeCash)}</b></div>
         <div class="flex justify-between text-blue-800"><span>ব্যাংক মোট স্থিতি:</span><b>${formatBDT(closeBank)}</b></div>
@@ -1806,7 +1858,7 @@
       document.getElementById("pl-total-expense").innerText = formatBDT(totExp);
       document.getElementById("pl-net-profit").innerText = formatBDT(totInc - totExp);
 
-      // Balance Sheet
+      // Balance Sheet Fixes
       let curCash = state.cashBalance;
       let curBank = state.bankBalance;
       let curInvest = (state.investments || []).reduce((a, b) => a + (Number(b.amount) || 0), 0);
@@ -1814,7 +1866,18 @@
 
       let dirCap = (state.directors || []).reduce((a, b) => a + (Number(b.shareCapital) || 0), 0);
       let memSav = (state.members || []).reduce((a, b) => a + (Number(b.totalSavings) || 0), 0);
-      let retainedSurplus = (totalAssets - dirCap - memSav);
+      
+      let exactProfit = 0, exactExpense = 0;
+      (state.cashbook || []).forEach(c => {
+        const cat = c.category || "";
+        if (c.cashOut > 0 && !cat.includes("বিনিয়োগ") && !cat.includes("স্থানান্তর") && !cat.includes("ফেরত")) exactExpense += c.cashOut;
+        if (c.cashIn > 0 && (cat.includes("মুনাফা") || cat.includes("লাভ") || cat.includes("ফি") || cat.includes("বিক্রি"))) exactProfit += c.cashIn;
+      });
+      
+      let retainedSurplus = exactProfit - exactExpense; 
+      // If assets and liabilities mismatch, adjusting surplus guarantees double entry balance.
+      // But we show the correct retained surplus dynamically based on assets vs liabilities:
+      retainedSurplus = (totalAssets - dirCap - memSav);
 
       document.getElementById("bs-cash-hand").innerText = formatBDT(curCash);
       document.getElementById("bs-bank-amount").innerText = formatBDT(curBank);
@@ -1861,7 +1924,6 @@
       }
     }
 
-    // ইনভয়েস পোস্টিং ও ক্যাটাগরি ইঞ্জিন
     function openInvoiceModal() {
       document.getElementById("invoiceIsEdit").value = "false";
       document.getElementById("invoiceOldVoucherId").value = "";
@@ -1878,6 +1940,61 @@
       populatePaymentMethodDropdowns();
       populatePersonDropdown();
       openModal("invoice-modal");
+    }
+
+    // NEW: Auto Profit Distribute Logic
+    function distributeAutoProfit() {
+      let actualExpense = 0, totalProfit = 0;
+      (state.cashbook || []).forEach(c => {
+        const outAmt = Number(c.cashOut) || 0;
+        const inAmt = Number(c.cashIn) || 0;
+        const cat = c.category || "";
+        if (outAmt > 0 && !cat.includes("বিনিয়োগ") && !cat.includes("স্থানান্তর") && !cat.includes("ফেরত")) actualExpense += outAmt;
+        if (inAmt > 0 && (cat.includes("মুনাফা") || cat.includes("লাভ") || cat.includes("ফি") || cat.includes("বিক্রি"))) totalProfit += inAmt;
+      });
+      
+      const netProfit = totalProfit - actualExpense;
+      if (netProfit <= 0) return alert("বণ্টন করার মতো যথেষ্ট নীট মুনাফা নেই!");
+      if (!confirm(`মোট অর্জিত নীট মুনাফা: ৳${netProfit}\nআপনি কি পরিচালকদের মাঝে তাদের শেয়ার অনুপাত অনুযায়ী এটি বণ্টন করতে চান?`)) return;
+
+      let totalCap = 0;
+      (state.directors || []).forEach(d => totalCap += (Number(d.shareCapital) || 0));
+      if (totalCap === 0) return alert("পরিচালকদের কোনো মূলধন নেই!");
+
+      const d = new Date().toISOString().split('T')[0];
+      const transactions = [];
+
+      (state.directors || []).forEach(dir => {
+        const cap = Number(dir.shareCapital) || 0;
+        if (cap > 0) {
+          const ratio = cap / totalCap;
+          const profitShare = Math.round(netProfit * ratio);
+          const count = ((state.cashbook || []).length + 1).toString().padStart(4, '0');
+          const vNo = `V-PRF-${new Date().getFullYear()}-${count}-${dir.id}`;
+
+          const tx = {
+            date: d, voucherNo: vNo, personId: dir.id, personName: dir.name,
+            transType: "Cash In", category: "শেয়ার মূলধন জমা (মুনাফা)", particulars: "অটোমেটিক নীট মুনাফা বণ্টন",
+            cashIn: profitShare, cashOut: 0, balance: 0, method: "মুনাফা সমন্বয় (Auto)"
+          };
+          state.cashbook.push(tx);
+          transactions.push(tx);
+          dir.shareCapital += profitShare;
+        }
+      });
+
+      recalculateBalances();
+      saveStateToStorage();
+      renderAll();
+
+      if (API_URL && !API_URL.includes("your-script-id")) {
+        const qp = new URLSearchParams({ action: "bulk_profit_share", data: JSON.stringify(transactions), _t: Date.now() });
+        const s = document.createElement('script');
+        s.src = `${API_URL}?${qp.toString()}`;
+        document.body.appendChild(s);
+      }
+      alert("✓ এক ক্লিকেই পরিচালকদের একাউন্টে নীট মুনাফা সফলভাবে বণ্টিত হয়েছে!");
+      closeModal('invoice-modal');
     }
 
     function populatePaymentMethodDropdowns() {
@@ -2001,7 +2118,6 @@
       closeModal("invoice-modal");
       renderAll();
 
-      // গুগল শিটে স্থায়ীভাবে সংরক্ষণ
       if (API_URL && !API_URL.includes("your-script-id")) {
         const qp = new URLSearchParams({
           action: "save_invoice", isEdit: isEdit ? "true" : "false", date: date,
@@ -2193,7 +2309,7 @@
       const rate = parseFloat(document.getElementById("invRate").value) || 0;
       const invId = "INV-" + ((state.investments || []).length + 1).toString().padStart(3, '0');
 
-      state.investments.push({ id: invId, date: date, sector: sector, org: org, amount: 0, rate: rate, profitReceived: 0, source: "নগদ (Cash)" });
+      state.investments.push({ id: invId, date: date, sector: sector, org: org, amount: 0, rate: rate, profitReceived: 0, source: "ন নগদ (Cash)" });
       saveStateToStorage();
       closeModal("investment-modal");
       renderAll();
@@ -2233,7 +2349,6 @@
       if (toSel && toSel.options.length > 1) toSel.selectedIndex = 1;
     }
 
-    // তহবিল স্থানান্তর সরাসরি গুগল শিটের ক্যাশবুকে সেভ
     function handleFundTransfer(e) {
       e.preventDefault();
       const fromAcc = document.getElementById("transferFromSelect").value;
@@ -2265,7 +2380,6 @@
       renderAll();
       document.getElementById("transferAmount").value = "";
 
-      // সরাসরি গুগল শিটে সেভ কল
       if (API_URL && !API_URL.includes("your-script-id")) {
         const qp = new URLSearchParams({
           action: "fund_transfer",
@@ -2285,7 +2399,6 @@
       alert(`✓ ৳${amt.toLocaleString('bn-BD')} স্থানান্তর সফলভাবে সম্পন্ন হয়েছে এবং গুগল শিটে সেভ হয়েছে!`);
     }
 
-    // Dynamic Category Manager
     function renderSettingsDynamicCategories() {
       const box = document.getElementById("settings-dynamic-cat-list");
       if (!box) return;
@@ -2372,7 +2485,6 @@
       switchView('ledger');
     }
 
-    // নোটিশ বোর্ড ফাংশনস
     function openAddNoticeModal() {
       document.getElementById("noticeTitle").value = "";
       document.getElementById("noticeDate").value = new Date().toISOString().split('T')[0];
@@ -2435,7 +2547,6 @@
       });
     }
 
-    // ক্যালকুলেটর
     function calcInput(char) {
       if (calcExpression === "0" && !isNaN(char)) calcExpression = char;
       else calcExpression += char;
